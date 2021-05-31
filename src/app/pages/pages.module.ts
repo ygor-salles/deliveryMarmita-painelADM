@@ -29,30 +29,18 @@ import { ComponentsModule } from './../components/components.module';
 
 // Páginas(Componentes) da aplicação
 import { ProdutosComponent } from './produtos/produtos.component';
-import { CuponsDeDescontoComponent } from './cupons-de-desconto/cupons-de-desconto.component';
-import { ExibicaoComponent } from './exibicao/exibicao.component';
-import { NotificacoesComponent } from './notificacoes/notificacoes.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ModalProdutosComponent } from './produtos/modal-produtos/modal-produtos.component';
-import { CardProdutosComponent } from './produtos/card-produtos/card-produtos.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdministradoresComponent } from './administradores/administradores.component';
-import { ModalAdministradoresComponent } from './administradores/modal-administradores/modal-administradores.component';
+import { HistoricoComponent } from './historico/historico.component';
 
 @NgModule({
   declarations: [
     ProdutosComponent,
-    CuponsDeDescontoComponent,
-    ExibicaoComponent,
-    NotificacoesComponent,
     PedidosComponent,
     UsuariosComponent,
-    ModalProdutosComponent,
-    CardProdutosComponent,
     DashboardComponent,
-    AdministradoresComponent,
-    ModalAdministradoresComponent,
+    HistoricoComponent,
   ],
   imports: [
     CommonModule,
@@ -83,12 +71,8 @@ import { ModalAdministradoresComponent } from './administradores/modal-administr
   ],
   exports: [
     ProdutosComponent,
-    CuponsDeDescontoComponent,
-    ExibicaoComponent,
-    NotificacoesComponent,
     PedidosComponent,
     UsuariosComponent,
-    AdministradoresComponent
   ],
   providers: [CurrencyPipe],
 })

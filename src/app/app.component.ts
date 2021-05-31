@@ -9,7 +9,7 @@ import { SessaoService } from './services/sessao.service';
 })
 export class AppComponent implements OnInit {
   title = 'pro-dashboard-angular';
-  logado: boolean = false;
+  logado: boolean;
 
   constructor(private appService: AppService, private sessaoService: SessaoService) {}
 

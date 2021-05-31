@@ -4,7 +4,7 @@
 $bg-color:#FFF;
 $navbar-bg-color : #8F8286;
 $navbar-color:#FFF;
-$sidebar-bg-color:#EE7850;
+$sidebar-bg-color:#FF6C37;
 $sidebar-color:#FFF;
 $sidebar-icon-color:#FFF;
 $border-color: #f2f3f8;
@@ -45,7 +45,7 @@ body {
 
       i {
         border-color: $navbar-color;
-        
+
       }
 
       &:hover {
@@ -124,7 +124,7 @@ body {
             }
           }
         }
-        
+
       }
     }
   }
