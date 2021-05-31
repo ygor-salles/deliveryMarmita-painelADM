@@ -1,0 +1,8 @@
+<div class="card-contentainer">
+  <div *ngFor="let image of imagens">
+    <img src="{{transformImageUrl(image.url)}}" alt="Imagem">
+  </div>
+  <div class="media-text">
+    <p>{{descricao}}</p>
+  </div>
+</div>

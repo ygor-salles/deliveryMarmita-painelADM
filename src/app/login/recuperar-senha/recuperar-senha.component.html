@@ -1,0 +1,52 @@
+<div class="recuperar-senha-bg">
+
+  <img class="recuperar-senha-logo" src="../../../assets/img/logo.png" alt="Logo">
+
+  <div class="card recuperar-senha-container">
+
+    <div class="text-container">
+      <h1>Recuperar senha</h1>
+      <p>Insira sua nova senha.</p>
+    </div>
+
+    <form [formGroup]="recuperarSenhaForm" (submit)="recuperarSenha()">
+      <div class="recuperar-senha-inputs">
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input type="email" matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nova senha</mat-label>
+          <input type="password" matInput formControlName="password">
+          <mat-error *ngIf="recuperarSenhaForm.get('password')?.errors?.invalidPassword" >
+            Deve conter um dígito, uma letra minúscula e uma maiúscula
+          </mat-error>
+          <mat-error *ngIf="recuperarSenhaForm.get('password')?.errors?.minlength && !recuperarSenhaForm.get('password')?.errors?.invalidPassword" >
+            Deve conter pelo menos 7 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirmar nova senha</mat-label>
+          <input type="password" matInput formControlName="confirm-password">
+          <mat-error *ngIf="recuperarSenhaForm.get('confirm-password')?.errors?.invalidPassword" >
+            Deve conter um dígito, uma letra minúscula e uma maiúscula
+          </mat-error>
+          <mat-error *ngIf="recuperarSenhaForm.get('confirm-password')?.errors?.minlength && !recuperarSenhaForm.get('confirm-password')?.errors?.invalidPassword" >
+            Deve conter pelo menos 7 caracteres
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="recuperar-senha-button">
+        <button mat-raised-button type="submit" [disabled]="recuperarSenhaForm.invalid">Trocar senha</button>
+      </div>
+
+    </form>
+
+    <div class="links">
+      <a (click)="irParaLogin()">Voltar para login</a>
+    </div>
+
+  </div>
+
+</div>

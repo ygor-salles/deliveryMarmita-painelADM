@@ -1,0 +1,32 @@
+<div class="esqueci-senha-bg">
+
+  <img class="esqueci-senha-logo" src="../../../assets/img/logo.png" alt="Logo">
+
+  <div class="card esqueci-senha-container">
+
+    <div class="text-container">
+      <h1>Esqueci minha senha</h1>
+      <p>Insira seu email para recuperar a senha.</p>
+    </div>
+
+    <form [formGroup]="esqueceuSenhaForm" (submit)="recuperarSenha()">
+      <div class="esqueci-senha-inputs">
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input type="email" matInput formControlName="email">
+        </mat-form-field>
+      </div>
+
+      <div class="esqueci-senha-button">
+        <button mat-raised-button type="submit" [disabled]="esqueceuSenhaForm.invalid">esqueci senha</button>
+      </div>
+
+    </form>
+
+    <div class="links">
+      <a (click)="irParaLogin()">Voltar para login</a>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,108 @@
+@import '../../../assets/partials/variables';
+// @import '../../../assets/partials/mixins';
+
+.recuperar-senha-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 300px;
+  margin: 0 auto;
+
+  h4 {
+    margin-bottom: 2rem;
+  }
+
+  p {
+    color: $muted-color;
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
+.recuperar-senha-logo {
+  max-height: 5rem;
+  max-width: 5rem;
+
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+}
+
+.recuperar-senha-container {
+  height: 500px;
+  width: 500px;
+  background-color: $gizele-white;
+  border-radius: $gizele-border-radius;
+  padding-top: 2.4rem;
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.recuperar-senha-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1.5rem 0;
+
+  .mat-form-field {
+    width: 60%;
+
+    &:nth-child(n+2) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.recuperar-senha-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    background-color: $gizele-orange;
+    color: $gizele-white;
+
+    font-size: 16px;
+    font-weight: normal;
+
+    width: 60%;
+    padding: 0.2rem 1rem;
+    max-height: none;
+
+    outline: none;
+
+  }
+}
+
+.links {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 1.5rem;
+
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+
+    &:not(:nth-child(1)) {
+      margin-top: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "produto_fisico": [
+    {
+      "id": 1,
+      "nome": "Produto Físico 1",
+      "estoque": 100,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 1 ........",
+      "created_at": "2021-03-20T18:15:36.000Z",
+      "update_at": "2021-03-20T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 2,
+      "nome": "Produto Físico 2",
+      "estoque": 100,
+      "ativo": false,
+      "descricao": "Descrição do produto, falando a respeito do produto 2 ........",
+      "created_at": "2021-04-20T18:15:36.000Z",
+      "update_at": "2021-04-20T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 3,
+      "nome": "Produto Físico 3",
+      "estoque": 100,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 3 ........",
+      "created_at": "2021-03-21T18:15:36.000Z",
+      "update_at": "2021-03-21T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 4,
+      "nome": "Produto Físico 4",
+      "estoque": 100,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 4 ........",
+      "created_at": "2021-03-22T18:15:36.000Z",
+      "update_at": "2021-03-22T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 5,
+      "nome": "Produto Físico 5",
+      "estoque": 100,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 5 ........",
+      "created_at": "2021-02-23T18:15:36.000Z",
+      "update_at": "2021-02-23T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 6,
+      "nome": "Produto Físico 6",
+      "estoque": 100,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 6 ........",
+      "created_at": "2021-03-10T18:15:36.000Z",
+      "update_at": "2021-03-10T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 7,
+      "nome": "Produto Físico 7",
+      "estoque": 50,
+      "ativo": false,
+      "descricao": "Descrição do produto, falando a respeito do produto 7 ........",
+      "created_at": "2021-03-09T18:15:36.000Z",
+      "update_at": "2021-03-09T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 8,
+      "nome": "Produto Físico 8",
+      "estoque": 30,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 8 ........",
+      "created_at": "2021-03-06T18:15:36.000Z",
+      "update_at": "2021-03-06T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 9,
+      "nome": "Produto Físico 9",
+      "estoque": 100,
+      "ativo": false,
+      "descricao": "Descrição do produto, falando a respeito do produto 9 ........",
+      "created_at": "2021-03-05T18:15:36.000Z",
+      "update_at": "2021-03-05T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "id": 10,
+      "nome": "Produto Físico 10",
+      "estoque": 50,
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 10 ........",
+      "created_at": "2021-03-01T18:15:36.000Z",
+      "update_at": "2021-03-01T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change"
+    },
+    {
+      "nome": "Produto Físico 11",
+      "ativo": false,
+      "descricao": "Descrsdcdlkfj",
+      "estoque": 4,
+      "imageUri": "https://pbs.twimg.com/profile_images/710142549546180608/C1wrLLSv_400x400.jpg",
+      "created_at": "2021-04-09T02:04:11.692Z",
+      "update_at": "2021-04-09T02:04:11.692Z",
+      "id": 11
+    }
+  ],
+  "produto_digital": [
+    {
+      "id": 1,
+      "nome": "Produto Digital 1",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 1 ........",
+      "created_at": "2021-03-20T18:15:36.000Z",
+      "update_at": "2021-03-20T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 2,
+      "nome": "Produto Digital 2",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 2 ........",
+      "created_at": "2021-04-20T18:15:36.000Z",
+      "update_at": "2021-04-20T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 3,
+      "nome": "Produto Digital 3",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 3 ........",
+      "created_at": "2021-03-21T18:15:36.000Z",
+      "update_at": "2021-03-21T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 4,
+      "nome": "Produto Digital 4",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 4 ........",
+      "created_at": "2021-03-22T18:15:36.000Z",
+      "update_at": "2021-03-22T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 5,
+      "nome": "Produto Digital 5",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 5 ........",
+      "created_at": "2021-02-23T18:15:36.000Z",
+      "update_at": "2021-02-23T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 6,
+      "nome": "Produto Digital 6",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 6 ........",
+      "created_at": "2021-03-10T18:15:36.000Z",
+      "update_at": "2021-03-10T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 7,
+      "nome": "Produto Digital 7",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": false,
+      "descricao": "Descrição do produto, falando a respeito do produto 7 ........",
+      "created_at": "2021-03-09T18:15:36.000Z",
+      "update_at": "2021-03-09T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 8,
+      "nome": "Produto Digital 8",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": true,
+      "descricao": "Descrição do produto, falando a respeito do produto 8 ........",
+      "created_at": "2021-03-06T18:15:36.000Z",
+      "update_at": "2021-03-06T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 9,
+      "nome": "Produto Digital 9",
+      "validade": "2023-04-20T18:15:36.000Z",
+      "ativo": false,
+      "descricao": "Descrição do produto, falando a respeito do produto 9 ........",
+      "created_at": "2021-03-05T18:15:36.000Z",
+      "update_at": "2021-03-05T18:15:36.000Z",
+      "imageUri": "https://gelniche.fbitsstatic.net/img/p/perfume-jet-ciclo-cosmeticos-masculino-deo-colonia-100ml-72260/258760-1.jpg?w=256&h=256&v=no-change",
+      "link_hotmat": "http://hotmat.com.br"
+    },
+    {
+      "id": 10,
+      "nome": "Produto Digital 10",
+      "descricao": "Descrição do Produto Digital 10",
+      "ativo": true,
+      "validade": "2023-04-20T18:15:36.000Z",
+      "imageUri": "https://pbs.twimg.com/profile_images/710142549546180608/C1wrLLSv_400x400.jpg",
+      "created_at": "2021-04-06T21:20:58.435Z"
+    }
+  ]
+}

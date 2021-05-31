@@ -1,0 +1,88 @@
+@import '../../assets/partials/variables';
+// @import '../../assets/partials/mixins';
+
+.login-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-logo {
+  max-height: 5rem;
+  max-width: 5rem;
+
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+}
+
+.login-container {
+  height: 500px;
+  width: 500px;
+  background-color: $gizele-white;
+  border-radius: $gizele-border-radius;
+  padding-top: 2.4rem;
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1.5rem 0;
+  margin-top: 1rem;
+
+  .mat-form-field {
+    width: 60%;
+
+    &:nth-child(n+2) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.login-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    background-color: $gizele-orange;
+    color: $gizele-white;
+
+    font-size: 16px;
+    font-weight: normal;
+
+    width: 60%;
+    padding: 0.2rem 1rem;
+    max-height: none;
+
+    outline: none;
+
+  }
+}
+
+.ajuda {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 2rem;
+
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+
+    &:not(:nth-child(1)) {
+      margin-top: 0.5rem;
+    }
+  }
+}

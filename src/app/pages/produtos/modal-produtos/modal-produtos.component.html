@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="prodForm">
+  <mat-dialog-content class="form-modal">
+    <div *ngIf="data.title==='Excluir produto'; else elseBlock">
+      <h3>O produto {{ data.nome }} será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Seleção entre físico ou digital -->
+      <mat-form-field>
+        <mat-label>Tipo de produto</mat-label>
+        <mat-select formControlName="selectProduto" required>
+          <mat-option value="produtoFisico">Produto Físico</mat-option>
+          <mat-option value="produtoDigital">Produto Digital</mat-option>
+        </mat-select>
+        <mat-error>Deve ser selecionando o tipo de produto a ser cadastrado</mat-error>
+      </mat-form-field>
+
+      <!-- Nome -->
+      <mat-form-field>
+        <input matInput placeholder="Nome" formControlName="nome" required>
+        <mat-error>Campo nome é obrigatório</mat-error>
+      </mat-form-field>
+
+      <!-- Descrição -->
+      <mat-form-field>
+        <textarea matInput placeholder="Descrição" formControlName="descricao" required></textarea>
+        <mat-error>Campo descrição é obrigatório</mat-error>
+      </mat-form-field>
+
+      <!-- Estoque (produtos físicos) -->
+      <mat-form-field *ngIf="prodForm.get('selectProduto')?.value==='produtoFisico'">
+        <input matInput type="number" min=0 placeholder="Estoque" formControlName="estoque" required>
+        <mat-error *ngIf="prodForm.get('estoque')?.errors?.required">Campo estoque é obrigatório</mat-error>
+        <mat-error *ngIf="prodForm.get('estoque')?.errors?.min">O estoque deve ser maior ou igual a zero</mat-error>
+      </mat-form-field>
+
+      <!-- Validade (produtos digitais) -->
+      <mat-form-field *ngIf="prodForm.get('selectProduto')?.value==='produtoDigital'">
+        <input matInput type="number" min=0 placeholder="Validade em dias" formControlName="validade" required>
+        <mat-error *ngIf="prodForm.get('validade')?.errors?.required">Campo validade é obrigatório</mat-error>
+        <mat-error *ngIf="prodForm.get('validade')?.errors?.min">A validade deve ser maior ou igual a zero</mat-error>
+      </mat-form-field>
+
+      <!-- Imagens -->
+      <div *ngIf="vaiEditar && prodForm.get('imagens')?.value!==[]; else elseEdit">
+        <div *ngFor="let image of prodForm.get('imagens')?.value">
+          <img mat-card-image src="{{transformImageUrl(image.url)}}" alt="Imagem">
+        </div>
+      </div>
+
+      <!-- Upload de imagens -->
+      <ng-template #elseEdit>
+        <file-upload formControlName="imagens"></file-upload>
+        <mat-error *ngIf="prodForm.get('imagens')?.errors?.filesLimit">
+          Deve ser inserido no máximo 10 imagens
+        </mat-error>
+        <mat-error *ngIf="prodForm.get('imagens')?.errors?.required">Imagem é obrigatório</mat-error>
+      </ng-template>
+
+
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir produto'"
+      [disabled]="prodForm.invalid">{{data.title}}</button>
+
+    <button mat-raised-button color="warn" (click)="confirm()"
+      *ngIf="data.title==='Excluir produto'">{{data.title}}</button>
+
+  </mat-dialog-actions>
+</form>

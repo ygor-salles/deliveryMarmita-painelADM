@@ -1,0 +1,6 @@
+<h3 mat-dialog-title>{{data.title}}</h3>
+<div mat-dialog-content>{{data.text}}</div>
+<div mat-dialog-actions>
+  <button mat-dialog-close class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
+  <button class="btn create-button ml-4" (click)="confirm()">Confirmar</button>
+</div>

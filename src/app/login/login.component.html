@@ -1,0 +1,36 @@
+<div class="login-bg">
+
+  <img class="login-logo" src="../../../assets/img/logo.png" alt="">
+
+  <div class="card login-container">
+
+    <div class="d-flex justify-content-center align-items-center">
+      <h1>Faça seu login</h1>
+    </div>
+
+    <form [formGroup]="loginForm" (submit)="login()">
+      <div class="login-inputs">
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input type="email" matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input type="password" matInput formControlName="senha">
+        </mat-form-field>
+      </div>
+
+      <div class="login-button">
+        <button mat-raised-button type="submit" [disabled]="loginForm.invalid">Continuar</button>
+      </div>
+
+    </form>
+
+    <div class="ajuda">
+      <a (click)="esqueciASenha()">Esqueceu a senha?</a>
+      <a (click)="ajuda()">Problemas para acessar o painel?</a>
+    </div>
+
+  </div>
+
+</div>

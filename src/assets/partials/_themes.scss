@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+$bg-color:#FFF;
+$navbar-bg-color : #8F8286;
+$navbar-color:#FFF;
+$sidebar-bg-color:#EE7850;
+$sidebar-color:#FFF;
+$sidebar-icon-color:#FFF;
+$border-color: #f2f3f8;
+
+body {
+  font-family: 'Poppins','Roboto', sans-serif;
+  font-size: .9rem;
+}
+
+
+.wrapper.default-theme {
+
+  background: $bg-color;
+
+  nav.navbar {
+    background: $navbar-bg-color;
+    border-color: rgba($navbar-color, .3);
+
+    .navbar-brand {
+      color: lighten($navbar-color, 25%);
+    }
+
+    .left-nav {
+      input.navbar-search {
+        background: $navbar-color;
+        &::placeholder{
+          color:rgba($navbar-bg-color, .9);
+        }
+      }
+    }
+
+    .right-nav {
+      background: $navbar-bg-color;
+    }
+
+    .nav-link {
+      color: $navbar-color;
+
+      i {
+        border-color: $navbar-color;
+        
+      }
+
+      &:hover {
+        color: lighten($navbar-color, 15%);
+      }
+    }
+
+    .nav-alert {
+      border-color: #2f3546;
+
+      &.notifications {
+        background-color: #ff61c5;
+        box-shadow: 0px 0px 4px #ff61c5;
+
+      }
+
+      &.messages {
+        background-color: #61b8ff;
+        box-shadow: 0px 0px 4px #61b8ff;
+
+      }
+    }
+  }
+
+  main {
+    .overlay {
+      background: $sidebar-bg-color;
+    }
+
+    .sidebar {
+      background: $sidebar-bg-color;
+
+      >div {
+        border-color: rgba($sidebar-color, .1);
+      }
+
+      a.sidebar-link {
+        color: $sidebar-color;
+
+      }
+
+      .sidebar-profile {
+        .name {
+          color: $sidebar-color;
+        }
+
+        .role {
+          color: rgba($sidebar-color, .8);
+        }
+      }
+
+      .sidebar-menu {
+        .menu-header {
+          color: rgba($sidebar-color, .5);
+        }
+
+        .menu-items {
+          a {
+            color: rgba($sidebar-color, .7);
+
+            i {
+              color: $sidebar-icon-color;
+              border: none;
+              width: auto;
+              font-size: 1rem;
+            }
+
+            &:hover,
+            &.active {
+              background: #FFF;
+              color: $sidebar-bg-color;
+
+              i {
+                color: $sidebar-bg-color;
+              }
+            }
+          }
+        }
+        
+      }
+    }
+  }
+
+  .card {
+    box-shadow: 1px 1px 2px rgba(#5b6582, .1);
+
+    .card-title {
+      color: rgba($sidebar-color, .8);
+    }
+
+    .card-icon {
+      i {
+        color: #98a4c7;
+      }
+    }
+
+    .card-footer {
+      border-top: 1px solid $border-color;
+      background: none;
+    }
+
+    .card-title {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  .btn {
+    font-size: .9rem;
+
+    &.btn-lightning {
+      color: #f0f3ff;
+      background-color: #5b6582;
+      border-color: #5b6582;
+
+      &:hover {
+        background-color: #4c5671;
+      }
+    }
+
+    &.btn-outline-lightning {
+      color: #5b6582;
+      background-color: transparent;
+      border-color: #5b6582;
+
+      &:hover {
+        color: #f0f3ff;
+        background-color: #5b6582;
+        border-color: #5b6582;
+      }
+    }
+  }
+
+  .form-control {
+    font-size: .9rem;
+  }
+
+  .text-lightning {
+    color: #98a4c7;
+  }
+}
+
+h1 {
+  color: $navbar-bg-color;
+}
+
+// hr {
+//   border: solid 1px $navbar-bg-color;
+// }

@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="adminForm">
+  <mat-dialog-content class="form-modal">
+    <div *ngIf="data.title==='Excluir administrador'; else elseBlock">
+      <h3>O administrador {{ data.nome }} será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Seleção de perfil -->
+      <mat-form-field>
+        <mat-label>Perfil</mat-label>
+        <mat-select formControlName="perfil_id" required>
+          <mat-option value="1">Perfil 1</mat-option>
+          <mat-option value="2">Perfil 2</mat-option>
+        </mat-select>
+        <mat-error>Deve ser selecionando o perfil a ser cadastrado</mat-error>
+      </mat-form-field>
+
+      <!-- Nome -->
+      <mat-form-field>
+        <input matInput placeholder="Nome" formControlName="nome" required>
+        <mat-error>Campo nome é obrigatório</mat-error>
+      </mat-form-field>
+
+      <!-- E-mail -->
+      <mat-form-field>
+        <input type="email" matInput placeholder="E-mail" formControlName="email" required>
+        <mat-error *ngIf="adminForm.get('email')?.errors?.required">Campo e-mail é obrigatório</mat-error>
+        <mat-error *ngIf="adminForm.get('email')?.errors?.email">E-mail inválido</mat-error>
+      </mat-form-field>
+
+      <!-- Senha -->
+      <mat-form-field>
+        <input *ngIf="!vaiEditar" type="password" matInput placeholder="Senha" formControlName="senha" required>
+        <input *ngIf="vaiEditar" type="password" matInput placeholder="Senha" formControlName="senha">
+        <mat-error *ngIf="adminForm.get('senha')?.errors?.required && !vaiEditar">Campo senha é obrigatório</mat-error>
+        <mat-error *ngIf="adminForm.get('senha')?.errors?.invalidPassword" >
+          Deve conter um dígito, uma letra minúscula e uma maiúscula
+        </mat-error>
+        <mat-error *ngIf="adminForm.get('senha')?.errors?.minlength">
+          Deve conter pelo menos 7 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Confirmar senha -->
+      <mat-form-field>
+        <input *ngIf="!vaiEditar" type="password" matInput placeholder="Confirmar senha" formControlName="confirmarSenha" required>
+        <input *ngIf="vaiEditar" type="password" matInput placeholder="Confirmar senha" formControlName="confirmarSenha">
+        <mat-error *ngIf="adminForm.get('confirmarSenha')?.errors?.required && !vaiEditar">Campo confirmar senha é obrigatório</mat-error>
+        <mat-error *ngIf="adminForm.get('confirmarSenha')?.errors?.invalidPassword" >
+          Deve conter um dígito, uma letra minúscula e uma maiúscula
+        </mat-error>
+        <mat-error *ngIf="adminForm.get('confirmarSenha')?.errors?.minlength" >
+          Deve conter pelo menos 7 caracteres
+        </mat-error>
+        <mat-error *ngIf="adminForm.get('confirmarSenha')?.value !== adminForm.get('senha')?.value" >
+          Senha e confirmar senha devem ser iguais
+        </mat-error>
+      </mat-form-field>
+
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir administrador'"
+      [disabled]="adminForm.invalid">{{data.title}}</button>
+
+    <button mat-raised-button color="warn" (click)="confirm()"
+      *ngIf="data.title==='Excluir administrador'">{{data.title}}</button>
+
+  </mat-dialog-actions>
+</form>
