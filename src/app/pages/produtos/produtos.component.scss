@@ -1,9 +1,23 @@
 @import "../../../assets/partials/variables";
 @import "../../../assets/partials/mixins";
 
-.table-produtos {
+::ng-deep .mat-tab-body.mat-tab-body-active {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-body-content {
+  overflow: visible !important;
+}
+
+table {
   width: 100%;
   border-collapse: separate;
+  margin-top: 20px;
 
   .header-table {
     height: 40px !important;
@@ -88,6 +102,20 @@ tbody {
         .mat-form-field-underline {
           background-color: $gizele-white !important;
         }
+
+        // .edit > i {
+        //   color: $gizele-white;
+        // }
+        .delete > i {
+          color: darkred;
+        }
+
+        // .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
+        //   background-color: $gizele-white;
+        // }
+        // .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+        //   background-color: $gizele-white;
+        // }
       }
     }
   }
@@ -163,4 +191,16 @@ tr.detail-row {
   .mat-form-field {
     margin-top: 0.5rem;
   }
+}
+
+.edit {
+  margin-right: 10px;
+}
+
+.edit > i {
+  color: $edit-color;
+}
+
+.delete > i {
+  color: $delete-color;
 }

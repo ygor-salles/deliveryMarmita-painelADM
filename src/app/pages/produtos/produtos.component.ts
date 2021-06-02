@@ -35,52 +35,93 @@ export class ProdutosComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   // Tabela Produtos
-  produtos: IProduto[] = [];
-  $produtos: Observable<IProdutoPaginado>;
-  fonteProdutos: MatTableDataSource<IProduto>;
-  displayedColumns = ['id', 'nome', 'preco', 'status', 'created_at'];
+  marmitas: IProduto[] = [];
+  $marmitas: Observable<IProdutoPaginado>;
+  fonteMarmitas: MatTableDataSource<IProduto>;
+  displayedColumns = ['id', 'nome', 'preco', 'status', 'created_at', 'acoes'];
   expandedElement: IProduto | null;
 
   // MatPaginator Inputs Produto Físico
-  tamanhoPaginacao = 0;
-  tamanhoPagina = 10;
-  indicePagina = 0;
-  opcoesPaginacao: number[] = [5, 10, 20, 50, 100];
+  tamanhoPaginacaoMarmita = 0;
+  tamanhoPaginaMarmita = 10;
+  indicePaginaMarmita = 0;
+  opcoesPaginacaoMarmita: number[] = [5, 10, 20, 50, 100];
+
+  // Tabela Produtos
+  bebidas: IProduto[] = [];
+  $bebidas: Observable<IProdutoPaginado>;
+  fonteBebidas: MatTableDataSource<IProduto>;
+  columnsDisplayed = ['id', 'nome', 'preco', 'status', 'created_at', 'acoes'];
+  elementExpanded: IProduto | null;
+
+  // MatPaginator Inputs Produto Físico
+  tamanhoPaginacaoBebida = 0;
+  tamanhoPaginaBebida = 10;
+  indicePaginaBebida = 0;
+  opcoesPaginacaoBebida: number[] = [5, 10, 20, 50, 100];
 
   constructor(private produtoService: ProdutoService) { }
 
   ngOnInit(): void {
-    this.buscarProdutos(0, this.tamanhoPagina);
+    this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+    this.buscarBebidas(0, this.tamanhoPaginaBebida);
   }
 
-  buscarProdutos(pagina: number, limite: number): void {
+  buscarMarmitas(pagina: number, limite: number): void {
     const sort = () => {
-      this.fonteProdutos = new MatTableDataSource(this.produtos);
-      this.fonteProdutos.sort = this.sort;
+      this.fonteMarmitas = new MatTableDataSource(this.marmitas);
+      this.fonteMarmitas.sort = this.sort;
     };
 
-    this.produtoService.readTeste(pagina, limite).subscribe(produtos => {
-      this.produtos = produtos.instancias;
-      this.tamanhoPaginacao = produtos.total;
-      this.indicePagina = pagina;
+    this.produtoService.readMarmita(pagina, limite).subscribe(marmitas => {
+      this.marmitas = marmitas.instancias;
+      this.tamanhoPaginacaoMarmita = marmitas.total;
+      this.indicePaginaMarmita = pagina;
       sort();
     });
   }
 
-  mudouPagina(event: PageEvent): void {
-    this.tamanhoPagina = event.pageSize;
-    this.buscarProdutos(event.pageIndex, event.pageSize);
+  buscarBebidas(pagina: number, limite: number): void {
+    const sort = () => {
+      this.fonteBebidas = new MatTableDataSource(this.bebidas);
+      this.fonteBebidas.sort = this.sort;
+    };
+
+    this.produtoService.readBebida(pagina, limite).subscribe(bebidas => {
+      this.bebidas = bebidas.instancias;
+      this.tamanhoPaginacaoBebida = bebidas.total;
+      this.indicePaginaBebida = pagina;
+      sort();
+    });
+  }
+
+  mudouPaginaMarmita(event: PageEvent): void {
+    this.tamanhoPaginaMarmita = event.pageSize;
+    this.buscarMarmitas(event.pageIndex, event.pageSize);
+  }
+
+  mudouPaginaBebida(event: PageEvent): void {
+    this.tamanhoPaginaBebida = event.pageSize;
+    this.buscarBebidas(event.pageIndex, event.pageSize);
+  }
+
+  ativarDesativar(produto: IProduto): void {
+    this.produtoService.patch(produto.status, produto.id).subscribe(() => {
+      this.produtoService.showMessage(
+        produto.status === true ? 'Produto ativado' : 'Produto desativado',
+      );
+    });
   }
 
   dialogCadastrar(): void {
     console.log('Abrir modal cadastro');
   }
 
-  ativarDesativar(produto: IProduto): void {
-    this.produtoService.update(produto).subscribe(() => {
-      this.produtoService.showMessage(
-        produto.status === true ? 'Produto ativado' : 'Produto desativado',
-      );
-    });
+  dialogEditar(produto: IProduto) {
+    console.log('Abrir modal de editar');
+  }
+
+  dialogExcluir(produto: IProduto) {
+    console.log('Abrir modal de excluir');
   }
 }

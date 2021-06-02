@@ -30,9 +30,9 @@ export class ProdutoService {
     return EMPTY;
   }
 
-  create(product: IProduto): Observable<IProduto> {
+  create(produto: IProduto): Observable<IProduto> {
     return this.http
-      .post<IProduto>(`${apiUrl}/produto_fisico`, product)
+      .post<IProduto>(`${apiUrl}/produto`, produto)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao cadastrar produto!')),
@@ -41,7 +41,7 @@ export class ProdutoService {
 
   read(): Observable<IProduto[]> {
     return this.http
-      .get<IProduto[]>(`${apiUrl}/produto_fisico/sem_paginacao`)
+      .get<IProduto[]>(`${apiUrl}/produto/sem_paginacao`)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
@@ -57,7 +57,7 @@ export class ProdutoService {
     params = params.append('limite', limite.toString());
 
     return this.http
-      .get<IProdutoPaginado>(`${apiUrl}/produto_fisico`, { params })
+      .get<IProdutoPaginado>(`${apiUrl}/produto`, { params })
       .pipe(
         map(obj => obj),
         catchError(e =>
@@ -69,16 +69,16 @@ export class ProdutoService {
   }
 
   readById(id: number): Observable<IProduto> {
-    const url = `${apiUrl}/produto_fisico/${id}`;
+    const url = `${apiUrl}/produto/${id}`;
     return this.http.get<IProduto>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler produto!')),
     );
   }
 
-  update(product: IProduto): Observable<IProduto> {
-    const url = `${apiUrl}/produto_fisico/${product.id}`;
-    return this.http.put<IProduto>(url, product).pipe(
+  update(produto: IProduto): Observable<IProduto> {
+    const url = `${apiUrl}/produto/${produto.id}`;
+    return this.http.put<IProduto>(url, produto).pipe(
       map(obj => obj),
       catchError(_ =>
         this.errorHandler('Erro ao atualizar dados de produto!'),
@@ -86,8 +86,16 @@ export class ProdutoService {
     );
   }
 
+  patch(isAtivo: boolean, id: number): Observable<any> {
+    const url = `${apiUrl}/produto/${id}/ativo/${isAtivo}`;
+    return this.http.patch(url, null).pipe(
+      map(obj => obj),
+      catchError(_ => this.errorHandler('Erro ao alterar status do produto!')),
+    );
+  }
+
   delete(id: number): Observable<IProduto> {
-    const url = `${apiUrl}/produto_fisico/${id}`;
+    const url = `${apiUrl}/produto/${id}`;
     return this.http.delete<IProduto>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao deletar produto!')),
@@ -95,11 +103,19 @@ export class ProdutoService {
   }
 
   /* ******************************************** */
-  readTeste(pagina: number, limite: number): Observable<IProdutoPaginado> {
+  readMarmita(pagina: number, limite: number): Observable<IProdutoPaginado> {
     console.log(pagina, limite);
-    return this.http.get<IProdutoPaginado>(`${apiUrl}/produtos`).pipe(
+    return this.http.get<IProdutoPaginado>(`${apiUrl}/marmitas`).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
+      catchError(_ => this.errorHandler('Erro ao ler dados de marmitas!')),
+    );
+  }
+
+  readBebida(pagina: number, limite: number): Observable<IProdutoPaginado> {
+    console.log(pagina, limite);
+    return this.http.get<IProdutoPaginado>(`${apiUrl}/bebidas`).pipe(
+      map(obj => obj),
+      catchError(_ => this.errorHandler('Erro ao ler dados de bebidas!')),
     );
   }
 }

@@ -1,5 +1,5 @@
 {
-  "produtos": {
+  "marmitas": {
     "total": 5,
     "pagina": 0,
     "totalPaginas": 1,
@@ -38,9 +38,18 @@
         "created_at": "2021-06-01T17:36:44.321Z",
         "updated_at": null,
         "deleted_at": null
-      },
+      }
+    ]
+  },
+  "bebidas": {
+    "total": 5,
+    "pagina": 0,
+    "totalPaginas": 1,
+    "limite": 100,
+    "offset": 0,
+    "instancias": [
       {
-        "id": 4,
+        "id": 1,
         "nome": "Coca Cola Lata 200 ml",
         "preco": 5,
         "tipo": "bebida",
@@ -51,7 +60,7 @@
         "deleted_at": null
       },
       {
-        "id": 5,
+        "id": 2,
         "nome": "Fanta Lata 200 ml",
         "preco": 4.5,
         "tipo": "bebida",
