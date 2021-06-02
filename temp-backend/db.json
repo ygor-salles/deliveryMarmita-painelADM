@@ -1,59 +1,66 @@
 {
-  "produtos": [
-    {
-      "id": 1,
-      "nome": "Marmita de 12 - Frango a Passarinho",
-      "preco": 12,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 2,
-      "nome": "Marmita de 10 - Frango a Passarinho",
-      "preco": 10,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 3,
-      "nome": "Marmita de 10 - Bisteca",
-      "preco": 10,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de bisteca",
-      "status": false,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 4,
-      "nome": "Coca Cola Lata 200 ml",
-      "preco": 5,
-      "tipo": "bebida",
-      "descricao": "Coca Cola Lata 200 ml",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 5,
-      "nome": "Fanta Lata 200 ml",
-      "preco": 4.5,
-      "tipo": "bebida",
-      "descricao": "Fanta Lata 200 ml",
-      "status": false,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    }
-  ]
+  "produtos": {
+    "total": 5,
+    "pagina": 0,
+    "totalPaginas": 1,
+    "limite": 100,
+    "offset": 0,
+    "instancias": [
+      {
+        "id": 1,
+        "nome": "Marmita de 12 - Frango a Passarinho",
+        "preco": 12,
+        "tipo": "marmita",
+        "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
+        "status": true,
+        "created_at": "2021-06-01T17:36:44.321Z",
+        "updated_at": null,
+        "deleted_at": null
+      },
+      {
+        "id": 2,
+        "nome": "Marmita de 10 - Frango a Passarinho",
+        "preco": 10,
+        "tipo": "marmita",
+        "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
+        "status": true,
+        "created_at": "2021-06-01T17:36:44.321Z",
+        "updated_at": null,
+        "deleted_at": null
+      },
+      {
+        "id": 3,
+        "nome": "Marmita de 10 - Bisteca",
+        "preco": 10,
+        "tipo": "marmita",
+        "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de bisteca",
+        "status": false,
+        "created_at": "2021-06-01T17:36:44.321Z",
+        "updated_at": null,
+        "deleted_at": null
+      },
+      {
+        "id": 4,
+        "nome": "Coca Cola Lata 200 ml",
+        "preco": 5,
+        "tipo": "bebida",
+        "descricao": "Coca Cola Lata 200 ml",
+        "status": true,
+        "created_at": "2021-06-01T17:36:44.321Z",
+        "updated_at": null,
+        "deleted_at": null
+      },
+      {
+        "id": 5,
+        "nome": "Fanta Lata 200 ml",
+        "preco": 4.5,
+        "tipo": "bebida",
+        "descricao": "Fanta Lata 200 ml",
+        "status": false,
+        "created_at": "2021-06-01T17:36:44.321Z",
+        "updated_at": null,
+        "deleted_at": null
+      }
+    ]
+  }
 }
