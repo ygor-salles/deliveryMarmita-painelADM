@@ -6,4 +6,5 @@ export interface IFormProduto {
   preco: number;
   status: boolean;
   tipo: string;
+  imagem: File;
 }

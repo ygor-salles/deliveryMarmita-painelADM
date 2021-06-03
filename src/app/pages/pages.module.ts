@@ -36,6 +36,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { AcordianComponent } from './acordian/acordian.component';
 import { ModalProdutoComponent } from './produtos/modal-produto/modal-produto.component';
+import { ModalImagemComponent } from './modal-imagem/modal-imagem.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ModalProdutoComponent } from './produtos/modal-produto/modal-produto.co
     HistoricoComponent,
     AcordianComponent,
     ModalProdutoComponent,
+    ModalImagemComponent,
   ],
   imports: [
     CommonModule,

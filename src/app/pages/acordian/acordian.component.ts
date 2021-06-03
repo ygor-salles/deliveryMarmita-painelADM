@@ -1,5 +1,8 @@
 import { IProduto } from './../../models/IProduto.model';
 import { Component, Input, OnInit } from '@angular/core';
+import transformProductImageUrl from 'src/app/utils/functions/transformProductImageUrl';
+import { ModalImagemComponent } from '../modal-imagem/modal-imagem.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-acordian',
@@ -10,9 +13,21 @@ export class AcordianComponent implements OnInit {
 
   @Input('produto') produto: IProduto;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  transformImageUrl(imageUrl: string): string {
+    return transformProductImageUrl(imageUrl);
+  }
+
+  abrirModalImagens(imagem: File): void {
+    this.dialog.open(ModalImagemComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: { imagem },
+    });
   }
 
 }

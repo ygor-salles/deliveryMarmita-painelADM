@@ -129,7 +129,8 @@ export class ProdutosComponent implements OnInit {
           descricao: result.descricao,
           preco: result.preco,
           status: true,
-          tipo: result.tipo
+          tipo: result.tipo,
+          imagem: result.imagem
         };
         console.log('POST em produto', produto);
         // this.produtoService.create(produto).subscribe(() => {
@@ -156,6 +157,7 @@ export class ProdutosComponent implements OnInit {
         preco: produto.preco,
         status: produto.status,
         tipo: produto.tipo,
+        imagem: produto.imagem
       }
     });
 
@@ -167,7 +169,8 @@ export class ProdutosComponent implements OnInit {
           descricao: result.descricao,
           preco: result.preco,
           status: result.status,
-          tipo: result.tipo
+          tipo: result.tipo,
+          imagem: result.imagem
         };
         console.log('PUT em produto', produto);
         // this.produtoService.update(produto).subscribe(() => {

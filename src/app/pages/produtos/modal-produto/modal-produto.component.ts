@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IFormProduto } from './../../../models/IFormProduto.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
+import { FileUploadValidators } from '@iplab/ngx-file-upload';
 
 @Component({
   selector: 'app-modal-produto',
@@ -29,6 +30,7 @@ export class ModalProdutoComponent implements OnInit {
       nome: [this.data.nome, Validators.required],
       descricao: [this.data.descricao, Validators.required],
       preco: [this.data.preco, Validators.required],
+      imagem: [this.data.imagem, FileUploadValidators.filesLimit(1)]
     });
   }
 

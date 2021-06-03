@@ -1,1 +1,11 @@
-<p>acordian works! {{produto.nome}}</p>
+<!-- ****** Accordion da tela de produtos *********** -->
+<div *ngIf="produto" class="card-contentainer">
+  <div>
+    <img class="cursor-pointer" (click)="abrirModalImagens(produto.imagem)"
+      src="../../../assets/img/marmita_sem_carne.jpg" alt="Imagens de produtos">
+  </div>
+  <div class="media-text">
+    <h2>Descrição</h2>
+    <p>{{produto.descricao}}</p>
+  </div>
+</div>

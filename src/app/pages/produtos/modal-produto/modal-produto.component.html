@@ -34,24 +34,32 @@
       <!-- Descrição -->
       <div class="d-flex mb-lg">
         <mat-form-field class="w-100" hintLabel="Max 255 caracteres">
-          <textarea matInput #input maxlength="255" placeholder="Descrição"
-            formControlName="descricao" required></textarea>
-            <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+          <textarea matInput #input maxlength="255" placeholder="Descrição" formControlName="descricao"
+            required></textarea>
+          <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
           <mat-error>Campo descrição é obrigatório</mat-error>
         </mat-form-field>
       </div>
+
+      <!-- Upload de Imagem -->
+      <file-upload formControlName="imagem" [required]="!vaiEditar"></file-upload>
+      <mat-error *ngIf="produtoForm.get('imagem')?.errors?.filesLimit">
+        Deve ser inserido ao menos 1 imagem para o produto
+      </mat-error>
+      <mat-error *ngIf="!vaiEditar && produtoForm.get('imagem')?.errors?.required">Imagem é obrigatório</mat-error>
 
     </ng-template>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()" class="mat-elevation-z4">Cancelar</button>
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
+      class="mat-elevation-z4">Cancelar</button>
 
     <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir produto'"
       [disabled]="produtoForm.invalid" class="mat-elevation-z4">{{data.title}}</button>
 
-    <button mat-raised-button color="warn" (click)="confirm()"
-      *ngIf="data.title==='Excluir produto'" class="mat-elevation-z4">{{data.title}}</button>
+    <button mat-raised-button color="warn" (click)="confirm()" *ngIf="data.title==='Excluir produto'"
+      class="mat-elevation-z4">{{data.title}}</button>
 
   </mat-dialog-actions>
 </form>
