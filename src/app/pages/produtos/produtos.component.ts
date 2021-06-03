@@ -108,11 +108,12 @@ export class ProdutosComponent implements OnInit {
   }
 
   ativarDesativar(produto: IProduto): void {
-    this.produtoService.patch(produto.status, produto.id).subscribe(() => {
-      this.produtoService.showMessage(
-        produto.status === true ? 'Produto ativado' : 'Produto desativado',
-      );
-    });
+    console.log('PATCH em porduto', produto.status, produto.id);
+    // this.produtoService.patch(produto.status, produto.id).subscribe(() => {
+    //   this.produtoService.showMessage(
+    //     produto.status === true ? 'Produto ativado' : 'Produto desativado',
+    //   );
+    // });
   }
 
   dialogCadastrar(): void {
