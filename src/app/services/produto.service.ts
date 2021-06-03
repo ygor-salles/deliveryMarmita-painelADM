@@ -86,7 +86,7 @@ export class ProdutoService {
     );
   }
 
-  patch(isAtivo: boolean, id: number): Observable<any> {
+  patch(isAtivo: boolean, id?: number): Observable<any> {
     const url = `${apiUrl}/produto/${id}/ativo/${isAtivo}`;
     return this.http.patch(url, null).pipe(
       map(obj => obj),

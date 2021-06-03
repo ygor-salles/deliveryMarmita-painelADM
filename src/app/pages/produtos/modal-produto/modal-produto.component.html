@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="produtoForm">
+  <mat-dialog-content>
+    <div *ngIf="data.title==='Excluir produto'; else elseBlock">
+      <h3>O produto <i>{{ data.nome }}</i> será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Seleção entre marmita ou bebida -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <mat-label>Tipo de produto</mat-label>
+          <mat-select formControlName="tipo" required>
+            <mat-option value="marmita">Marmita</mat-option>
+            <mat-option value="bebida">Bebida</mat-option>
+          </mat-select>
+          <mat-error>Deve ser selecionando o tipo de produto a ser cadastrado</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Nome e Preço -->
+      <div class="d-flex">
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Nome" formControlName="nome" required>
+          <mat-error>Campo nome é obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput type="number" placeholder="Preço" formControlName="preco" required>
+          <span matPrefix>R$&nbsp;</span>
+          <mat-error>Campo preço à vista é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Descrição -->
+      <div class="d-flex mb-lg">
+        <mat-form-field class="w-100" hintLabel="Max 255 caracteres">
+          <textarea matInput #input maxlength="255" placeholder="Descrição"
+            formControlName="descricao" required></textarea>
+            <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+          <mat-error>Campo descrição é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()" class="mat-elevation-z4">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir produto'"
+      [disabled]="produtoForm.invalid" class="mat-elevation-z4">{{data.title}}</button>
+
+    <button mat-raised-button color="warn" (click)="confirm()"
+      *ngIf="data.title==='Excluir produto'" class="mat-elevation-z4">{{data.title}}</button>
+
+  </mat-dialog-actions>
+</form>
