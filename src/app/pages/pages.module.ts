@@ -20,6 +20,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -75,7 +77,9 @@ import { ModalImagemComponent } from './modal-imagem/modal-imagem.component';
     MatNativeDateModule,
     MatRippleModule,
     MatSortModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule,
+    MatListModule
   ],
   exports: [
     ProdutosComponent,

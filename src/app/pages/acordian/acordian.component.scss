@@ -1,8 +1,17 @@
+@import "../../../assets/partials/variables";
+@import "../../../assets/partials/mixins";
+
+// Tela Produtos
 .card-contentainer {
   display: flex;
   align-items: flex-start;
   margin: 1em;
   max-width: 90em;
+}
+
+.example-header-image {
+  background-size: cover;
+  display: inline flex;
 }
 
 .media-text {
@@ -22,4 +31,41 @@ img {
 
 p {
   text-align: justify;
+}
+
+// Tela Pedidos
+
+.caption-table {
+  display: flex;
+  display: inline;
+  text-align: center;
+  font-size: 16px;
+
+  margin: 0 0 20px 0;
+}
+
+.header-table {
+  background-color: $tr-header-color;
+  border-radius: $gizele-border-radius;
+  align-items: center;
+  height: 35px;
+  font-size: 12px;
+
+  margin: 16px 0 20px 0;
+  padding: 0 2px;
+}
+
+.body-table {
+  border: solid 2px $tr-border-color;
+  border-radius: $gizele-border-radius;
+  align-items: center;
+  height: 50px;
+
+  margin: 0 0 20px 0;
+  padding: 0 2px;
+}
+
+.coluna-imagem {
+  width: 3vw;
+  height: 5vh;
 }

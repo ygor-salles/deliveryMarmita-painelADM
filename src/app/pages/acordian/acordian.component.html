@@ -9,3 +9,59 @@
     <p>{{produto.descricao}}</p>
   </div>
 </div>
+
+<!-- **************************** Accordion da tela de pedidos **************************** -->
+<div *ngIf="pedido">
+  <mat-list>
+    <div matSubheader class="caption-table">Endereço</div>
+    <div class="row header-table">
+      <span class="col-md-3">Cidade</span>
+      <span class="col-md-2">CEP</span>
+      <span class="col-md-3">Bairro</span>
+      <span class="col-md-3">Rua</span>
+      <span class="col-md-1">Número</span>
+    </div>
+    <div class="row body-table">
+      <span class="col-md-3">{{ pedido.endereco_cidade }}</span>
+      <span class="col-md-2">{{ pedido.cep | mask: '00000-000' }}</span>
+      <span class="col-md-3">{{ pedido.endereco_bairro }}</span>
+      <span class="col-md-3">{{ pedido.endereco_rua }}</span>
+      <span class="col-md-1">{{ pedido.endereco_numero }}</span>
+    </div>
+  </mat-list>
+
+  <mat-list *ngIf="pedido.ponto_referencia">
+    <div matSubheader class="caption-table">Ponto de referência</div>
+    <div class="row body-table">
+      <span class="col-md-12">{{pedido.ponto_referencia}}</span>
+    </div>
+  </mat-list>
+
+  <mat-list>
+    <div matSubheader class="caption-table">Produto(s)</div>
+    <div class="row header-table">
+      <span class="col-md-4">Produto</span>
+      <span class="col-md-4">Observação</span>
+      <span class="col-md-4">Opçoes de carne</span>
+    </div>
+    <div class="row body-table" *ngFor="let produto of pedido.pedido_produto">
+      <span class="col-md-4">{{produto.quantidade}} {{produto.produto.nome}} - {{produto.produto.preco | currency}}</span>
+      <span class="col-md-4">{{produto.observacao ? produto.observacao : '---'}}</span>
+      <span class="col-md-4">{{produto.opcoes_carne ? produto.opcoes_carne : '---'}}</span>
+    </div>
+  </mat-list>
+
+  <mat-list>
+    <div matSubheader class="caption-table">Pagamento</div>
+    <div class="row header-table">
+      <span class="col-md-4">Troco</span>
+      <span class="col-md-4">Frete</span>
+      <span class="col-md-4">Total</span>
+    </div>
+    <div class="row body-table">
+      <span class="col-md-4">{{pedido.troco ? pedido.troco : '---'}}</span>
+      <span class="col-md-4">{{pedido.valor_frete===0 ? 'Frete grátis' : pedido.valor_frete}}</span>
+      <span class="col-md-4">{{pedido.total | currency}}</span>
+    </div>
+  </mat-list>
+</div>

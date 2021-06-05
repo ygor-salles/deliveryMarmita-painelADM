@@ -1,3 +1,4 @@
+import { IPedido } from 'src/app/models/IPedido.model';
 import { IProduto } from './../../models/IProduto.model';
 import { Component, Input, OnInit } from '@angular/core';
 import transformProductImageUrl from 'src/app/utils/functions/transformProductImageUrl';
@@ -12,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class AcordianComponent implements OnInit {
 
   @Input('produto') produto: IProduto;
+
+  @Input('pedido') pedido: IPedido;
 
   constructor(public dialog: MatDialog) { }
 
