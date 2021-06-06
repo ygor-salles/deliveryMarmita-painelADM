@@ -69,3 +69,14 @@ p {
   width: 3vw;
   height: 5vh;
 }
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
