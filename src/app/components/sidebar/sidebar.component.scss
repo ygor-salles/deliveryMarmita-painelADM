@@ -41,3 +41,24 @@
   }
 
 }
+
+.sidebar-user {
+  color: $gizele-white;
+  padding-left: 48px !important;
+  margin: 0 0 20px 0 !important;
+  width: 100%;
+
+  .sidebar-user-name {
+    font-weight: 500;
+  }
+}
+
+.slogan {
+  background-color: rgb(3, 3, 3);
+  color: #FFF;
+  font-size: 1.1rem;
+  width: 100%;
+  text-align: center;
+  margin: 90px 0 0 0;
+  padding: 15px 0;
+}
