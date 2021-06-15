@@ -1,6 +1,6 @@
-import { IProduto } from './../../../models/IProduto.model';
+import { IProduct } from '../../../models/IProduct.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IFormProduto } from './../../../models/IFormProduto.model';
+import { IFormProduct } from '../../../models/IFormProduct.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FileUploadValidators } from '@iplab/ngx-file-upload';
@@ -17,7 +17,7 @@ export class ModalProdutoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalProdutoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IFormProduto,
+    @Inject(MAT_DIALOG_DATA) public data: IFormProduct,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -26,11 +26,11 @@ export class ModalProdutoComponent implements OnInit {
     else this.vaiEditar = false;
 
     this.produtoForm = this.formBuilder.group({
-      tipo: [{ value: this.data.tipo, disabled: this.vaiEditar }, Validators.required],
-      nome: [this.data.nome, Validators.required],
-      descricao: [this.data.descricao, Validators.required],
-      preco: [this.data.preco, Validators.required],
-      imagem: [this.data.imagem, FileUploadValidators.filesLimit(1)]
+      type: [{ value: this.data.type, disabled: this.vaiEditar }, Validators.required],
+      name: [this.data.name, Validators.required],
+      description: [this.data.description, Validators.required],
+      price: [this.data.price, Validators.required],
+      image: [this.data.image, FileUploadValidators.filesLimit(1)]
     });
   }
 
@@ -39,7 +39,7 @@ export class ModalProdutoComponent implements OnInit {
   }
 
   confirm(): void {
-    const novoProduto = this.produtoForm.getRawValue() as IProduto;
+    const novoProduto = this.produtoForm.getRawValue() as IProduct;
     this.dialogRef.close({...novoProduto, id: this.data.id, status: this.data.status});
   }
 

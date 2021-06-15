@@ -21,7 +21,7 @@ body {
 
   nav.navbar {
     background: $navbar-bg-color;
-    border-color: rgba($navbar-color, .3);
+    // border-color: rgba($navbar-color, .3);
 
     .navbar-brand {
       color: lighten($navbar-color, 25%);
@@ -110,7 +110,7 @@ body {
               color: $sidebar-icon-color;
               border: none;
               width: auto;
-              font-size: 1.2rem;
+              font-size: 0.9rem;
             }
 
             &:hover,

@@ -1,11 +1,11 @@
-import { IProduto } from './../models/IProduto.model';
+import { IProduct } from '../models/IProduct.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { IProdutoPaginado } from '../models/IProdutoPaginado.model';
+import { IPagedProduct } from '../models/IPagedProduct.model';
 
 const { apiUrl } = environment;
 
@@ -30,18 +30,18 @@ export class ProdutoService {
     return EMPTY;
   }
 
-  create(produto: IProduto): Observable<IProduto> {
+  create(produto: IProduct): Observable<IProduct> {
     return this.http
-      .post<IProduto>(`${apiUrl}/produto`, produto)
+      .post<IProduct>(`${apiUrl}/produto`, produto)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao cadastrar produto!')),
       );
   }
 
-  read(): Observable<IProduto[]> {
+  read(): Observable<IProduct[]> {
     return this.http
-      .get<IProduto[]>(`${apiUrl}/produto/sem_paginacao`)
+      .get<IProduct[]>(`${apiUrl}/produto/sem_paginacao`)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
@@ -51,13 +51,13 @@ export class ProdutoService {
   readPaginator(
     pagina: number,
     limite: number,
-  ): Observable<IProdutoPaginado> {
+  ): Observable<IPagedProduct> {
     let params = new HttpParams();
     params = params.append('pagina', pagina.toString());
     params = params.append('limite', limite.toString());
 
     return this.http
-      .get<IProdutoPaginado>(`${apiUrl}/produto`, { params })
+      .get<IPagedProduct>(`${apiUrl}/produto`, { params })
       .pipe(
         map(obj => obj),
         catchError(e =>
@@ -68,17 +68,17 @@ export class ProdutoService {
       );
   }
 
-  readById(id: number): Observable<IProduto> {
+  readById(id: number): Observable<IProduct> {
     const url = `${apiUrl}/produto/${id}`;
-    return this.http.get<IProduto>(url).pipe(
+    return this.http.get<IProduct>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler produto!')),
     );
   }
 
-  update(produto: IProduto): Observable<IProduto> {
+  update(produto: IProduct): Observable<IProduct> {
     const url = `${apiUrl}/produto/${produto.id}`;
-    return this.http.put<IProduto>(url, produto).pipe(
+    return this.http.put<IProduct>(url, produto).pipe(
       map(obj => obj),
       catchError(_ =>
         this.errorHandler('Erro ao atualizar dados de produto!'),
@@ -94,26 +94,26 @@ export class ProdutoService {
     );
   }
 
-  delete(id: number): Observable<IProduto> {
+  delete(id: number): Observable<IProduct> {
     const url = `${apiUrl}/produto/${id}`;
-    return this.http.delete<IProduto>(url).pipe(
+    return this.http.delete<IProduct>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao deletar produto!')),
     );
   }
 
   /* ******************************************** */
-  readMarmita(pagina: number, limite: number): Observable<IProdutoPaginado> {
+  readMarmita(pagina: number, limite: number): Observable<IPagedProduct> {
     console.log(pagina, limite);
-    return this.http.get<IProdutoPaginado>(`${apiUrl}/marmitas`).pipe(
+    return this.http.get<IPagedProduct>(`${apiUrl}/marmitas`).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler dados de marmitas!')),
     );
   }
 
-  readBebida(pagina: number, limite: number): Observable<IProdutoPaginado> {
+  readBebida(pagina: number, limite: number): Observable<IPagedProduct> {
     console.log(pagina, limite);
-    return this.http.get<IProdutoPaginado>(`${apiUrl}/bebidas`).pipe(
+    return this.http.get<IPagedProduct>(`${apiUrl}/bebidas`).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler dados de bebidas!')),
     );

@@ -2,7 +2,7 @@
 <form [formGroup]="produtoForm">
   <mat-dialog-content>
     <div *ngIf="data.title==='Excluir produto'; else elseBlock">
-      <h3>O produto <i>{{ data.nome }}</i> será excluído. Deseja prosseguir?</h3>
+      <h3>O produto <i>{{ data.name }}</i> será excluído. Deseja prosseguir?</h3>
     </div>
 
     <ng-template #elseBlock>
@@ -10,7 +10,7 @@
       <div class="d-flex">
         <mat-form-field class="w-100">
           <mat-label>Tipo de produto</mat-label>
-          <mat-select formControlName="tipo" required>
+          <mat-select formControlName="type" required>
             <mat-option value="marmita">Marmita</mat-option>
             <mat-option value="bebida">Bebida</mat-option>
           </mat-select>
@@ -21,11 +21,11 @@
       <!-- Nome e Preço -->
       <div class="d-flex">
         <mat-form-field class="w-50">
-          <input matInput placeholder="Nome" formControlName="nome" required>
+          <input matInput placeholder="Nome" formControlName="name" required>
           <mat-error>Campo nome é obrigatório</mat-error>
         </mat-form-field>
         <mat-form-field class="w-50">
-          <input matInput type="number" placeholder="Preço" formControlName="preco" required>
+          <input matInput type="number" placeholder="Preço" formControlName="price" required>
           <span matPrefix>R$&nbsp;</span>
           <mat-error>Campo preço à vista é obrigatório</mat-error>
         </mat-form-field>
@@ -33,20 +33,20 @@
 
       <!-- Descrição -->
       <div class="d-flex mb-lg">
-        <mat-form-field class="w-100" hintLabel="Max 255 caracteres">
-          <textarea matInput #input maxlength="255" placeholder="Descrição" formControlName="descricao"
+        <mat-form-field class="w-100" hintLabel="Max 1000 caracteres">
+          <textarea matInput #input maxlength="1000" placeholder="Descrição" formControlName="description"
             required></textarea>
-          <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+          <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
           <mat-error>Campo descrição é obrigatório</mat-error>
         </mat-form-field>
       </div>
 
       <!-- Upload de Imagem -->
-      <file-upload formControlName="imagem" [required]="!vaiEditar"></file-upload>
-      <mat-error *ngIf="produtoForm.get('imagem')?.errors?.filesLimit">
+      <file-upload formControlName="image" [required]="!vaiEditar"></file-upload>
+      <mat-error *ngIf="produtoForm.get('image')?.errors?.filesLimit">
         Deve ser inserido ao menos 1 imagem para o produto
       </mat-error>
-      <mat-error *ngIf="!vaiEditar && produtoForm.get('imagem')?.errors?.required">Imagem é obrigatório</mat-error>
+      <mat-error *ngIf="!vaiEditar && produtoForm.get('image')?.errors?.required">Imagem é obrigatório</mat-error>
 
     </ng-template>
   </mat-dialog-content>

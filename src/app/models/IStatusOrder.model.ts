@@ -1,4 +1,4 @@
-export interface IStatusPedido {
+export interface IStatusOrder {
   id: number;
   status: string;
 }

@@ -1,12 +1,12 @@
-import { IPedidoPaginado } from './../models/IPedidoPaginado.model';
+import { IPagedOrder } from '../models/IPagedOrder.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IPedido } from '../models/IPedido.model';
+import { IOrder } from '../models/IOrder.model';
 import { catchError, map } from 'rxjs/operators';
-import { IFiltroPedido } from '../models/IFiltroPedido.model';
+import { IFilterOrder } from '../models/IFilterOrder.model';
 
 const { apiUrl } = environment;
 
@@ -35,18 +35,18 @@ export class PedidoService {
     return EMPTY;
   }
 
-  create(pedido: IPedido): Observable<IPedido> {
+  create(pedido: IOrder): Observable<IOrder> {
     return this.http
-      .post<IPedido>(`${apiUrl}/pedido`, pedido)
+      .post<IOrder>(`${apiUrl}/pedido`, pedido)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao cadastrar pedido!')),
       );
   }
 
-  read(): Observable<IPedido[]> {
+  read(): Observable<IOrder[]> {
     return this.http
-      .get<IPedido[]>(`${apiUrl}/pedido/sem_paginacao`)
+      .get<IOrder[]>(`${apiUrl}/pedido/sem_paginacao`)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
@@ -56,17 +56,17 @@ export class PedidoService {
   readPaginator(
     pagina: number,
     limite: number,
-    filtros?: IFiltroPedido,
-  ): Observable<IPedidoPaginado> {
+    filtros?: IFilterOrder,
+  ): Observable<IPagedOrder> {
     let params = new HttpParams();
 
     if (filtros) {
       // eslint-disable-next-line no-restricted-syntax
       for (const key in filtros) {
-        if (filtros[key as keyof IFiltroPedido]) {
+        if (filtros[key as keyof IFilterOrder]) {
           params = params.append(
             key,
-            filtros[key as keyof IFiltroPedido]?.toString() || '',
+            filtros[key as keyof IFilterOrder]?.toString() || '',
           );
         }
       }
@@ -76,7 +76,7 @@ export class PedidoService {
     }
 
     return this.http
-      .get<IPedidoPaginado>(`${apiUrl}/pedido`, { params })
+      .get<IPagedOrder>(`${apiUrl}/pedido`, { params })
       .pipe(
         map(obj => obj),
         catchError(e =>
@@ -87,17 +87,17 @@ export class PedidoService {
       );
   }
 
-  readById(id: number): Observable<IPedido> {
+  readById(id: number): Observable<IOrder> {
     const url = `${apiUrl}/pedido/${id}`;
-    return this.http.get<IPedido>(url).pipe(
+    return this.http.get<IOrder>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler pedido!')),
     );
   }
 
-  update(pedido: IPedido): Observable<IPedido> {
+  update(pedido: IOrder): Observable<IOrder> {
     const url = `${apiUrl}/pedido/${pedido.id}`;
-    return this.http.put<IPedido>(url, pedido).pipe(
+    return this.http.put<IOrder>(url, pedido).pipe(
       map(obj => obj),
       catchError(_ =>
         this.errorHandler('Erro ao atualizar dados de pedido!'),
@@ -113,18 +113,18 @@ export class PedidoService {
     );
   }
 
-  delete(id: number): Observable<IPedido> {
+  delete(id: number): Observable<IOrder> {
     const url = `${apiUrl}/pedido/${id}`;
-    return this.http.delete<IPedido>(url).pipe(
+    return this.http.delete<IOrder>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao deletar pedido!')),
     );
   }
 
   /* ******************************************** */
-  readPedido(pagina: number, limite: number): Observable<IPedidoPaginado> {
+  readPedido(pagina: number, limite: number): Observable<IPagedOrder> {
     console.log(pagina, limite);
-    return this.http.get<IPedidoPaginado>(`${apiUrl}/pedidos`).pipe(
+    return this.http.get<IPagedOrder>(`${apiUrl}/pedidos`).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler dados de pedido!')),
     );

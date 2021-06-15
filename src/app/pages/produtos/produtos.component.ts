@@ -1,8 +1,8 @@
 import { ModalProdutoComponent } from './modal-produto/modal-produto.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProdutoService } from './../../services/produto.service';
-import { IProdutoPaginado } from './../../models/IProdutoPaginado.model';
-import { IProduto } from './../../models/IProduto.model';
+import { IPagedProduct } from '../../models/IPagedProduct.model';
+import { IProduct } from '../../models/IProduct.model';
 import {
   animate,
   state,
@@ -37,11 +37,11 @@ export class ProdutosComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   // Tabela Produtos
-  marmitas: IProduto[] = [];
-  $marmitas: Observable<IProdutoPaginado>;
-  fonteMarmitas: MatTableDataSource<IProduto>;
-  displayedColumns = ['id', 'nome', 'preco', 'status', 'created_at', 'acoes'];
-  expandedElement: IProduto | null;
+  marmitas: IProduct[] = [];
+  $marmitas: Observable<IPagedProduct>;
+  fonteMarmitas: MatTableDataSource<IProduct>;
+  displayedColumns = ['id', 'name', 'price', 'status', 'createdAt', 'actions'];
+  expandedElement: IProduct | null;
 
   // MatPaginator Inputs Produto Físico
   tamanhoPaginacaoMarmita = 0;
@@ -50,11 +50,11 @@ export class ProdutosComponent implements OnInit {
   opcoesPaginacaoMarmita: number[] = [5, 10, 20, 50, 100];
 
   // Tabela Produtos
-  bebidas: IProduto[] = [];
-  $bebidas: Observable<IProdutoPaginado>;
-  fonteBebidas: MatTableDataSource<IProduto>;
-  columnsDisplayed = ['id', 'nome', 'preco', 'status', 'created_at', 'acoes'];
-  elementExpanded: IProduto | null;
+  bebidas: IProduct[] = [];
+  $bebidas: Observable<IPagedProduct>;
+  fonteBebidas: MatTableDataSource<IProduct>;
+  columnsDisplayed = ['id', 'name', 'price', 'status', 'createdAt', 'actions'];
+  elementExpanded: IProduct | null;
 
   // MatPaginator Inputs Produto Físico
   tamanhoPaginacaoBebida = 0;
@@ -76,7 +76,7 @@ export class ProdutosComponent implements OnInit {
     };
 
     this.produtoService.readMarmita(pagina, limite).subscribe(marmitas => {
-      this.marmitas = marmitas.instancias;
+      this.marmitas = marmitas.instances;
       this.tamanhoPaginacaoMarmita = marmitas.total;
       this.indicePaginaMarmita = pagina;
       sort();
@@ -90,7 +90,7 @@ export class ProdutosComponent implements OnInit {
     };
 
     this.produtoService.readBebida(pagina, limite).subscribe(bebidas => {
-      this.bebidas = bebidas.instancias;
+      this.bebidas = bebidas.instances;
       this.tamanhoPaginacaoBebida = bebidas.total;
       this.indicePaginaBebida = pagina;
       sort();
@@ -107,7 +107,7 @@ export class ProdutosComponent implements OnInit {
     this.buscarBebidas(event.pageIndex, event.pageSize);
   }
 
-  ativarDesativar(produto: IProduto): void {
+  ativarDesativar(produto: IProduct): void {
     console.log('PATCH em porduto', produto.status, produto.id);
     // this.produtoService.patch(produto.status, produto.id).subscribe(() => {
     //   this.produtoService.showMessage(
@@ -124,17 +124,17 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const produto: IProduto = {
-          nome: result.nome,
-          descricao: result.descricao,
-          preco: result.preco,
+        const produto: IProduct = {
+          name: result.name,
+          description: result.description,
+          price: result.price,
           status: true,
-          tipo: result.tipo,
-          imagem: result.imagem
+          type: result.type,
+          image: result.image
         };
         console.log('POST em produto', produto);
         // this.produtoService.create(produto).subscribe(() => {
-        //   if (produto.tipo==='marmita'){
+        //   if (produto.type==='marmita'){
         //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
         //     this.produtoService.showMessage('Marmita cadastrada com sucesso');
         //   } else {
@@ -146,35 +146,35 @@ export class ProdutosComponent implements OnInit {
     })
   }
 
-  dialogEditar(produto: IProduto) {
+  dialogEditar(produto: IProduct) {
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
       width: '60%',
       data: {
         title: 'Editar produto',
         id: produto.id,
-        nome: produto.nome,
-        descricao: produto.descricao,
-        preco: produto.preco,
+        name: produto.name,
+        description: produto.description,
+        price: produto.price,
         status: produto.status,
-        tipo: produto.tipo,
-        imagem: produto.imagem
+        type: produto.type,
+        image: produto.image
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const produto: IProduto = {
+        const produto: IProduct = {
           id: result.id,
-          nome: result.nome,
-          descricao: result.descricao,
-          preco: result.preco,
+          name: result.name,
+          description: result.description,
+          price: result.price,
           status: result.status,
-          tipo: result.tipo,
-          imagem: result.imagem
+          type: result.type,
+          image: result.image
         };
         console.log('PUT em produto', produto);
         // this.produtoService.update(produto).subscribe(() => {
-        //   if (produto.tipo==='marmita') {
+        //   if (produto.type==='marmita') {
         //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
         //     this.produtoService.showMessage('Marmita alterada com sucesso');
         //   } else {
@@ -186,17 +186,17 @@ export class ProdutosComponent implements OnInit {
     });
   }
 
-  dialogExcluir(produto: IProduto) {
+  dialogExcluir(produto: IProduct) {
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
       width: '60%',
-      data: { title: 'Excluir produto', id: produto.id, nome: produto.nome, tipo: produto.tipo },
+      data: { title: 'Excluir produto', id: produto.id, name: produto.name, type: produto.type },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('DELETE em produto', produto);
         // this.produtoService.delete(result.id).subscribe(() => {
-        //   if (produto.tipo==='marmita'){
+        //   if (produto.type==='marmita'){
         //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
         //     this.produtoService.showMessage('Marmita cadastrada com sucesso');
         //   } else {

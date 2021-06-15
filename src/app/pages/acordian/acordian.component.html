@@ -1,12 +1,12 @@
 <!-- ****** Accordion da tela de produtos *********** -->
 <div *ngIf="produto" class="card-contentainer">
   <div>
-    <img class="cursor-pointer" (click)="abrirModalImagens(produto.imagem)"
+    <img class="cursor-pointer" (click)="abrirModalImagens(produto.image)"
       src="../../../assets/img/marmita_sem_carne.jpg" alt="Imagens de produtos">
   </div>
   <div class="media-text">
     <h2>Descrição</h2>
-    <p>{{produto.descricao}}</p>
+    <p>{{produto.description}}</p>
   </div>
 </div>
 
@@ -22,18 +22,18 @@
       <span class="col-md-1">Número</span>
     </div>
     <div class="row body-table">
-      <span class="col-md-3">{{ pedido.endereco_cidade }}</span>
+      <span class="col-md-3">{{ pedido.address_city }}</span>
       <span class="col-md-2">{{ pedido.cep | mask: '00000-000' }}</span>
-      <span class="col-md-3">{{ pedido.endereco_bairro }}</span>
-      <span class="col-md-3">{{ pedido.endereco_rua }}</span>
-      <span class="col-md-1">{{ pedido.endereco_numero }}</span>
+      <span class="col-md-3">{{ pedido.address_neighborhood }}</span>
+      <span class="col-md-3">{{ pedido.address_street }}</span>
+      <span class="col-md-1">{{ pedido.address_number }}</span>
     </div>
   </mat-list>
 
-  <mat-list *ngIf="pedido.ponto_referencia">
+  <mat-list *ngIf="pedido.reference_point">
     <div matSubheader class="caption-table">Ponto de referência</div>
     <div class="row body-table">
-      <span class="col-md-12">{{pedido.ponto_referencia}}</span>
+      <span class="col-md-12">{{pedido.reference_point}}</span>
     </div>
   </mat-list>
 
@@ -44,10 +44,10 @@
       <span class="col-md-4">Observação</span>
       <span class="col-md-4">Opçoes de carne</span>
     </div>
-    <div class="row no-gutters body-table" *ngFor="let produto of pedido.pedido_produto">
-      <span class="col-md-4">{{produto.quantidade}} {{produto.produto.nome}} - {{produto.produto.preco | currency}}</span>
-      <span class="col-md-4">{{produto.observacao ? produto.observacao : '---'}}</span>
-      <span class="col-md-4">{{produto.opcoes_carne ? produto.opcoes_carne : '---'}}</span>
+    <div class="row no-gutters body-table" *ngFor="let produto of pedido.orderToProducts">
+      <span class="col-md-4">{{produto.amount}} {{produto.products.name}} - {{produto.products.price | currency}}</span>
+      <span class="col-md-4">{{produto.observation ? produto.observation : '---'}}</span>
+      <span class="col-md-4">{{produto.meet_options ? produto.meet_options : '---'}}</span>
     </div>
   </mat-list>
 
@@ -60,9 +60,9 @@
       <span class="col-md-3">Total</span>
     </div>
     <div class="row body-table">
-      <span class="col-md-3">{{pedido.troco ? pedido.troco : '---'}}</span>
-      <span class="col-md-3">{{pedido.valor_frete===0 ? 'Frete grátis' : pedido.valor_frete}}</span>
-      <span class="col-md-3">{{pedido.pagamento}}</span>
+      <span class="col-md-3">{{pedido.change_of_money ? pedido.change_of_money : '---'}}</span>
+      <span class="col-md-3">{{pedido.cost_freight===0 ? 'Frete grátis' : pedido.cost_freight}}</span>
+      <span class="col-md-3">{{pedido.payment}}</span>
       <span class="col-md-3">{{pedido.total | currency}}</span>
     </div>
   </mat-list>
