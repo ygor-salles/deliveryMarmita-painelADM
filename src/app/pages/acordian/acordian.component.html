@@ -2,7 +2,8 @@
 <div *ngIf="produto" class="card-contentainer">
   <div>
     <img class="cursor-pointer" (click)="abrirModalImagens(produto.image)"
-      src="../../../assets/img/marmita_sem_carne.jpg" alt="Imagens de produtos">
+      src="{{transformImageUrl(produto.image)}}" onerror="this.src='../../../assets/img/dump3.png'"
+      alt="Imagens de produtos">
   </div>
   <div class="media-text">
     <h2>Descrição</h2>

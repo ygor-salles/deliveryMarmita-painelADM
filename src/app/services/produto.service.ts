@@ -32,7 +32,7 @@ export class ProdutoService {
 
   create(produto: IProduct): Observable<IProduct> {
     return this.http
-      .post<IProduct>(`${apiUrl}/produto`, produto)
+      .post<IProduct>(`${apiUrl}/products`, produto)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao cadastrar produto!')),
@@ -41,7 +41,7 @@ export class ProdutoService {
 
   read(): Observable<IProduct[]> {
     return this.http
-      .get<IProduct[]>(`${apiUrl}/produto/sem_paginacao`)
+      .get<IProduct[]>(`${apiUrl}/products`)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
@@ -51,13 +51,15 @@ export class ProdutoService {
   readPaginator(
     pagina: number,
     limite: number,
+    type: string,
   ): Observable<IPagedProduct> {
     let params = new HttpParams();
-    params = params.append('pagina', pagina.toString());
-    params = params.append('limite', limite.toString());
+    params = params.append('type', type);
+    params = params.append('page', pagina.toString());
+    params = params.append('limit', limite.toString());
 
     return this.http
-      .get<IPagedProduct>(`${apiUrl}/produto`, { params })
+      .get<IPagedProduct>(`${apiUrl}/products/paged`, { params })
       .pipe(
         map(obj => obj),
         catchError(e =>
@@ -69,7 +71,7 @@ export class ProdutoService {
   }
 
   readById(id: number): Observable<IProduct> {
-    const url = `${apiUrl}/produto/${id}`;
+    const url = `${apiUrl}/products/${id}`;
     return this.http.get<IProduct>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler produto!')),
@@ -77,7 +79,7 @@ export class ProdutoService {
   }
 
   update(produto: IProduct): Observable<IProduct> {
-    const url = `${apiUrl}/produto/${produto.id}`;
+    const url = `${apiUrl}/products/${produto.id}`;
     return this.http.put<IProduct>(url, produto).pipe(
       map(obj => obj),
       catchError(_ =>
@@ -87,7 +89,7 @@ export class ProdutoService {
   }
 
   patch(isAtivo: boolean, id?: number): Observable<any> {
-    const url = `${apiUrl}/produto/${id}/ativo/${isAtivo}`;
+    const url = `${apiUrl}/products/${id}/ativo/${isAtivo}`;
     return this.http.patch(url, null).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao alterar status do produto!')),
@@ -95,7 +97,7 @@ export class ProdutoService {
   }
 
   delete(id: number): Observable<IProduct> {
-    const url = `${apiUrl}/produto/${id}`;
+    const url = `${apiUrl}/products/${id}`;
     return this.http.delete<IProduct>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao deletar produto!')),

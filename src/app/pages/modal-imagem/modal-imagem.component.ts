@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import transformProductImageUrl from 'src/app/utils/functions/transformProductImageUrl';
 
 interface ModalData {
-  imagem: File
+  image: string;
 }
 
 @Component({

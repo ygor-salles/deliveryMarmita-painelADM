@@ -4,7 +4,7 @@ export interface IProduct {
   price: number;
   type: string;
   description: string;
-  status: boolean;
+  status?: boolean;
   image: string;
   createdAt?: Date;
   updatedAt?: Date;

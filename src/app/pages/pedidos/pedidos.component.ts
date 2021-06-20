@@ -89,7 +89,7 @@ export class PedidosComponent implements OnInit {
       this.fontePedidos.sort = this.sort;
     };
 
-    this.pedidoService.readPedido(pagina, limite).subscribe(ped => {
+    this.pedidoService.readPaginator(pagina, limite).subscribe(ped => {
       this.pedidos = ped.instances;
       this.tamanhoPaginacao = ped.total;
       this.indicePagina = pagina;

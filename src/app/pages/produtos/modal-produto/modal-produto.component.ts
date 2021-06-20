@@ -30,7 +30,7 @@ export class ModalProdutoComponent implements OnInit {
       name: [this.data.name, Validators.required],
       description: [this.data.description, Validators.required],
       price: [this.data.price, Validators.required],
-      image: [this.data.image, FileUploadValidators.filesLimit(1)]
+      image: [null, FileUploadValidators.filesLimit(1)]
     });
   }
 

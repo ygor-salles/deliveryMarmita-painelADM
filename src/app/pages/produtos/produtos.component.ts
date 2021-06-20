@@ -75,7 +75,7 @@ export class ProdutosComponent implements OnInit {
       this.fonteMarmitas.sort = this.sort;
     };
 
-    this.produtoService.readMarmita(pagina, limite).subscribe(marmitas => {
+    this.produtoService.readPaginator(pagina, limite, 'marmita').subscribe(marmitas => {
       this.marmitas = marmitas.instances;
       this.tamanhoPaginacaoMarmita = marmitas.total;
       this.indicePaginaMarmita = pagina;
@@ -89,7 +89,7 @@ export class ProdutosComponent implements OnInit {
       this.fonteBebidas.sort = this.sort;
     };
 
-    this.produtoService.readBebida(pagina, limite).subscribe(bebidas => {
+    this.produtoService.readPaginator(pagina, limite, 'bebida').subscribe(bebidas => {
       this.bebidas = bebidas.instances;
       this.tamanhoPaginacaoBebida = bebidas.total;
       this.indicePaginaBebida = pagina;
@@ -128,7 +128,6 @@ export class ProdutosComponent implements OnInit {
           name: result.name,
           description: result.description,
           price: result.price,
-          status: true,
           type: result.type,
           image: result.image
         };

@@ -37,7 +37,7 @@ export class PedidoService {
 
   create(pedido: IOrder): Observable<IOrder> {
     return this.http
-      .post<IOrder>(`${apiUrl}/pedido`, pedido)
+      .post<IOrder>(`${apiUrl}/orders`, pedido)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao cadastrar pedido!')),
@@ -46,7 +46,7 @@ export class PedidoService {
 
   read(): Observable<IOrder[]> {
     return this.http
-      .get<IOrder[]>(`${apiUrl}/pedido/sem_paginacao`)
+      .get<IOrder[]>(`${apiUrl}/orders`)
       .pipe(
         map(obj => obj),
         catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
@@ -71,12 +71,12 @@ export class PedidoService {
         }
       }
     } else {
-      params = params.append('pagina', pagina.toString());
-      params = params.append('limite', limite.toString());
+      params = params.append('page', pagina.toString());
+      params = params.append('limit', limite.toString());
     }
 
     return this.http
-      .get<IPagedOrder>(`${apiUrl}/pedido`, { params })
+      .get<IPagedOrder>(`${apiUrl}/orders/paged`, { params })
       .pipe(
         map(obj => obj),
         catchError(e =>
@@ -88,7 +88,7 @@ export class PedidoService {
   }
 
   readById(id: number): Observable<IOrder> {
-    const url = `${apiUrl}/pedido/${id}`;
+    const url = `${apiUrl}/orders/${id}`;
     return this.http.get<IOrder>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler pedido!')),
@@ -96,7 +96,7 @@ export class PedidoService {
   }
 
   update(pedido: IOrder): Observable<IOrder> {
-    const url = `${apiUrl}/pedido/${pedido.id}`;
+    const url = `${apiUrl}/orders/${pedido.id}`;
     return this.http.put<IOrder>(url, pedido).pipe(
       map(obj => obj),
       catchError(_ =>
@@ -106,7 +106,7 @@ export class PedidoService {
   }
 
   patch(pedido?: IPedidoUpdate, idPedido?: number): Observable<IPedidoUpdate> {
-    const url = `${apiUrl}/pedido/${idPedido}/${pedido?.status_id}`;
+    const url = `${apiUrl}/orders/${idPedido}/${pedido?.status_id}`;
     return this.http.put<IPedidoUpdate>(url, null).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao atualizar dados de pedido!')),
@@ -114,7 +114,7 @@ export class PedidoService {
   }
 
   delete(id: number): Observable<IOrder> {
-    const url = `${apiUrl}/pedido/${id}`;
+    const url = `${apiUrl}/orders/${id}`;
     return this.http.delete<IOrder>(url).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao deletar pedido!')),
