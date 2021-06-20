@@ -124,6 +124,7 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+
         const produto: IProduct = {
           name: result.name,
           description: result.description,

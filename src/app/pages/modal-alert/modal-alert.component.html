@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>{{data.text}}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button *ngIf="data.title === 'Atenção'; else elseBlock" mat-raised-button color="primary"
+    (click)="cancel()" class="mat-elevation-z4">Fechar</button>
+  <ng-template #elseBlock>
+    <button mat-raised-button color="secondary" (click)="cancel()" class="mat-elevation-z4">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="confirm()" class="mat-elevation-z4">Confirmar</button>
+  </ng-template>
+</mat-dialog-actions>

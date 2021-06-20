@@ -42,12 +42,26 @@
       </div>
 
       <!-- Upload de Imagem -->
+      <label class="label">Inserir imagem do produto</label>
       <file-upload formControlName="image" [required]="!vaiEditar"></file-upload>
       <mat-error *ngIf="produtoForm.get('image')?.errors?.filesLimit">
         Deve ser inserido ao menos 1 imagem para o produto
       </mat-error>
       <mat-error *ngIf="!vaiEditar && produtoForm.get('image')?.errors?.required">Imagem é obrigatório</mat-error>
 
+      <!-- Imagens -->
+      <label *ngIf="vaiEditar && data.image" class="label">Remover imagem atual do produto</label>
+      <div *ngIf="vaiEditar">
+        <a class="cursor-pointer remove-image" (click)="removerImagem(data.image)">
+          <i class="material-icons" #tooltip="matTooltip" matTooltip="Remover imagem do produto"
+            matTooltipPosition="above">
+            delete
+          </i>
+        </a>
+        <br>
+        <img src="{{transformImageUrl(data.image)}}" onerror="this.src='../../../../assets/img/dump3.png'"
+          alt="Imagem" class="cursor-pointer" (click)="abrirModalImagem(data.image)">
+      </div>
     </ng-template>
   </mat-dialog-content>
 

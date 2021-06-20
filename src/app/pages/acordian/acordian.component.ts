@@ -25,7 +25,7 @@ export class AcordianComponent implements OnInit {
     return transformProductImageUrl(imageUrl);
   }
 
-  abrirModalImagens(image: string): void {
+  abrirModalImagem(image: string): void {
     this.dialog.open(ModalImagemComponent, {
       width: 'auto',
       height: 'auto',

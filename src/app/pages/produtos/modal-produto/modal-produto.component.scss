@@ -7,3 +7,19 @@ mat-form-field {
 h3 {
     color: #8F8286;
 }
+
+.label {
+  margin: 30px 0 30px 0;
+  color: #673ab7;
+}
+
+img {
+  width: 60%;
+  height: 60%;
+  object-fit: cover;
+  margin-bottom: 30px;
+}
+
+.remove-image > i {
+  color: #e35e6b;
+}
