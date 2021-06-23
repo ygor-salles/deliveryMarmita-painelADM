@@ -42,12 +42,16 @@
       </div>
 
       <!-- Upload de Imagem -->
-      <label class="label">Inserir imagem do produto</label>
-      <file-upload formControlName="image" [required]="!vaiEditar"></file-upload>
+      <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label>
+      <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+          accept="image/*" />
+      <img class="img-upload" [src]="img64" height="200" *ngIf="img64">
+
+      <!-- <file-upload formControlName="image" [required]="!vaiEditar"></file-upload>
       <mat-error *ngIf="produtoForm.get('image')?.errors?.filesLimit">
         Deve ser inserido ao menos 1 imagem para o produto
       </mat-error>
-      <mat-error *ngIf="!vaiEditar && produtoForm.get('image')?.errors?.required">Imagem é obrigatório</mat-error>
+      <mat-error *ngIf="!vaiEditar && produtoForm.get('image')?.errors?.required">Imagem é obrigatório</mat-error> -->
 
       <!-- Imagens -->
       <label *ngIf="vaiEditar && data.image" class="label">Remover imagem atual do produto</label>

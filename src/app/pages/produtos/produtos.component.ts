@@ -124,24 +124,23 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
         const produto: IProduct = {
           name: result.name,
           description: result.description,
           price: result.price,
           type: result.type,
-          image: result.image
+          image: result.img64
         };
         console.log('POST em produto', produto);
-        // this.produtoService.create(produto).subscribe(() => {
-        //   if (produto.type==='marmita'){
-        //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-        //     this.produtoService.showMessage('Marmita cadastrada com sucesso');
-        //   } else {
-        //     this.buscarBebidas(0, this.tamanhoPaginaBebida);
-        //     this.produtoService.showMessage('Bebida cadastrada com sucesso');
-        //   }
-        // });
+        this.produtoService.create(produto).subscribe(() => {
+          if (produto.type==='marmita'){
+            this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+            this.produtoService.showMessage('Marmita cadastrada com sucesso');
+          } else {
+            this.buscarBebidas(0, this.tamanhoPaginaBebida);
+            this.produtoService.showMessage('Bebida cadastrada com sucesso');
+          }
+        });
       }
     })
   }

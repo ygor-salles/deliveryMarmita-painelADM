@@ -1,5 +1,5 @@
 import { IProduct } from '../models/IProduct.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -25,17 +25,21 @@ export class ProdutoService {
     });
   }
 
-  errorHandler(e: string): Observable<any> {
-    this.showMessage(e, true);
+  errorHandler(e: HttpErrorResponse): Observable<never> {
+    if (e.status) {
+      this.showMessage(e.error.message, true);
+    } else {
+      this.showMessage('Falha de conexão com a API!', true);
+    }
     return EMPTY;
   }
 
-  create(produto: IProduct): Observable<IProduct> {
+  create(produto: IProduct): Observable<any> {
     return this.http
       .post<IProduct>(`${apiUrl}/products`, produto)
       .pipe(
         map(obj => obj),
-        catchError(_ => this.errorHandler('Erro ao cadastrar produto!')),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -44,7 +48,7 @@ export class ProdutoService {
       .get<IProduct[]>(`${apiUrl}/products`)
       .pipe(
         map(obj => obj),
-        catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -62,11 +66,7 @@ export class ProdutoService {
       .get<IPagedProduct>(`${apiUrl}/products/paged`, { params })
       .pipe(
         map(obj => obj),
-        catchError(e =>
-          this.errorHandler(
-            `Erro ao ler dados de produtos! \n${e.error ? e.error : ''}`,
-          ),
-        ),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -74,7 +74,7 @@ export class ProdutoService {
     const url = `${apiUrl}/products/${id}`;
     return this.http.get<IProduct>(url).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler produto!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -82,9 +82,7 @@ export class ProdutoService {
     const url = `${apiUrl}/products/${produto.id}`;
     return this.http.put<IProduct>(url, produto).pipe(
       map(obj => obj),
-      catchError(_ =>
-        this.errorHandler('Erro ao atualizar dados de produto!'),
-      ),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -92,7 +90,7 @@ export class ProdutoService {
     const url = `${apiUrl}/products/${id}/ativo/${isAtivo}`;
     return this.http.patch(url, null).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao alterar status do produto!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -100,7 +98,7 @@ export class ProdutoService {
     const url = `${apiUrl}/products/${id}`;
     return this.http.delete<IProduct>(url).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao deletar produto!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -109,7 +107,7 @@ export class ProdutoService {
     console.log(pagina, limite);
     return this.http.get<IPagedProduct>(`${apiUrl}/marmitas`).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler dados de marmitas!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -117,7 +115,7 @@ export class ProdutoService {
     console.log(pagina, limite);
     return this.http.get<IPagedProduct>(`${apiUrl}/bebidas`).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler dados de bebidas!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 }
