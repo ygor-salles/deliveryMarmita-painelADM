@@ -12,12 +12,14 @@
 <mat-tab-group mat-align-tabs="left">
   <mat-tab label="Marmitas">
     <table mat-table [dataSource]="fonteMarmitas" multiTemplateDataRows>
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
+      <!-- Índice Column -->
+      <ng-container matColumnDef="indice">
         <th mat-header-cell *matHeaderCellDef>
-          <span>ID</span>
+          <span>Índice</span>
         </th>
-        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.id}} </td>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto; let i = dataIndex;">
+          {{ i+1 + indicePaginaMarmita * tamanhoPaginaMarmita }}
+        </td>
       </ng-container>
 
       <!-- Nome Column -->
@@ -30,6 +32,12 @@
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef> <span>Preço</span> </th>
         <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.price | currency}} </td>
+      </ng-container>
+
+      <!-- Tamanho Column -->
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef> <span>Tamanho</span> </th>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.size}} </td>
       </ng-container>
 
       <!-- Status Column -->
@@ -88,19 +96,21 @@
       <span>Não há nenhuma marmita cadastrada</span>
     </div>
 
-    <mat-paginator [length]="tamanhoPaginacaoMarmita" [pageSize]="tamanhoPaginaMarmita" [pageSizeOptions]="opcoesPaginacaoMarmita"
-      [pageIndex]="indicePaginaMarmita" (page)="mudouPaginaMarmita($event)">
+    <mat-paginator [length]="tamanhoPaginacaoMarmita" [pageSize]="tamanhoPaginaMarmita"
+      [pageSizeOptions]="opcoesPaginacaoMarmita" [pageIndex]="indicePaginaMarmita" (page)="mudouPaginaMarmita($event)">
     </mat-paginator>
   </mat-tab>
 
   <mat-tab label="Bebidas">
     <table mat-table [dataSource]="fonteBebidas" multiTemplateDataRows>
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
+      <!-- Índice Column -->
+      <ng-container matColumnDef="indice">
         <th mat-header-cell *matHeaderCellDef>
-          <span>ID</span>
+          <span>Índice</span>
         </th>
-        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.id}} </td>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto; let i = dataIndex;">
+          {{ i+1 + indicePaginaBebida * tamanhoPaginaBebida }}
+        </td>
       </ng-container>
 
       <!-- Nome Column -->
@@ -113,6 +123,12 @@
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef> <span>Preço</span> </th>
         <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.price | currency}} </td>
+      </ng-container>
+
+      <!-- Tamanho Column -->
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef> <span>Tamanho</span> </th>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.size}} </td>
       </ng-container>
 
       <!-- Status Column -->
@@ -172,8 +188,8 @@
       <span>Não há nenhuma bebida cadastrada</span>
     </div>
 
-    <mat-paginator [length]="tamanhoPaginacaoBebida" [pageSize]="tamanhoPaginaBebida" [pageSizeOptions]="opcoesPaginacaoBebida"
-      [pageIndex]="indicePaginaBebida" (page)="mudouPaginaBebida($event)">
+    <mat-paginator [length]="tamanhoPaginacaoBebida" [pageSize]="tamanhoPaginaBebida"
+      [pageSizeOptions]="opcoesPaginacaoBebida" [pageIndex]="indicePaginaBebida" (page)="mudouPaginaBebida($event)">
     </mat-paginator>
   </mat-tab>
 </mat-tab-group>

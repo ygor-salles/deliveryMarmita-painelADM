@@ -1,5 +1,5 @@
 import { IPagedOrder } from '../models/IPagedOrder.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
@@ -30,8 +30,12 @@ export class PedidoService {
     });
   }
 
-  errorHandler(e: string): Observable<any> {
-    this.showMessage(e, true);
+  errorHandler(e: HttpErrorResponse): Observable<never> {
+    if (e.status) {
+      this.showMessage(e.error.message, true);
+    } else {
+      this.showMessage('Falha de conexão com a API!', true);
+    }
     return EMPTY;
   }
 
@@ -40,7 +44,7 @@ export class PedidoService {
       .post<IOrder>(`${apiUrl}/orders`, pedido)
       .pipe(
         map(obj => obj),
-        catchError(_ => this.errorHandler('Erro ao cadastrar pedido!')),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -49,7 +53,7 @@ export class PedidoService {
       .get<IOrder[]>(`${apiUrl}/orders`)
       .pipe(
         map(obj => obj),
-        catchError(_ => this.errorHandler('Erro ao ler dados de produtos!')),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -79,11 +83,7 @@ export class PedidoService {
       .get<IPagedOrder>(`${apiUrl}/orders/paged`, { params })
       .pipe(
         map(obj => obj),
-        catchError(e =>
-          this.errorHandler(
-            `Erro ao ler dados de pedidos!\n${e.error ? e.error : ''}`,
-          ),
-        ),
+        catchError(e => this.errorHandler(e)),
       );
   }
 
@@ -91,7 +91,7 @@ export class PedidoService {
     const url = `${apiUrl}/orders/${id}`;
     return this.http.get<IOrder>(url).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler pedido!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -99,9 +99,7 @@ export class PedidoService {
     const url = `${apiUrl}/orders/${pedido.id}`;
     return this.http.put<IOrder>(url, pedido).pipe(
       map(obj => obj),
-      catchError(_ =>
-        this.errorHandler('Erro ao atualizar dados de pedido!'),
-      ),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -109,7 +107,7 @@ export class PedidoService {
     const url = `${apiUrl}/orders/${idPedido}/${pedido?.status_id}`;
     return this.http.put<IPedidoUpdate>(url, null).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao atualizar dados de pedido!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -117,15 +115,7 @@ export class PedidoService {
     const url = `${apiUrl}/orders/${id}`;
     return this.http.delete<IOrder>(url).pipe(
       map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao deletar pedido!')),
-    );
-  }
-
-  /* ******************************************** */
-  readPedido(pagina: number, limite: number): Observable<IPagedOrder> {
-    return this.http.get<IPagedOrder>(`${apiUrl}/pedidos`).pipe(
-      map(obj => obj),
-      catchError(_ => this.errorHandler('Erro ao ler dados de pedido!')),
+      catchError(e => this.errorHandler(e)),
     );
   }
 }

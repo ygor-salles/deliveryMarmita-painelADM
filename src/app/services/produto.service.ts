@@ -106,19 +106,4 @@ export class ProdutoService {
       catchError(e => this.errorHandler(e)),
     );
   }
-
-  /* ******************************************** */
-  readMarmita(pagina: number, limite: number): Observable<IPagedProduct> {
-    return this.http.get<IPagedProduct>(`${apiUrl}/marmitas`).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e)),
-    );
-  }
-
-  readBebida(pagina: number, limite: number): Observable<IPagedProduct> {
-    return this.http.get<IPagedProduct>(`${apiUrl}/bebidas`).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e)),
-    );
-  }
 }

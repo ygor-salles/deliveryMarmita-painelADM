@@ -7,4 +7,5 @@ export interface IFormProduct {
   status: boolean;
   image: string;
   type: string;
+  size: string;
 }

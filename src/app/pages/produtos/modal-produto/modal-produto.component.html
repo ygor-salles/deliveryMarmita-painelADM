@@ -8,13 +8,22 @@
     <ng-template #elseBlock>
       <!-- Seleção entre marmita ou bebida -->
       <div class="d-flex">
-        <mat-form-field class="w-100">
+        <mat-form-field class="w-50">
           <mat-label>Tipo de produto</mat-label>
           <mat-select formControlName="type" required>
             <mat-option value="marmita">Marmita</mat-option>
             <mat-option value="bebida">Bebida</mat-option>
           </mat-select>
           <mat-error>Deve ser selecionando o tipo de produto a ser cadastrado</mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <mat-label>Tamanho do Produto</mat-label>
+          <mat-select formControlName="size" required>
+            <!-- <mat-option value="pequena">Pequena</mat-option> -->
+            <mat-option value="media">Média</mat-option>
+            <mat-option value="grande">Grande</mat-option>
+          </mat-select>
+          <mat-error>Deve ser selecionando o tamanho do produto a ser cadastrado</mat-error>
         </mat-form-field>
       </div>
 
@@ -44,9 +53,9 @@
       <!-- Exibição e Upload de Imagem -->
       <div class="mb-lg">
         <div *ngIf="!vaiEditar; else editar">
-          <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label>
+          <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
           <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
-            accept="image/*" />
+            accept="image/*" /> <br>
           <img *ngIf="img64" [src]="img64" height="200">
         </div>
         <ng-template #editar>

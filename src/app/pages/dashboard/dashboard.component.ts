@@ -5,20 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-
-  image: any;
-
-  onChange($event: Event): void {
-    this.readLine($event.target);
-  }
-
-  readLine(inputValue: any): void {
-    let file: File = inputValue.files[0];
-    let myReader: FileReader = new FileReader();
-    myReader.onload = e => {
-      this.image = myReader.result;
-    }
-    myReader.readAsDataURL(file);
-  }
-}
+export class DashboardComponent {}

@@ -40,7 +40,7 @@ export class ProdutosComponent implements OnInit {
   marmitas: IProduct[] = [];
   $marmitas: Observable<IPagedProduct>;
   fonteMarmitas: MatTableDataSource<IProduct>;
-  displayedColumns = ['id', 'name', 'price', 'status', 'createdAt', 'actions'];
+  displayedColumns = ['indice', 'name', 'price', 'size', 'status', 'createdAt', 'actions'];
   expandedElement: IProduct | null;
 
   // MatPaginator Inputs Produto Físico
@@ -53,7 +53,7 @@ export class ProdutosComponent implements OnInit {
   bebidas: IProduct[] = [];
   $bebidas: Observable<IPagedProduct>;
   fonteBebidas: MatTableDataSource<IProduct>;
-  columnsDisplayed = ['id', 'name', 'price', 'status', 'createdAt', 'actions'];
+  columnsDisplayed = ['indice', 'name', 'price', 'size', 'status', 'createdAt', 'actions'];
   elementExpanded: IProduct | null;
 
   // MatPaginator Inputs Produto Físico
@@ -117,18 +117,18 @@ export class ProdutosComponent implements OnInit {
 
   dialogCadastrar(): void {
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
-      width: '60%',
+      width: '70%',
       data: { title: 'Cadastrar produto' },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // const base64Data = result.img64.replace(/^data:image\/[a-z]+;base64,/, "");
         const produto: IProduct = {
           name: result.name,
           description: result.description,
           price: result.price,
           type: result.type,
+          size: result.size,
           image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
         };
         this.produtoService.create(produto).subscribe(() => {
@@ -147,7 +147,7 @@ export class ProdutosComponent implements OnInit {
   dialogEditar(event: MouseEvent, produto: IProduct) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
-      width: '60%',
+      width: '70%',
       data: {
         title: 'Editar produto',
         id: produto.id,
@@ -156,6 +156,7 @@ export class ProdutosComponent implements OnInit {
         price: produto.price,
         status: produto.status,
         type: produto.type,
+        size: produto.size,
         image: produto.image
       }
     });
@@ -169,6 +170,7 @@ export class ProdutosComponent implements OnInit {
             description: result.description,
             price: result.price,
             type: result.type,
+            size: result.size,
             image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
           };
         } else {
@@ -177,6 +179,7 @@ export class ProdutosComponent implements OnInit {
             description: result.description,
             price: result.price,
             type: result.type,
+            size: result.size,
           };
         }
         this.produtoService.update(produto, result.id).subscribe(() => {
@@ -195,7 +198,7 @@ export class ProdutosComponent implements OnInit {
   dialogExcluir(event: MouseEvent, produto: IProduct) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
-      width: '60%',
+      width: '70%',
       data: { title: 'Excluir produto', id: produto.id, name: produto.name, type: produto.type },
     });
 
