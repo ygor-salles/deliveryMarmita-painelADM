@@ -21,11 +21,11 @@ export class AcordianComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  transformImageUrl(imageUrl: string): string {
+  transformImageUrl(imageUrl?: string): string {
     return transformProductImageUrl(imageUrl);
   }
 
-  abrirModalImagem(image: string): void {
+  abrirModalImagem(image?: string): void {
     this.dialog.open(ModalImagemComponent, {
       width: 'auto',
       height: 'auto',

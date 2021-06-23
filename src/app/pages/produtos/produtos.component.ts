@@ -108,12 +108,11 @@ export class ProdutosComponent implements OnInit {
   }
 
   ativarDesativar(produto: IProduct): void {
-    console.log('PATCH em porduto', produto.status, produto.id);
-    // this.produtoService.patch(produto.status, produto.id).subscribe(() => {
-    //   this.produtoService.showMessage(
-    //     produto.status === true ? 'Produto ativado' : 'Produto desativado',
-    //   );
-    // });
+    this.produtoService.patch(produto.status, produto.id).subscribe(() => {
+      this.produtoService.showMessage(
+        produto.status === true ? 'Produto ativado' : 'Produto desativado',
+      );
+    });
   }
 
   dialogCadastrar(): void {
@@ -124,15 +123,14 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const base64Data = result.img64.replace(/^data:image\/[a-z]+;base64,/, "");
+        // const base64Data = result.img64.replace(/^data:image\/[a-z]+;base64,/, "");
         const produto: IProduct = {
           name: result.name,
           description: result.description,
           price: result.price,
           type: result.type,
-          image: base64Data
+          image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
         };
-        console.log('POST em produto', produto);
         this.produtoService.create(produto).subscribe(() => {
           if (produto.type==='marmita'){
             this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
@@ -146,7 +144,8 @@ export class ProdutosComponent implements OnInit {
     })
   }
 
-  dialogEditar(produto: IProduct) {
+  dialogEditar(event: MouseEvent, produto: IProduct) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
       width: '60%',
       data: {
@@ -163,30 +162,38 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const produto: IProduct = {
-          id: result.id,
-          name: result.name,
-          description: result.description,
-          price: result.price,
-          status: result.status,
-          type: result.type,
-          image: result.image
-        };
-        console.log('PUT em produto', produto);
-        // this.produtoService.update(produto).subscribe(() => {
-        //   if (produto.type==='marmita') {
-        //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-        //     this.produtoService.showMessage('Marmita alterada com sucesso');
-        //   } else {
-        //     this.buscarBebidas(0, this.tamanhoPaginaBebida);
-        //     this.produtoService.showMessage('Bebida alterada com sucesso');
-        //   }
-        // });
+        let produto: IProduct;
+        if (result.img64) {
+          produto = {
+            name: result.name,
+            description: result.description,
+            price: result.price,
+            type: result.type,
+            image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
+          };
+        } else {
+          produto = {
+            name: result.name,
+            description: result.description,
+            price: result.price,
+            type: result.type,
+          };
+        }
+        this.produtoService.update(produto, result.id).subscribe(() => {
+          if (produto.type==='marmita') {
+            this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+            this.produtoService.showMessage('Marmita alterada com sucesso');
+          } else {
+            this.buscarBebidas(0, this.tamanhoPaginaBebida);
+            this.produtoService.showMessage('Bebida alterada com sucesso');
+          }
+        });
       }
     });
   }
 
-  dialogExcluir(produto: IProduct) {
+  dialogExcluir(event: MouseEvent, produto: IProduct) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(ModalProdutoComponent, {
       width: '60%',
       data: { title: 'Excluir produto', id: produto.id, name: produto.name, type: produto.type },
@@ -194,16 +201,15 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('DELETE em produto', produto);
-        // this.produtoService.delete(result.id).subscribe(() => {
-        //   if (produto.type==='marmita'){
-        //     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-        //     this.produtoService.showMessage('Marmita cadastrada com sucesso');
-        //   } else {
-        //     this.buscarBebidas(0, this.tamanhoPaginaBebida);
-        //     this.produtoService.showMessage('Bebida cadastrada com sucesso');
-        //   }
-        // });
+        this.produtoService.delete(result.id).subscribe(() => {
+          if (produto.type==='marmita'){
+            this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+            this.produtoService.showMessage('Marmita deletada com sucesso');
+          } else {
+            this.buscarBebidas(0, this.tamanhoPaginaBebida);
+            this.produtoService.showMessage('Bebida deletada com sucesso');
+          }
+        });
       }
     });
   }

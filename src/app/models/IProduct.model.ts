@@ -5,7 +5,7 @@ export interface IProduct {
   type: string;
   description: string;
   status?: boolean;
-  image: string;
+  image?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

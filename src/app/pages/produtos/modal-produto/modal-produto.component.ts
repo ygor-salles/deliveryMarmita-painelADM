@@ -5,8 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IFormProduct } from '../../../models/IFormProduct.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FileUploadValidators } from '@iplab/ngx-file-upload';
-import { ModalImagemComponent } from '../../modal-imagem/modal-imagem.component';
 
 @Component({
   selector: 'app-modal-produto',
@@ -18,6 +16,7 @@ export class ModalProdutoComponent implements OnInit {
   produtoForm: FormGroup;
   vaiEditar: boolean;
   img64: any;
+  showUpdateImage = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalProdutoComponent>,
@@ -67,25 +66,13 @@ export class ModalProdutoComponent implements OnInit {
     }
   }
 
-  abrirModalImagem(image: string): void {
-    this.dialog.open(ModalImagemComponent, {
-      width: 'auto',
-      height: 'auto',
-      data: { image },
-    });
+  removerImagem(): void {
+    this.showUpdateImage = true;
   }
 
-  removerImagem(image: string): void {
-    const imagensUpload = this.produtoForm.get('image')?.value;
-    if (!imagensUpload) {
-      this.dialog.open(ModalAlertComponent, {
-        width: 'auto',
-        height: 'auto',
-        data: { title: 'Atenção', text: 'Esta imagem não pode ser removida. É necessário ao menos uma imagem para o produto, e nenhuma nova imagem foi anexada em upload' }
-      })
-    } else {
-      console.log('Remover imagem: ', image);
-    }
+  cancelarAlteracao(): void {
+    this.img64 = null;
+    this.showUpdateImage = false;
   }
 
 }

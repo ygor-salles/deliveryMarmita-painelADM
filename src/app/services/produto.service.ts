@@ -9,6 +9,10 @@ import { IPagedProduct } from '../models/IPagedProduct.model';
 
 const { apiUrl } = environment;
 
+interface IUpdateProduct{
+  status?: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -78,17 +82,18 @@ export class ProdutoService {
     );
   }
 
-  update(produto: IProduct): Observable<IProduct> {
-    const url = `${apiUrl}/products/${produto.id}`;
+  update(produto: IProduct, idProduto: number): Observable<IProduct> {
+    const url = `${apiUrl}/products/${idProduto}`;
     return this.http.put<IProduct>(url, produto).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );
   }
 
-  patch(isAtivo: boolean, id?: number): Observable<any> {
-    const url = `${apiUrl}/products/${id}/ativo/${isAtivo}`;
-    return this.http.patch(url, null).pipe(
+  patch(isAtivo?: boolean, id?: number): Observable<any> {
+    const url = `${apiUrl}/products/${id}/update-status`;
+    const objStatus: IUpdateProduct = { status: isAtivo }
+    return this.http.put<IUpdateProduct>(url, objStatus).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );
@@ -104,7 +109,6 @@ export class ProdutoService {
 
   /* ******************************************** */
   readMarmita(pagina: number, limite: number): Observable<IPagedProduct> {
-    console.log(pagina, limite);
     return this.http.get<IPagedProduct>(`${apiUrl}/marmitas`).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
@@ -112,7 +116,6 @@ export class ProdutoService {
   }
 
   readBebida(pagina: number, limite: number): Observable<IPagedProduct> {
-    console.log(pagina, limite);
     return this.http.get<IPagedProduct>(`${apiUrl}/bebidas`).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),

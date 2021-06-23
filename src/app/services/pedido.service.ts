@@ -123,7 +123,6 @@ export class PedidoService {
 
   /* ******************************************** */
   readPedido(pagina: number, limite: number): Observable<IPagedOrder> {
-    console.log(pagina, limite);
     return this.http.get<IPagedOrder>(`${apiUrl}/pedidos`).pipe(
       map(obj => obj),
       catchError(_ => this.errorHandler('Erro ao ler dados de pedido!')),

@@ -10,7 +10,6 @@ export class DashboardComponent {
   image: any;
 
   onChange($event: Event): void {
-    console.log($event.target);
     this.readLine($event.target);
   }
 
@@ -21,6 +20,5 @@ export class DashboardComponent {
       this.image = myReader.result;
     }
     myReader.readAsDataURL(file);
-    console.log(this.image);
   }
 }

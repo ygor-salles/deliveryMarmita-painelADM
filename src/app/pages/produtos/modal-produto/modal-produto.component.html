@@ -32,7 +32,7 @@
       </div>
 
       <!-- Descrição -->
-      <div class="d-flex mb-lg">
+      <div class="d-flex">
         <mat-form-field class="w-100" hintLabel="Max 1000 caracteres">
           <textarea matInput #input maxlength="1000" placeholder="Descrição" formControlName="description"
             required></textarea>
@@ -41,30 +41,39 @@
         </mat-form-field>
       </div>
 
-      <!-- Upload de Imagem -->
-      <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label>
-      <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
-          accept="image/*" />
-      <img class="img-upload" [src]="img64" height="200" *ngIf="img64">
-
-      <!-- <file-upload formControlName="image" [required]="!vaiEditar"></file-upload>
-      <mat-error *ngIf="produtoForm.get('image')?.errors?.filesLimit">
-        Deve ser inserido ao menos 1 imagem para o produto
-      </mat-error>
-      <mat-error *ngIf="!vaiEditar && produtoForm.get('image')?.errors?.required">Imagem é obrigatório</mat-error> -->
-
-      <!-- Imagens -->
-      <label *ngIf="vaiEditar && data.image" class="label">Remover imagem atual do produto</label>
-      <div *ngIf="vaiEditar">
-        <a class="cursor-pointer remove-image" (click)="removerImagem(data.image)">
-          <i class="material-icons" #tooltip="matTooltip" matTooltip="Remover imagem do produto"
-            matTooltipPosition="above">
-            delete
-          </i>
-        </a>
-        <br>
-        <img src="{{transformImageUrl(data.image)}}" onerror="this.src='../../../../assets/img/dump3.png'"
-          alt="Imagem" class="cursor-pointer" (click)="abrirModalImagem(data.image)">
+      <!-- Exibição e Upload de Imagem -->
+      <div class="mb-lg">
+        <div *ngIf="!vaiEditar; else editar">
+          <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label>
+          <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+            accept="image/*" />
+          <img *ngIf="img64" [src]="img64" height="200">
+        </div>
+        <ng-template #editar>
+          <div *ngIf="!showUpdateImage, else showUpdateTemplate">
+            <label class="label">Imagem atual</label> <br>
+            <div class="img-container">
+              <img src="{{transformImageUrl(data.image)}}" onerror="this.src='../../../../assets/img/dump3.png'"
+                alt="Imagem">
+              <a class="cursor-pointer remove-image" (click)="removerImagem()">
+                <i class="material-icons" #tooltip="matTooltip" matTooltip="Remover imagem do produto"
+                  matTooltipPosition="above">
+                  delete
+                </i>
+              </a>
+            </div>
+          </div>
+          <ng-template #showUpdateTemplate>
+            <label class="label">Atualizar imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
+            <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+              accept="image/*" />
+            <img *ngIf="img64" [src]="img64" height="200">
+            <br><br>
+            <button mat-raised-button color="secondary" (click)="cancelarAlteracao()">
+              Cancelar alteração
+            </button>
+          </ng-template>
+        </ng-template>
       </div>
     </ng-template>
   </mat-dialog-content>
