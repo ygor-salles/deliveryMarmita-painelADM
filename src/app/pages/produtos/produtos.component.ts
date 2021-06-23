@@ -124,12 +124,13 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        const base64Data = result.img64.replace(/^data:image\/[a-z]+;base64,/, "");
         const produto: IProduct = {
           name: result.name,
           description: result.description,
           price: result.price,
           type: result.type,
-          image: result.img64
+          image: base64Data
         };
         console.log('POST em produto', produto);
         this.produtoService.create(produto).subscribe(() => {
