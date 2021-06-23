@@ -6,7 +6,7 @@
     </div>
 
     <ng-template #elseBlock>
-      <!-- Seleção entre marmita ou bebida -->
+      <!-- Seleção entre marmita ou bebida e se média ou grande -->
       <div class="d-flex">
         <mat-form-field class="w-50">
           <mat-label>Tipo de produto</mat-label>
@@ -34,9 +34,10 @@
           <mat-error>Campo nome é obrigatório</mat-error>
         </mat-form-field>
         <mat-form-field class="w-50">
-          <input matInput type="number" placeholder="Preço" formControlName="price" required>
+          <input matInput type="number" min=0.5 placeholder="Preço" formControlName="price" required>
           <span matPrefix>R$&nbsp;</span>
-          <mat-error>Campo preço à vista é obrigatório</mat-error>
+          <mat-error *ngIf="produtoForm.get('price')?.errors?.required">Campo preço é obrigatório</mat-error>
+          <mat-error *ngIf="produtoForm.get('price')?.errors?.min">O Produto deve ter um preço igual ou maior a R$ 0,50</mat-error>
         </mat-form-field>
       </div>
 
@@ -91,7 +92,10 @@
     <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
       class="mat-elevation-z4">Cancelar</button>
 
-    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir produto'"
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Cadastrar produto'"
+      [disabled]="produtoForm.invalid || !img64" class="mat-elevation-z4">{{data.title}}</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Editar produto'"
       [disabled]="produtoForm.invalid" class="mat-elevation-z4">{{data.title}}</button>
 
     <button mat-raised-button color="warn" (click)="confirm()" *ngIf="data.title==='Excluir produto'"

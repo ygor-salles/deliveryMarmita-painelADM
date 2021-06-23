@@ -34,7 +34,7 @@ export class ModalProdutoComponent implements OnInit {
       size: [{ value: this.data.size, disabled: this.vaiEditar }, Validators.required],
       name: [this.data.name, Validators.required],
       description: [this.data.description, Validators.required],
-      price: [this.data.price, Validators.required]
+      price: [this.data.price, [Validators.required, Validators.min(0.5)]]
     });
   }
 
@@ -59,8 +59,7 @@ export class ModalProdutoComponent implements OnInit {
         let image = new Image();
         image.src = e.target.result;
         image.onload = rs => {
-          const imgBase64Path = e.target.result;
-          this.img64 = imgBase64Path
+          this.img64 = e.target.result;
         };
       };
       reader.readAsDataURL(imgFile.target.files[0]);

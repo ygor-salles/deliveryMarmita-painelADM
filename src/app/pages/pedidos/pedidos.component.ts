@@ -114,6 +114,10 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  toggleStatusSelect(event: MouseEvent): void {
+    event.stopPropagation();
+  }
+
   selectPedido(event: MatSelectChange, idPedido: number): void {
     const objeto: IStatusOrder | undefined = this.listStatus.find(
       status => status.status === event.value,

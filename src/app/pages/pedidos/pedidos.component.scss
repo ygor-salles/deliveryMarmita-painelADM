@@ -1,6 +1,10 @@
 @import "../../../assets/partials/variables";
 @import "../../../assets/partials/mixins";
 
+.largura-40 {
+  width: 40%;
+}
+
 .table-pedidos {
   width: 100%;
   border-collapse: separate;

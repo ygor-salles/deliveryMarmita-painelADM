@@ -54,7 +54,7 @@
   <!-- Cliente Column -->
   <ng-container matColumnDef="client_name">
     <th mat-header-cell *matHeaderCellDef> <span>Cliente</span> </th>
-    <td class="cursor-pointer" mat-cell *matCellDef="let pedido"> {{pedido.client_name}} </td>
+    <td class="cursor-pointer largura-40" mat-cell *matCellDef="let pedido"> {{pedido.client_name}} </td>
   </ng-container>
 
   <!-- Telefone Column -->
@@ -74,7 +74,7 @@
     <th mat-header-cell *matHeaderCellDef> <span>Status</span> </th>
     <td mat-cell *matCellDef="let pedido">
       <mat-form-field>
-        <mat-select [(value)]="pedido.status.status" (selectionChange)="selectPedido($event, pedido.id)">
+        <mat-select [(value)]="pedido.status.status" (click)="toggleStatusSelect($event)" (selectionChange)="selectPedido($event, pedido.id)">
           <mat-option [value]="status.status" *ngFor="let status of listStatus">
             {{status.status}}
           </mat-option>
