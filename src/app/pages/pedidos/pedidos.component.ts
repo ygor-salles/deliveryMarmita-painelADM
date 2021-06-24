@@ -82,7 +82,7 @@ export class PedidosComponent implements OnInit {
       this.fontePedidos.sort = this.sort;
     };
 
-    this.pedidoService.readPaginator(pagina, limite).subscribe(ped => {
+    this.pedidoService.readPaginator(pagina, limite, filtros).subscribe(ped => {
       this.pedidos = ped.instances;
       this.tamanhoPaginacao = ped.total;
       this.indicePagina = pagina;
@@ -91,16 +91,16 @@ export class PedidosComponent implements OnInit {
   }
 
   mudouPagina(event: PageEvent): void {
-    const status_id = this.filterForm.get('status')?.value;
-    const client_name = this.filterForm.get('client_name')?.value;
-    const createdAt = this.filterForm.get('data')?.value;
+    const status = this.filterForm.get('status')?.value;
+    const client = this.filterForm.get('client_name')?.value;
+    const data = this.filterForm.get('data')?.value;
 
     this.tamanhoPagina = event.pageSize;
-    if (status_id || client_name || createdAt) {
+    if (status || client || data) {
       this.buscarPedidos(event.pageIndex, event.pageSize, {
-        status_id,
-        client_name,
-        createdAt,
+        status,
+        client,
+        data,
       });
     } else {
       this.buscarPedidos(event.pageIndex, event.pageSize);
@@ -118,15 +118,15 @@ export class PedidosComponent implements OnInit {
   }
 
   filtrar(): void {
-    const status_id = this.filterForm.get('status')?.value;
-    const client_name = this.filterForm.get('client_name')?.value;
-    const createdAt = this.filterForm.get('data')?.value;
+    const status = this.filterForm.get('status')?.value;
+    const client = this.filterForm.get('client_name')?.value;
+    const data = this.filterForm.get('data')?.value;
 
-    if (status_id || client_name || createdAt) {
+    if (status || client || data) {
       this.buscarPedidos(0, this.tamanhoPagina, {
-        status_id,
-        client_name,
-        createdAt,
+        status,
+        client,
+        data,
       });
     } else {
       this.buscarPedidos(0, this.tamanhoPagina);

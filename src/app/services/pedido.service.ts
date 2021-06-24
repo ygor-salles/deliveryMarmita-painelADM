@@ -63,6 +63,8 @@ export class PedidoService {
     filtros?: IFilterOrder,
   ): Observable<IPagedOrder> {
     let params = new HttpParams();
+    params = params.append('page', pagina.toString());
+    params = params.append('limit', limite.toString());
 
     if (filtros) {
       // eslint-disable-next-line no-restricted-syntax
@@ -74,9 +76,6 @@ export class PedidoService {
           );
         }
       }
-    } else {
-      params = params.append('page', pagina.toString());
-      params = params.append('limit', limite.toString());
     }
 
     return this.http
