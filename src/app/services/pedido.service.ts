@@ -11,7 +11,7 @@ import { IFilterOrder } from '../models/IFilterOrder.model';
 const { apiUrl } = environment;
 
 interface IPedidoUpdate {
-  status_id?: number;
+  status: string;
 }
 
 @Injectable({
@@ -103,9 +103,9 @@ export class PedidoService {
     );
   }
 
-  patch(pedido?: IPedidoUpdate, idPedido?: number): Observable<IPedidoUpdate> {
-    const url = `${apiUrl}/orders/${idPedido}/${pedido?.status_id}`;
-    return this.http.put<IPedidoUpdate>(url, null).pipe(
+  patch(status: string, idPedido: number): Observable<IPedidoUpdate> {
+    const url = `${apiUrl}/orders/${idPedido}/changeStatus`;
+    return this.http.put<IPedidoUpdate>(url, { status: status }).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );

@@ -82,15 +82,15 @@ tbody {
       @include translate-box;
       ::ng-deep td {
         background-color: $gizele-orange;
-        color: $gizele-white;
+        color: #fff;
 
         .mat-select-value,
         .mat-select-arrow {
-          color: $gizele-white !important;
+          color: #fff !important;
         }
 
         .mat-form-field-underline {
-          background-color: $gizele-white !important;
+          background-color: #fff !important;
         }
       }
     }

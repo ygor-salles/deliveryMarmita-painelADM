@@ -1,5 +1,4 @@
 import { IFilterOrder } from '../../models/IFilterOrder.model';
-import { IStatusOrder } from '../../models/IStatusOrder.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   animate,
@@ -55,13 +54,7 @@ export class PedidosComponent implements OnInit {
   indicePagina = 0;
   opcoesPaginacao: number[] = [5, 10, 20, 50, 100];
 
-  listStatus: IStatusOrder[] = [
-    {id: 1, status: 'inicializado'},
-    {id: 2, status: 'andamento'},
-    {id: 3, status: 'pronto'},
-    {id: 4, status: 'entregue'},
-    {id: 5, status: 'cancelado'},
-  ]
+  listStatus = [ 'inicializado', 'andamento', 'pronto', 'entregue', 'cancelado']
 
   constructor(
     public dialog: MatDialog,
@@ -119,14 +112,9 @@ export class PedidosComponent implements OnInit {
   }
 
   selectPedido(event: MatSelectChange, idPedido: number): void {
-    const objeto: IStatusOrder | undefined = this.listStatus.find(
-      status => status.status === event.value,
-    );
-    const pedidoUpdate: IPedidoUpdate | undefined = { status_id: objeto?.id };
-    console.log('Pedido update',pedidoUpdate, 'Id do pedido',idPedido);
-    // this.pedidoService.patch(pedidoUpdate, idPedido).subscribe(() => {
-    //   this.pedidoService.showMessage('Status do pedido atualizado com sucesso');
-    // });
+    this.pedidoService.patch(event.value, idPedido).subscribe(() => {
+      this.pedidoService.showMessage('Status do pedido atualizado com sucesso');
+    });
   }
 
   filtrar(): void {
