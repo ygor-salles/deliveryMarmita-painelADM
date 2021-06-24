@@ -62,7 +62,7 @@
     </div>
     <div class="row body-table">
       <span class="col-md-3">{{pedido.change_of_money ? pedido.change_of_money : '---'}}</span>
-      <span class="col-md-3">{{pedido.cost_freight===0 ? 'Frete grátis' : pedido.cost_freight}}</span>
+      <span class="col-md-3">{{pedido.cost_freight===0 ? 'Frete grátis' : pedido.cost_freight | currency}}</span>
       <span class="col-md-3">{{pedido.payment}}</span>
       <span class="col-md-3">{{pedido.total | currency}}</span>
     </div>
