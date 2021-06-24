@@ -76,7 +76,7 @@ body {
     }
 
     .sidebar {
-      background-image: url('../img/Imagem4.png');
+      background-color: $sidebar-bg-color;
 
       >div {
         border-color: rgba($sidebar-color, .1);
