@@ -1,5 +1,5 @@
 export interface IFilterOrder {
-  data?: Date;
+  data?: string;
   client?: string;
   status?: string;
 }

@@ -18,9 +18,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PedidoService } from 'src/app/services/pedido.service';
 
-interface IPedidoUpdate {
-  status_id?: number;
-}
 
 @Component({
   selector: 'app-pedidos',
@@ -94,13 +91,20 @@ export class PedidosComponent implements OnInit {
     const status = this.filterForm.get('status')?.value;
     const client = this.filterForm.get('client_name')?.value;
     const data = this.filterForm.get('data')?.value;
+    let dataFormatada: string;
+    if (data) {
+      dataFormatada = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`;
+    } else {
+      const agora = new Date();
+      dataFormatada = `${agora.getFullYear()}-${agora.getMonth()+1}-${agora.getDate()}`;
+    }
 
     this.tamanhoPagina = event.pageSize;
     if (status || client || data) {
       this.buscarPedidos(event.pageIndex, event.pageSize, {
         status,
         client,
-        data,
+        data: dataFormatada,
       });
     } else {
       this.buscarPedidos(event.pageIndex, event.pageSize);
@@ -121,12 +125,19 @@ export class PedidosComponent implements OnInit {
     const status = this.filterForm.get('status')?.value;
     const client = this.filterForm.get('client_name')?.value;
     const data = this.filterForm.get('data')?.value;
+    let dataFormatada: string;
+    if (data) {
+      dataFormatada = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`;
+    } else {
+      const agora = new Date();
+      dataFormatada = `${agora.getFullYear()}-${agora.getMonth()+1}-${agora.getDate()}`;
+    }
 
     if (status || client || data) {
       this.buscarPedidos(0, this.tamanhoPagina, {
         status,
         client,
-        data,
+        data: dataFormatada,
       });
     } else {
       this.buscarPedidos(0, this.tamanhoPagina);
