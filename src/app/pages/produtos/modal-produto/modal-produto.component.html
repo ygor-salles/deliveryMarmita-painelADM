@@ -16,14 +16,16 @@
           </mat-select>
           <mat-error>Deve ser selecionando o tipo de produto a ser cadastrado</mat-error>
         </mat-form-field>
-        <mat-form-field class="w-50">
+        <mat-form-field *ngIf="produtoForm.get('type')?.value === 'marmita'"  class="w-50">
           <mat-label>Tamanho do Produto</mat-label>
-          <mat-select formControlName="size" required>
+          <mat-select formControlName="size" [required]="produtoForm.get('type')?.value === 'marmita'">
             <mat-option value="pequena">Pequena</mat-option>
             <mat-option value="media">Média</mat-option>
             <mat-option value="grande">Grande</mat-option>
           </mat-select>
-          <mat-error>Deve ser selecionando o tamanho do produto a ser cadastrado</mat-error>
+          <mat-error *ngIf="produtoForm.get('size')?.errors?.required">
+            Deve ser selecionando o tamanho do produto a ser cadastrado
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -76,7 +78,7 @@
           <ng-template #showUpdateTemplate>
             <label class="label">Atualizar imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
             <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
-              accept="image/*" />
+              accept="image/*" /> <br>
             <img *ngIf="img64" [src]="img64" height="200">
             <br><br>
             <button mat-raised-button color="secondary" (click)="cancelarAlteracao()">

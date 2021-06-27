@@ -31,7 +31,7 @@ export class ModalProdutoComponent implements OnInit {
 
     this.produtoForm = this.formBuilder.group({
       type: [{ value: this.data.type, disabled: this.vaiEditar }, Validators.required],
-      size: [{ value: this.data.size, disabled: this.vaiEditar }, Validators.required],
+      size: [{ value: this.data.size, disabled: this.vaiEditar }],
       name: [this.data.name, Validators.required],
       description: [this.data.description, Validators.required],
       price: [this.data.price, [Validators.required, Validators.min(0.5)]]

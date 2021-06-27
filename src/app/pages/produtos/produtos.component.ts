@@ -164,23 +164,42 @@ export class ProdutosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let produto: IProduct;
-        if (result.img64) {
-          produto = {
-            name: result.name,
-            description: result.description,
-            price: result.price,
-            type: result.type,
-            size: result.size,
-            image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-          };
+        if (result.size) {
+          if (result.img64) {
+            produto = {
+              name: result.name,
+              description: result.description,
+              price: result.price,
+              type: result.type,
+              size: result.size,
+              image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
+            };
+          } else {
+            produto = {
+              name: result.name,
+              description: result.description,
+              price: result.price,
+              type: result.type,
+              size: result.size,
+            };
+          }
         } else {
-          produto = {
-            name: result.name,
-            description: result.description,
-            price: result.price,
-            type: result.type,
-            size: result.size,
-          };
+          if (result.img64) {
+            produto = {
+              name: result.name,
+              description: result.description,
+              price: result.price,
+              type: result.type,
+              image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
+            };
+          } else {
+            produto = {
+              name: result.name,
+              description: result.description,
+              price: result.price,
+              type: result.type,
+            };
+          }
         }
         this.produtoService.update(produto, result.id).subscribe(() => {
           if (produto.type==='marmita') {
