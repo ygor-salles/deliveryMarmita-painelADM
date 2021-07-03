@@ -11,42 +11,42 @@
     rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-@mixin gizele-items-border {
-  border-radius: $gizele-border-radius;
+@mixin brasa-items-border {
+  border-radius: $brasa-border-radius;
   border: solid $tr-border-thickness $tr-border-color;
 }
 
 @mixin dark-blue-button {
-  background-color: $gizele-dark-blue;
-  color: $gizele-white;
+  background-color: $brasa-dark-blue;
+  color: $brasa-white;
 
   &:hover {
-    color: $gizele-white;
-    background-color: darken($gizele-dark-blue, 5%);
+    color: $brasa-white;
+    background-color: darken($brasa-dark-blue, 5%);
   }
 }
 
-@mixin gizele-icons {
+@mixin brasa-icons {
   font-size: 24px;
-  color: $gizele-dark-blue;
+  color: $brasa-dark-blue;
 }
 
 @mixin slide-toggle-blue-color {
   .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: $gizele-dark-blue;
+    background-color: $brasa-dark-blue;
   }
 
   .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: lighten($gizele-dark-blue, 15%);
+    background-color: lighten($brasa-dark-blue, 15%);
   }
 }
 
 @mixin slide-toggle-white-color {
   .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: $gizele-white;
+    background-color: $brasa-white;
   }
 
   .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: darken($gizele-white, 15%);
+    background-color: darken($brasa-white, 15%);
   }
 }

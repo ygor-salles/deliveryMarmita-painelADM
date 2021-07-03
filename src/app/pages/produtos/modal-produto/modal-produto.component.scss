@@ -11,7 +11,7 @@ h3 {
 
 .label {
   margin: 30px 0 30px 0;
-  color: $gizele-orange;
+  color: $brasa-orange;
 }
 
 .img-container {
@@ -25,7 +25,7 @@ img {
   object-fit: cover;
   margin: 20px 0 30px 0;
   border-radius: 10px;
-  // @include gizele-items-border;
+  // @include brasa-items-border;
 }
 
 .remove-image > i {

@@ -41,14 +41,14 @@ table {
       }
 
       &:first-child span {
-        border-top-left-radius: $gizele-border-radius;
-        border-bottom-left-radius: $gizele-border-radius !important;
+        border-top-left-radius: $brasa-border-radius;
+        border-bottom-left-radius: $brasa-border-radius !important;
         padding-left: 40px;
       }
 
       &:last-child span {
-        border-top-right-radius: $gizele-border-radius;
-        border-bottom-right-radius: $gizele-border-radius;
+        border-top-right-radius: $brasa-border-radius;
+        border-bottom-right-radius: $brasa-border-radius;
         padding-right: 24px;
       }
     }
@@ -62,14 +62,14 @@ table {
       overflow: visible !important;
 
       &:first-child {
-        border-top-left-radius: $gizele-border-radius;
-        border-bottom-left-radius: $gizele-border-radius !important;
+        border-top-left-radius: $brasa-border-radius;
+        border-bottom-left-radius: $brasa-border-radius !important;
         border-left: solid $tr-border-thickness $tr-border-color;
       }
 
       &:last-child {
-        border-top-right-radius: $gizele-border-radius;
-        border-bottom-right-radius: $gizele-border-radius;
+        border-top-right-radius: $brasa-border-radius;
+        border-bottom-right-radius: $brasa-border-radius;
         border-right: solid $tr-border-thickness $tr-border-color;
       }
     }
@@ -79,14 +79,14 @@ table {
 tbody {
   tr {
     &.produto-row {
-      border-radius: $gizele-border-radius;
+      border-radius: $brasa-border-radius;
     }
   }
 }
 
 .produto-row {
   margin-bottom: 20px !important;
-  border-radius: $gizele-border-radius;
+  border-radius: $brasa-border-radius;
 
   &:not(.expanded-row) {
     transition: all 0.4s;
@@ -95,30 +95,30 @@ tbody {
     &:hover {
       @include translate-box;
       ::ng-deep td {
-        background-color: $gizele-orange;
-        color: $gizele-white;
+        background-color: $brasa-orange;
+        color: $brasa-white;
 
         .mat-select-value,
         .mat-select-arrow {
-          color: $gizele-white !important;
+          color: $brasa-white !important;
         }
 
         .mat-form-field-underline {
-          background-color: $gizele-white !important;
+          background-color: $brasa-white !important;
         }
 
         // .edit > i {
-        //   color: $gizele-white;
+        //   color: $brasa-white;
         // }
         .delete > i {
           color: darkred;
         }
 
         // .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
-        //   background-color: $gizele-white;
+        //   background-color: $brasa-white;
         // }
         // .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-        //   background-color: $gizele-white;
+        //   background-color: $brasa-white;
         // }
       }
     }
@@ -132,16 +132,16 @@ tbody {
     transform: translate(3px, 3px);
 
     ::ng-deep td {
-      background-color: $gizele-orange;
-      color: $gizele-white;
+      background-color: $brasa-orange;
+      color: $brasa-white;
 
       .mat-select-value,
       .mat-select-arrow {
-        color: $gizele-white !important;
+        color: $brasa-white !important;
       }
 
       .mat-form-field-underline {
-        background-color: $gizele-white !important;
+        background-color: $brasa-white !important;
       }
     }
   }
@@ -164,7 +164,7 @@ tr.detail-row {
     td {
       .produto-detail {
         border: solid $tr-border-thickness $tr-border-color;
-        border-radius: $gizele-border-radius;
+        border-radius: $brasa-border-radius;
         width: 100%;
         padding: 0 1.5rem;
 
