@@ -95,10 +95,10 @@
       class="mat-elevation-z4">Cancelar</button>
 
     <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Cadastrar produto'"
-      [disabled]="produtoForm.invalid || !img64" class="mat-elevation-z4">{{data.title}}</button>
+      [disabled]="produtoForm.invalid || !img64" class="mat-elevation-z4 color-button">{{data.title}}</button>
 
     <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Editar produto'"
-      [disabled]="produtoForm.invalid" class="mat-elevation-z4">{{data.title}}</button>
+      [disabled]="produtoForm.invalid" class="mat-elevation-z4 color-button">{{data.title}}</button>
 
     <button mat-raised-button color="warn" (click)="confirm()" *ngIf="data.title==='Excluir produto'"
       class="mat-elevation-z4">{{data.title}}</button>

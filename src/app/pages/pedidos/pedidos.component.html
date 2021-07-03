@@ -2,12 +2,13 @@
   <h1>Pedidos</h1>
   <hr>
   <div class="d-flex">
-    <button mat-raised-button color="primary" class="mr-3" (click)="filterAccordion.toggle()" class="mat-elevation-z4">
+    <button mat-raised-button color="primary" (click)="filterAccordion.toggle()" class="mat-elevation-z4 mr-3 color-button">
       Filtros
       <i class="fa fa-filter"></i>
     </button>
   </div>
 </div>
+<hr>
 
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel #filterAccordion class="expansion-panel-filtros">
