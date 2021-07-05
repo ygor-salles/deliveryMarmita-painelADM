@@ -96,8 +96,8 @@
       <span>Não há nenhuma marmita cadastrada</span>
     </div>
 
-    <mat-paginator [length]="tamanhoPaginacaoMarmita" [pageSize]="tamanhoPaginaMarmita"
-      [pageSizeOptions]="opcoesPaginacaoMarmita" [pageIndex]="indicePaginaMarmita" (page)="mudouPaginaMarmita($event)">
+    <mat-paginator [length]="tamanhoPaginacaoMarmita" [pageSize]="tamanhoPaginaMarmita" [pageSizeOptions]="opcoesPaginacaoMarmita"
+      [pageIndex]="indicePaginaMarmita" (page)="mudouPaginaMarmita($event)" showFirstLastButtons>
     </mat-paginator>
   </mat-tab>
 
@@ -188,8 +188,8 @@
       <span>Não há nenhuma bebida cadastrada</span>
     </div>
 
-    <mat-paginator [length]="tamanhoPaginacaoBebida" [pageSize]="tamanhoPaginaBebida"
-      [pageSizeOptions]="opcoesPaginacaoBebida" [pageIndex]="indicePaginaBebida" (page)="mudouPaginaBebida($event)">
+    <mat-paginator [length]="tamanhoPaginacaoBebida" [pageSize]="tamanhoPaginaBebida" [pageSizeOptions]="opcoesPaginacaoBebida"
+      [pageIndex]="indicePaginaBebida" (page)="mudouPaginaBebida($event)" showFirstLastButtons>
     </mat-paginator>
   </mat-tab>
 </mat-tab-group>

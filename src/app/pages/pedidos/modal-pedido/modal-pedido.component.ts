@@ -1,3 +1,4 @@
+import { MatSelectChange } from '@angular/material/select';
 import { ProdutoService } from './../../../services/produto.service';
 import { IProduct } from './../../../models/IProduct.model';
 import { IFormOrder } from './../../../models/IFormOrder.model';
@@ -16,6 +17,12 @@ export class ModalPedidoComponent implements OnInit {
   vaiEditar: boolean;
   orderForm: FormGroup;
   listProducts: IProduct[];
+  listSize = [
+    { name: 'Marmita pequena', size: 'pequena' },
+    { name: 'Marmita média', size: 'media' },
+    { name: 'Marmita grande', size: 'grande' },
+    { name: 'Bebida', size: null },
+  ]
 
   constructor(
     public dialogRef: MatDialogRef<ModalPedidoComponent>,
@@ -27,10 +34,6 @@ export class ModalPedidoComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.title === 'Editar pedido') this.vaiEditar = true;
     else this.vaiEditar = false;
-
-    this.produtoService.read().subscribe(products => {
-      this.listProducts = products;
-    });
 
     this.orderForm = this.formBuilder.group({
       client_name: [this.data.client_name, Validators.required],
@@ -47,6 +50,7 @@ export class ModalPedidoComponent implements OnInit {
       change_of_money: [this.data.change_of_money, Validators.required],
       total: [this.data.total, Validators.required],
 
+      selectSize: [null],
       selectProduct: [null],
       amount: [null, [Validators.min(0), isNumberIntegerValidator]],
       observation: [null],
@@ -61,6 +65,18 @@ export class ModalPedidoComponent implements OnInit {
   confirm(): void {
     const novoPedido = this.orderForm.getRawValue() as IFormOrder;
     this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status });
+  }
+
+  getProductPerType(event: MatSelectChange): void {
+    if (event.value.name === 'Bebida'){
+      this.produtoService.readPerType('bebida').subscribe(bebidas => {
+        this.listProducts = bebidas;
+      });
+    } else {
+      this.produtoService.readPerType('marmita', event.value.size).subscribe(bebidas => {
+        this.listProducts = bebidas;
+      });
+    }
   }
 
   adicionarProduto(): void {

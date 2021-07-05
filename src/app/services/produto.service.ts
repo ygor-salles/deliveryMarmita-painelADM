@@ -9,7 +9,7 @@ import { IPagedProduct } from '../models/IPagedProduct.model';
 
 const { apiUrl } = environment;
 
-interface IUpdateProduct{
+interface IUpdateProduct {
   status?: boolean
 }
 
@@ -50,6 +50,19 @@ export class ProdutoService {
   read(): Observable<IProduct[]> {
     return this.http
       .get<IProduct[]>(`${apiUrl}/products`)
+      .pipe(
+        map(obj => obj),
+        catchError(e => this.errorHandler(e)),
+      );
+  }
+
+  readPerType(type: string, size?: string): Observable<IProduct[]> {
+    let url = `${apiUrl}/products?type=${type}&status=1`
+    if (size) {
+      url = `${apiUrl}/products?type=${type}&status=1&size=${size}`
+    }
+    return this.http
+      .get<IProduct[]>(url)
       .pipe(
         map(obj => obj),
         catchError(e => this.errorHandler(e)),
