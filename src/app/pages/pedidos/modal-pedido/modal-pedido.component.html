@@ -2,21 +2,32 @@
 <form [formGroup]="orderForm">
   <mat-dialog-content>
     <div class="row mb-4">
-      <mat-form-field class="col-3">
-        <mat-label>Produtos</mat-label>
+      <mat-form-field class="col-4">
+        <mat-label>Tipo de produto</mat-label>
+        <mat-select formControlName="selectSize" (selectionChange)="getProductPerType($event)">
+          <mat-option *ngFor="let item of listSize" [value]="item">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-5">
+        <mat-label>Produto</mat-label>
         <mat-select formControlName="selectProduct">
           <mat-option *ngFor="let product of listProducts" [value]="product">
             {{ product.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-2">
+      <mat-form-field class="col-3">
         <input matInput placeholder="qtd" formControlName="amount">
       </mat-form-field>
-      <mat-form-field class="col-3">
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-6">
         <input matInput placeholder="Observação" formControlName="observation">
       </mat-form-field>
-      <mat-form-field class="col-3">
+      <mat-form-field class="col-5">
         <input matInput placeholder="Mais opções" formControlName="meet_options">
       </mat-form-field>
       <div class="col-1">
