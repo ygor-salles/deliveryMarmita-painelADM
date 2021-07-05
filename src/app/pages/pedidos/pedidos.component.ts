@@ -1,3 +1,5 @@
+import { IFormOrder } from './../../models/IFormOrder.model';
+import { ModalPedidoComponent } from './modal-pedido/modal-pedido.component';
 import { IFilterOrder } from '../../models/IFilterOrder.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
@@ -42,7 +44,7 @@ export class PedidosComponent implements OnInit {
   pedidos: IOrder[] = [];
   $pedidos: Observable<IPagedOrder>;
   fontePedidos: MatTableDataSource<IOrder>;
-  displayedColumns = ['createdAt', 'client_name', 'phone', 'withdrawal', 'status'];
+  displayedColumns = ['createdAt', 'client_name', 'phone', 'withdrawal', 'status', 'actions'];
 
   expandedElement: IOrder | null;
 
@@ -51,7 +53,7 @@ export class PedidosComponent implements OnInit {
   indicePagina = 0;
   opcoesPaginacao: number[] = [5, 10, 20, 50, 100];
 
-  listStatus = [ 'inicializado', 'andamento', 'pronto', 'entregue', 'cancelado']
+  listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado']
 
   constructor(
     public dialog: MatDialog,
@@ -93,10 +95,10 @@ export class PedidosComponent implements OnInit {
     const data = this.filterForm.get('data')?.value;
     let dataFormatada: string;
     if (data) {
-      dataFormatada = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`;
+      dataFormatada = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
     } else {
       const agora = new Date();
-      dataFormatada = `${agora.getFullYear()}-${agora.getMonth()+1}-${agora.getDate()}`;
+      dataFormatada = `${agora.getFullYear()}-${agora.getMonth() + 1}-${agora.getDate()}`;
     }
 
     this.tamanhoPagina = event.pageSize;
@@ -127,10 +129,10 @@ export class PedidosComponent implements OnInit {
     const data = this.filterForm.get('data')?.value;
     let dataFormatada: string;
     if (data) {
-      dataFormatada = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`;
+      dataFormatada = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
     } else {
       const agora = new Date();
-      dataFormatada = `${agora.getFullYear()}-${agora.getMonth()+1}-${agora.getDate()}`;
+      dataFormatada = `${agora.getFullYear()}-${agora.getMonth() + 1}-${agora.getDate()}`;
     }
 
     if (status || client || data) {
@@ -142,5 +144,84 @@ export class PedidosComponent implements OnInit {
     } else {
       this.buscarPedidos(0, this.tamanhoPagina);
     }
+  }
+
+  dialogCadastrar(): void {
+    const dialogRef = this.dialog.open(ModalPedidoComponent, {
+      width: '80%',
+      data: { title: 'Cadastrar pedido' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const pedido: IFormOrder = {
+          client_name: result.client_name,
+          phone: result.phone,
+          cep: result.cep,
+          address_street: result.address_street,
+          address_number: result.address_number,
+          address_neighborhood: result.address_neighborhood,
+          address_city: result.address_city,
+          cost_freight: result.cost_freight,
+          status: 'inicializado',
+          payment: result.payment,
+          withdrawal: result.withdrawal,
+          reference_point: result.reference_point,
+          change_of_money: result.change_of_money,
+          total: result.total,
+          products: result.products,
+        }
+        console.log('POST pedido -', pedido);
+      }
+    });
+  }
+
+  dialogEditar(event: MouseEvent, pedido: IOrder) {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(ModalPedidoComponent, {
+      width: '80%',
+      data: {
+        title: 'Editar pedido',
+        id: pedido.id,
+        client_name: pedido.client_name,
+        phone: pedido.phone,
+        cep: pedido.cep,
+        address_street: pedido.address_street,
+        address_number: pedido.address_number,
+        address_neighborhood: pedido.address_neighborhood,
+        address_city: pedido.address_city,
+        cost_freight: pedido.cost_freight,
+        status: pedido.status,
+        payment: pedido.payment,
+        withdrawal: pedido.withdrawal,
+        reference_point: pedido.reference_point,
+        change_of_money: pedido.change_of_money,
+        total: pedido.total,
+        products: null,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const pedido: IFormOrder = {
+          client_name: result.client_name,
+          phone: result.phone,
+          cep: result.cep,
+          address_street: result.address_street,
+          address_number: result.address_number,
+          address_neighborhood: result.address_neighborhood,
+          address_city: result.address_city,
+          cost_freight: result.cost_freight,
+          status: result.status,
+          payment: result.payment,
+          withdrawal: result.withdrawal,
+          reference_point: result.reference_point,
+          change_of_money: result.change_of_money,
+          total: result.total,
+          products: result.products,
+        }
+        console.log('PUT pedido -', pedido);
+      }
+    });
   }
 }
