@@ -14,6 +14,7 @@ import { isNumberIntegerValidator } from 'src/app/utils/validators/numero-inteir
 })
 export class ModalPedidoComponent implements OnInit {
 
+  // teste
   vaiEditar: boolean;
   orderForm: FormGroup;
   listProducts: IProduct[];
