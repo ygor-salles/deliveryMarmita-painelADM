@@ -1,0 +1,110 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="orderForm">
+  <mat-dialog-content>
+    <div class="row mb-4">
+      <mat-form-field class="col-3">
+        <mat-label>Produtos</mat-label>
+        <mat-select formControlName="selectProduct">
+          <mat-option *ngFor="let product of listProducts" [value]="product">
+            {{ product.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-2">
+        <input matInput placeholder="qtd" formControlName="amount">
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput placeholder="Observação" formControlName="observation">
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput placeholder="Mais opções" formControlName="meet_options">
+      </mat-form-field>
+      <div class="col-1">
+        <a class="cursor-pointer addProduto" (click)="adicionarProduto()">
+          <i class="material-icons" #tooltip="matTooltip" matTooltip="Adicionar produto" matTooltipPosition="above">
+            add_box
+          </i>
+        </a>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-6">
+        <input matInput placeholder="Nome do cliente" formControlName="client_name" required>
+        <mat-error>Campo nome do cliente é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput placeholder="Telefone" formControlName="phone" required>
+        <mat-error>Campo telefone é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput placeholder="CEP" formControlName="cep" required>
+        <mat-error>Campo cep é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-9">
+        <input matInput placeholder="Endereço da rua" formControlName="address_street" required>
+        <mat-error>Endereço da rua é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput placeholder="Número" formControlName="address_number" required>
+        <mat-error>Número da casa é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-6">
+        <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" required>
+        <mat-error>Endereço do bairro é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <input matInput placeholder="Cidade" formControlName="address_city" required>
+        <mat-error>Cidade é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-4">
+        <input matInput placeholder="Custo do frete" formControlName="cost_freight" required>
+        <mat-error>Custo do frete é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-4">
+        <input matInput placeholder="Tipo de Pagamento" formControlName="payment" required>
+        <mat-error>Tipo de pagamento é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-4">
+        <input matInput placeholder="Retirada" formControlName="withdrawal" required>
+        <mat-error>Cidade é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-4">
+      <mat-form-field class="col-12">
+        <input matInput placeholder="Ponto de referência" formControlName="reference_point" required>
+        <mat-error>Ponto de referência é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-5">
+      <mat-form-field class="offset-8 col-2">
+        <input matInput placeholder="Troco" formControlName="change_of_money" required>
+        <mat-error>Troco é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-2">
+        <input matInput placeholder="Total" formControlName="total" required>
+        <mat-error>Tipo de pagamento é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
+      class="mat-elevation-z4">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" [disabled]="orderForm.invalid"
+      class="mat-elevation-z4 color-button">{{data.title}}</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,107 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="produtoForm">
+  <mat-dialog-content>
+    <div *ngIf="data.title==='Excluir produto'; else elseBlock">
+      <h3>O produto <i>{{ data.name }}</i> será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Seleção entre marmita ou bebida e se média ou grande -->
+      <div class="d-flex">
+        <mat-form-field class="w-50">
+          <mat-label>Tipo de produto</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option value="marmita">Marmita</mat-option>
+            <mat-option value="bebida">Bebida</mat-option>
+          </mat-select>
+          <mat-error>Deve ser selecionando o tipo de produto a ser cadastrado</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="produtoForm.get('type')?.value === 'marmita'"  class="w-50">
+          <mat-label>Tamanho do Produto</mat-label>
+          <mat-select formControlName="size" [required]="produtoForm.get('type')?.value === 'marmita'">
+            <mat-option value="pequena">Pequena</mat-option>
+            <mat-option value="media">Média</mat-option>
+            <mat-option value="grande">Grande</mat-option>
+          </mat-select>
+          <mat-error *ngIf="produtoForm.get('size')?.errors?.required">
+            Deve ser selecionando o tamanho do produto a ser cadastrado
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Nome e Preço -->
+      <div class="d-flex">
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Nome" formControlName="name" required>
+          <mat-error>Campo nome é obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput type="number" min=0.5 placeholder="Preço" formControlName="price" required>
+          <span matPrefix>R$&nbsp;</span>
+          <mat-error *ngIf="produtoForm.get('price')?.errors?.required">Campo preço é obrigatório</mat-error>
+          <mat-error *ngIf="produtoForm.get('price')?.errors?.min">O Produto deve ter um preço igual ou maior a R$ 0,50</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Descrição -->
+      <div class="d-flex">
+        <mat-form-field class="w-100" hintLabel="Max 1000 caracteres">
+          <textarea matInput #input maxlength="1000" placeholder="Descrição" formControlName="description"
+            required></textarea>
+          <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
+          <mat-error>Campo descrição é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Exibição e Upload de Imagem -->
+      <div class="mb-lg">
+        <div *ngIf="!vaiEditar; else editar">
+          <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
+          <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+            accept="image/*" /> <br>
+          <img *ngIf="img64" [src]="img64" height="200">
+        </div>
+        <ng-template #editar>
+          <div *ngIf="!showUpdateImage, else showUpdateTemplate">
+            <label class="label">Imagem atual</label> <br>
+            <div class="img-container">
+              <img src="{{transformImageUrl(data.image)}}" onerror="this.src='../../../../assets/img/dump3.png'"
+                alt="Imagem">
+              <a class="cursor-pointer remove-image" (click)="removerImagem()">
+                <i class="material-icons" #tooltip="matTooltip" matTooltip="Remover imagem do produto"
+                  matTooltipPosition="above">
+                  delete
+                </i>
+              </a>
+            </div>
+          </div>
+          <ng-template #showUpdateTemplate>
+            <label class="label">Atualizar imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
+            <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+              accept="image/*" /> <br>
+            <img *ngIf="img64" [src]="img64" height="200">
+            <br><br>
+            <button mat-raised-button color="secondary" (click)="cancelarAlteracao()">
+              Cancelar alteração
+            </button>
+          </ng-template>
+        </ng-template>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
+      class="mat-elevation-z4">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Cadastrar produto'"
+      [disabled]="produtoForm.invalid || !img64" class="mat-elevation-z4 color-button">{{data.title}}</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title==='Editar produto'"
+      [disabled]="produtoForm.invalid" class="mat-elevation-z4 color-button">{{data.title}}</button>
+
+    <button mat-raised-button color="warn" (click)="confirm()" *ngIf="data.title==='Excluir produto'"
+      class="mat-elevation-z4">{{data.title}}</button>
+
+  </mat-dialog-actions>
+</form>

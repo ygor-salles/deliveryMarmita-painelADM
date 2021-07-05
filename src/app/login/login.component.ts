@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         title: 'Ajuda',
         text: [
           'Caso esteja tendo problema para acessar o painel envie um email para: '+
-          'contato@gizelemonteiro.com.br'
+          'contato@brasa.com.br'
         ],
       },
     });

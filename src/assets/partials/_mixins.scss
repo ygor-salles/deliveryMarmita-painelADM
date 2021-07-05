@@ -1,0 +1,52 @@
+@mixin translate-box {
+
+  -webkit-transform: translate(3px, 3px);
+  transform: translate(3px, 3px);
+
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+@mixin brasa-items-border {
+  border-radius: $brasa-border-radius;
+  border: solid $tr-border-thickness $tr-border-color;
+}
+
+@mixin dark-blue-button {
+  background-color: $brasa-dark-blue;
+  color: $brasa-white;
+
+  &:hover {
+    color: $brasa-white;
+    background-color: darken($brasa-dark-blue, 5%);
+  }
+}
+
+@mixin brasa-icons {
+  font-size: 24px;
+  color: $brasa-dark-blue;
+}
+
+@mixin slide-toggle-blue-color {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: $brasa-dark-blue;
+  }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: lighten($brasa-dark-blue, 15%);
+  }
+}
+
+@mixin slide-toggle-white-color {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: $brasa-white;
+  }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: darken($brasa-white, 15%);
+  }
+}

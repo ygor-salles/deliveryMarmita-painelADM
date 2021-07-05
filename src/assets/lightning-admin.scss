@@ -40,7 +40,7 @@ body {
       right: 0;
       bottom: 0;
       left: 0;
-      z-index: 100;  
+      z-index: 100;
       opacity: .7;
       display: none;
 
@@ -70,4 +70,17 @@ body {
 
 .toast {
   opacity: 1;
+}
+
+.mensagem-nenhum-item-tabela {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 1rem;
+
+  span {
+    color: $muted-color;
+  }
 }

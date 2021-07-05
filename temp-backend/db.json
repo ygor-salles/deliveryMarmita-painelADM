@@ -1,59 +1,253 @@
 {
-  "produtos": [
-    {
-      "id": 1,
-      "nome": "Marmita de 12 - Frango a Passarinho",
-      "preco": 12,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 2,
-      "nome": "Marmita de 10 - Frango a Passarinho",
-      "preco": 10,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de frango",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 3,
-      "nome": "Marmita de 10 - Bisteca",
-      "preco": 10,
-      "tipo": "marmita",
-      "descricao": "Arroz, Feijão, Macarrão, Farofa, um pedaço de bisteca",
-      "status": false,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 4,
-      "nome": "Coca Cola Lata 200 ml",
-      "preco": 5,
-      "tipo": "bebida",
-      "descricao": "Coca Cola Lata 200 ml",
-      "status": true,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": 5,
-      "nome": "Fanta Lata 200 ml",
-      "preco": 4.5,
-      "tipo": "bebida",
-      "descricao": "Fanta Lata 200 ml",
-      "status": false,
-      "created_at": "2021-06-01T17:36:44.321Z",
-      "updated_at": null,
-      "deleted_at": null
-    }
-  ]
+  "marmitas": {
+    "total": 5,
+    "page": 0,
+    "totalPages": 1,
+    "limit": 100,
+    "offset": 0,
+    "instances": [
+      {
+        "id": 1,
+        "name": "Marmita de 12 - Frango a Passarinho",
+        "price": 12,
+        "type": "marmita",
+        "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, um pedaço de frango",
+        "status": true,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null
+      },
+      {
+        "id": 2,
+        "name": "Marmita de 10 - Frango a Passarinho",
+        "price": 10,
+        "type": "marmita",
+        "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, Alface, um pedaço de frango",
+        "status": true,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null
+      },
+      {
+        "id": 3,
+        "name": "Marmita de 10 - Bisteca",
+        "price": 10,
+        "type": "marmita",
+        "description": "Arroz, Feijão, Macarrão, Farofa, um pedaço de bisteca",
+        "status": false,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null
+      }
+    ]
+  },
+  "bebidas": {
+    "total": 5,
+    "page": 0,
+    "totalPages": 1,
+    "limit": 100,
+    "offset": 0,
+    "instances": [
+      {
+        "id": 4,
+        "name": "Coca Cola Lata 200 ml",
+        "price": 5,
+        "type": "bebida",
+        "description": "Coca Cola Lata 200 ml",
+        "status": true,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null
+      },
+      {
+        "id": 5,
+        "name": "Fanta Lata 200 ml",
+        "price": 4.5,
+        "type": "bebida",
+        "description": "Fanta Lata 200 ml",
+        "status": false,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null
+      }
+    ]
+  },
+  "pedidos": {
+    "total": 5,
+    "page": 0,
+    "totalPages": 1,
+    "limit": 100,
+    "offset": 0,
+    "instances": [
+      {
+        "id": 1,
+        "client_name": "João Almeida Campos",
+        "phone": "(35)98412-7463",
+        "cep": "37510-000",
+        "address_street": "Rua Catorino Veiga",
+        "address_number": 156,
+        "address_neighborhood": "Cruzeiro",
+        "address_city": "São José do Alegre",
+        "cost_freight": 0,
+        "withdrawal": "entrega",
+        "payment": "pix",
+        "reference_point": null,
+        "status": "inicializado",
+        "change_of_money": null,
+        "total": 15,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null,
+        "orderToProducts": [
+          {
+            "amount": 1,
+            "observation": "Sem cebola, sem alface",
+            "meet_options": "Frango frito",
+            "products": {
+              "id": 2,
+              "name": "Marmita de 10 - Frango a Passarinho",
+              "price": 10,
+              "type": "marmita",
+              "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, Alface, um pedaço de frango",
+              "status": true,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          },
+          {
+            "amount": 2,
+            "observation": null,
+            "meet_options": null,
+            "products": {
+              "id": 4,
+              "name": "Coca Cola Lata 200 ml",
+              "price": 5,
+              "type": "bebida",
+              "description": "Coca Cola Lata 200 ml",
+              "status": true,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "client_name": "Maria Aparecida Clarice",
+        "phone": "(35)98412-5678",
+        "cep": "37510-000",
+        "address_street": "Rua Dom Pedro",
+        "address_number": 167,
+        "address_neighborhood": "Centro",
+        "address_city": "São José do Alegre",
+        "cost_freight": 0,
+        "withdrawal": "local",
+        "payment": "dinheiro",
+        "reference_point": "Em frente ao Cassinho",
+        "status": "inicializado",
+        "change_of_money": 50,
+        "total": 15,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null,
+        "orderToProducts": [
+          {
+            "amount": 1,
+            "observation": "Sem cebola",
+            "meet_options": null,
+            "products": {
+              "id": 1,
+              "name": "Marmita de 12 - Frango a Passarinho",
+              "price": 12,
+              "type": "marmita",
+              "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, um pedaço de frango",
+              "status": true,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "client_name": "Marcio Arantes de Souza",
+        "phone": "(35)78635-7463",
+        "cep": "37520-000",
+        "address_street": "Rua Alfranco Viana",
+        "address_number": 23,
+        "address_neighborhood": "Centro",
+        "address_city": "Pedralva",
+        "cost_freight": 10,
+        "withdrawal": "entrega",
+        "payment": "Cartão de crédito",
+        "reference_point": "Ao lado da rodoviária",
+        "status": "inicializado",
+        "change_of_money": 50,
+        "total": 25,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null,
+        "orderToProducts": [
+          {
+            "amount": 1,
+            "observation": "Sem cebola",
+            "meet_options": null,
+            "products": {
+              "id": 1,
+              "name": "Marmita de 12 - Frango a Passarinho",
+              "price": 12,
+              "type": "marmita",
+              "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, um pedaço de frango",
+              "status": true,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          },
+          {
+            "amount": 2,
+            "observation": null,
+            "meet_options": null,
+            "products": {
+              "id": 3,
+              "name": "Marmita de 10 - Bisteca",
+              "price": 10,
+              "type": "marmita",
+              "description": "Arroz, Feijão, Macarrão, Farofa, um pedaço de bisteca",
+              "status": false,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "client_name": "Ana Maria Lurdes",
+        "phone": "(35)96753-1489",
+        "cep": "37508-000",
+        "address_street": "Rua Dom Casmurro",
+        "address_number": 2,
+        "address_neighborhood": "Centro",
+        "address_city": "Piranguinho - Trevo do Capote",
+        "cost_freight": 15,
+        "withdrawal": "entrega",
+        "payment": "pix",
+        "reference_point": null,
+        "status": "inicializado",
+        "change_of_money": null,
+        "total": 25,
+        "createdAt": "2021-06-01T17:36:44.321Z",
+        "updatedAt": null,
+        "orderToProducts": [
+          {
+            "amount": 1,
+            "observation": "Sem cebola",
+            "meet_options": null,
+            "products": {
+              "id": 1,
+              "name": "Marmita de 12 - Frango a Passarinho",
+              "price": 12,
+              "type": "marmita",
+              "description": "Arroz, Feijão, Macarrão, Farofa, Cebola, um pedaço de frango",
+              "status": true,
+              "createdAt": "2021-06-01T17:36:44.321Z",
+              "updatedAt": null
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -19,6 +19,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -33,6 +36,11 @@ import { PedidosComponent } from './pedidos/pedidos.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoricoComponent } from './historico/historico.component';
+import { AcordianComponent } from './acordian/acordian.component';
+import { ModalProdutoComponent } from './produtos/modal-produto/modal-produto.component';
+import { ModalImagemComponent } from './modal-imagem/modal-imagem.component';
+import { ModalAlertComponent } from './modal-alert/modal-alert.component';
+import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +49,11 @@ import { HistoricoComponent } from './historico/historico.component';
     UsuariosComponent,
     DashboardComponent,
     HistoricoComponent,
+    AcordianComponent,
+    ModalProdutoComponent,
+    ModalImagemComponent,
+    ModalAlertComponent,
+    ModalPedidoComponent,
   ],
   imports: [
     CommonModule,
@@ -68,6 +81,9 @@ import { HistoricoComponent } from './historico/historico.component';
     MatNativeDateModule,
     MatRippleModule,
     MatSortModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    MatListModule
   ],
   exports: [
     ProdutosComponent,

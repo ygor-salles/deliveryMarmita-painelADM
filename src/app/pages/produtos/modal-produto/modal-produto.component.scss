@@ -1,0 +1,38 @@
+@import '../../../../assets/partials/variables';
+// @import '../../../../assets/partials/mixins';
+
+mat-form-field {
+  margin: 10px;
+}
+
+h3 {
+    color: #8F8286;
+}
+
+.label {
+  margin: 30px 0 30px 0;
+  color: $brasa-orange;
+}
+
+.img-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+img {
+  width: 30%;
+  height: 30%;
+  object-fit: cover;
+  margin: 20px 0 30px 0;
+  border-radius: 10px;
+  // @include brasa-items-border;
+}
+
+.remove-image > i {
+  color: #e35e6b;
+  font-size: 30px;
+}
+
+.mb-lg {
+  margin-bottom: 30px;
+}

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
 $bg-color:#FFF;
-$navbar-bg-color : #8F8286;
+$navbar-bg-color : black;
 $navbar-color:#FFF;
 $sidebar-bg-color:#FF6C37;
 $sidebar-color:#FFF;
@@ -21,7 +21,7 @@ body {
 
   nav.navbar {
     background: $navbar-bg-color;
-    border-color: rgba($navbar-color, .3);
+    // border-color: rgba($navbar-color, .3);
 
     .navbar-brand {
       color: lighten($navbar-color, 25%);
@@ -76,7 +76,7 @@ body {
     }
 
     .sidebar {
-      background: $sidebar-bg-color;
+      background-color: $sidebar-bg-color;
 
       >div {
         border-color: rgba($sidebar-color, .1);
@@ -99,18 +99,18 @@ body {
 
       .sidebar-menu {
         .menu-header {
-          color: rgba($sidebar-color, .5);
+          color: #fff;
         }
 
         .menu-items {
           a {
-            color: rgba($sidebar-color, .7);
+            color: #fff;
 
             i {
               color: $sidebar-icon-color;
               border: none;
               width: auto;
-              font-size: 1rem;
+              font-size: 0.9rem;
             }
 
             &:hover,
