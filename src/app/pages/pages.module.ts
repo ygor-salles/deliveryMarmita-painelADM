@@ -22,6 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -83,7 +84,8 @@ import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.compon
     MatSortModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatAutocompleteModule
   ],
   exports: [
     ProdutosComponent,

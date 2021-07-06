@@ -1,3 +1,5 @@
+import { IOrderToProduct } from "./IOrderToProduct.model";
+
 export interface IFormOrder {
   title?: string;
   id?: number;
@@ -15,11 +17,5 @@ export interface IFormOrder {
   reference_point: string;
   change_of_money: number;
   total: number;
-  products: {
-    amount: number;
-    observation: string;
-    meet_options: string;
-    order: number | null;
-    product: number
-  }[];
+  products: IOrderToProduct[];
 }

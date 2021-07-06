@@ -197,7 +197,7 @@ export class PedidosComponent implements OnInit {
         reference_point: pedido.reference_point,
         change_of_money: pedido.change_of_money,
         total: pedido.total,
-        products: null,
+        products: pedido.orderToProducts,
       }
     });
 

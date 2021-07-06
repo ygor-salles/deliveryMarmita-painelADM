@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 <form [formGroup]="orderForm">
   <mat-dialog-content>
+    <!-- Qtd produto, Tipo produto, Produto -->
     <div class="row mb-4">
       <mat-form-field class="col-2">
         <input matInput type="number" min=1 placeholder="Qtd produto" formControlName="amount">
@@ -29,6 +30,7 @@
       </mat-form-field>
     </div>
 
+    <!-- Acréscimo, Qtd acréscimo, Observação -->
     <div class="row mb-4">
       <mat-form-field class="col-3">
         <mat-label>Acréscimo</mat-label>
@@ -59,28 +61,58 @@
       </div>
     </div>
 
+    <table *ngIf="data.products.length > 0">
+      <thead>
+        <tr>
+          <th>Quantidade</th>
+          <th>Produto</th>
+          <th>Acréscimos</th>
+          <th>Observação</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.products; let i = index;">
+          <td>{{ item.amount }}</td>
+          <td>{{ item.products.name }} -- {{ item.products.price | currency }}</td>
+          <td>{{ item.meet_options }}</td>
+          <td>{{ item.observation }}</td>
+          <td>
+            <a class="cursor-pointer delete" (click)="excluirProduto(i)">
+              <i class="material-icons" #tooltip="matTooltip" matTooltip="Excluir produto"
+                matTooltipPosition="above">
+                delete
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Cliente, Telefone, CEP -->
     <div class="row mb-4">
       <mat-form-field class="col-6">
         <input matInput placeholder="Nome do cliente" formControlName="client_name" required>
         <mat-error>Campo nome do cliente é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="Telefone" formControlName="phone"
-          mask="(00) 0000-0000||(00) 00000-0000" [showMaskTyped]="true" required>
+        <input matInput placeholder="Telefone" formControlName="phone" mask="(00) 0000-0000||(00) 00000-0000"
+          [showMaskTyped]="true" required>
         <mat-error>Campo telefone é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="CEP" formControlName="cep"
-         mask="00000-000" [showMaskTyped]="true" required (blur)="buscarCEP()">
-         <mat-error *ngIf="orderForm.get('cep')?.errors?.required" >
+        <input matInput placeholder="CEP" formControlName="cep" mask="00000-000" [showMaskTyped]="true" required
+          (blur)="buscarCEP()">
+        <mat-error *ngIf="orderForm.get('cep')?.errors?.required">
           Você deve inserir o CEP
         </mat-error>
-        <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido" >
+        <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido">
           O CEP inserido é inválido
         </mat-error>
       </mat-form-field>
     </div>
 
+    <!-- Rua, Número -->
     <div class="row mb-4">
       <mat-form-field class="col-9">
         <input matInput placeholder="Endereço da rua" formControlName="address_street" required>
@@ -100,9 +132,16 @@
       </mat-form-field>
     </div>
 
+    <!-- Bairro, Cidade -->
     <div class="row mb-4">
       <mat-form-field class="col-6">
-        <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" required>
+        <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" [matAutocomplete]="auto"
+          (blur)="buscarFrete()" required>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let frete of listFrete" [value]="frete.neighborhood">
+            {{frete.neighborhood}} -- {{frete.shipping_value | currency}}
+          </mat-option>
+        </mat-autocomplete>
         <mat-error>Endereço do bairro é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-6">
@@ -111,31 +150,34 @@
       </mat-form-field>
     </div>
 
+    <!-- Custo frete, Retirada -->
     <div class="row mb-4">
       <mat-form-field class="col-3">
         <input matInput type="number" placeholder="Custo do frete" formControlName="cost_freight" required>
+        <span matPrefix>R$&nbsp;</span>
         <mat-error>Custo do frete é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
         <mat-label>Tipo de pagamento</mat-label>
-          <mat-select formControlName="payment" required>
-            <mat-option value="pix">Pix</mat-option>
-            <mat-option value="dinheiro">Dinheiro</mat-option>
-            <mat-option value="credito">Cartão de Crédito</mat-option>
-            <mat-option value="debito">Cartão de Débito</mat-option>
-          </mat-select>
-          <mat-error>Deve ser selecionando o tipo de pagamento</mat-error>
+        <mat-select formControlName="payment" required>
+          <mat-option value="pix">Pix</mat-option>
+          <mat-option value="dinheiro">Dinheiro</mat-option>
+          <mat-option value="credito">Cartão de Crédito</mat-option>
+          <mat-option value="debito">Cartão de Débito</mat-option>
+        </mat-select>
+        <mat-error>Deve ser selecionando o tipo de pagamento</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
         <mat-label>Retirada</mat-label>
         <mat-select formControlName="withdrawal" required>
           <mat-option value="entrega">Entrega</mat-option>
-          <mat-option value="local">Local</mat-option>
+          <mat-option value="local">Restaurante</mat-option>
         </mat-select>
         <mat-error>Deve ser selecionando o ponto de retirada</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
         <input matInput type="number" placeholder="Troco" formControlName="change_of_money">
+        <span matPrefix>R$&nbsp;</span>
       </mat-form-field>
     </div>
 

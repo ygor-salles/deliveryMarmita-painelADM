@@ -35,6 +35,13 @@ export class ModalPedidoComponent implements OnInit {
     { id: 5, name: 'Macarrão', price: 1.50 },
   ]
 
+  listFrete = [
+    { id: 1, cep: '37510-000', neighborhood: 'Machado', shipping_value: 5.50 },
+    { id: 2, cep: '37510-000', neighborhood: 'Morada do Sol', shipping_value: 3 },
+    { id: 3, cep: '37520-000', neighborhood: 'Paulino', shipping_value: 7.50 },
+    { id: 4, cep: '37510-000', neighborhood: 'Fundão', shipping_value: 6.50 },
+  ]
+
   constructor(
     public dialogRef: MatDialogRef<ModalPedidoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IFormOrder,
@@ -46,6 +53,7 @@ export class ModalPedidoComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.title === 'Editar pedido') this.vaiEditar = true;
     else this.vaiEditar = false;
+    console.log(this.data.products);
 
     this.orderForm = this.formBuilder.group({
       client_name: [this.data.client_name, Validators.required],
@@ -100,6 +108,10 @@ export class ModalPedidoComponent implements OnInit {
     console.log(selectProduct, amount, observation, meet_options);
   }
 
+  excluirProduto(index: number): void {
+    this.data.products.splice(index, 1);
+  }
+
   buscarCEP(): void {
     const cep = this.orderForm.get('cep').value;
 
@@ -116,6 +128,14 @@ export class ModalPedidoComponent implements OnInit {
         this.orderForm.get('cep').setErrors({ cepInvalido: true });
       },
     );
+  }
+
+  buscarFrete(): void {
+    const bairro = this.orderForm.get('address_neighborhood').value;
+    if (bairro) {
+      const frete = this.listFrete.find(frete => frete.neighborhood === bairro)
+      this.orderForm.get('cost_freight').setValue(frete.shipping_value);
+    }
   }
 
 }

@@ -13,3 +13,27 @@ h3 {
   color: #28a745;
   font-size: 38px;
 }
+
+table {
+  width: 100%;
+  margin: 40px 0 40px 0;
+  text-align: center;
+  border-color: black;
+}
+
+th {
+  background-color: #dedede;
+}
+
+th,
+td {
+  padding: 5px 0 5px 0;
+}
+
+tbody tr {
+  border: solid 2px #dedede;
+}
+
+.delete > i {
+  color: $delete-color;
+}
