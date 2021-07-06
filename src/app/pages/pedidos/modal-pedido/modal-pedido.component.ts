@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { CEPserviceService } from './../../../services/cepservice.service';
 import { MatSelectChange } from '@angular/material/select';
 import { ProdutoService } from './../../../services/produto.service';
 import { IProduct } from './../../../models/IProduct.model';
@@ -14,15 +16,23 @@ import { isNumberIntegerValidator } from 'src/app/utils/validators/numero-inteir
 })
 export class ModalPedidoComponent implements OnInit {
 
-  // teste
   vaiEditar: boolean;
   orderForm: FormGroup;
   listProducts: IProduct[];
+
   listSize = [
-    { name: 'Marmita pequena', size: 'pequena' },
-    { name: 'Marmita média', size: 'media' },
     { name: 'Marmita grande', size: 'grande' },
+    { name: 'Marmita média', size: 'media' },
+    { name: 'Marmita pequena', size: 'pequena' },
     { name: 'Bebida', size: null },
+  ]
+
+  listOptions = [
+    { id: 1, name: 'Bisteca', price: 2.50 },
+    { id: 2, name: 'Frango', price: 2.00 },
+    { id: 3, name: 'Peixe', price: 2.30 },
+    { id: 4, name: 'Linguiça', price: 2.00 },
+    { id: 5, name: 'Macarrão', price: 1.50 },
   ]
 
   constructor(
@@ -30,6 +40,7 @@ export class ModalPedidoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: IFormOrder,
     private formBuilder: FormBuilder,
     private produtoService: ProdutoService,
+    private cepService: CEPserviceService,
   ) { }
 
   ngOnInit(): void {
@@ -47,15 +58,16 @@ export class ModalPedidoComponent implements OnInit {
       cost_freight: [this.data.cost_freight, Validators.required],
       payment: [this.data.payment, Validators.required],
       withdrawal: [this.data.withdrawal, Validators.required],
-      reference_point: [this.data.reference_point, Validators.required],
-      change_of_money: [this.data.change_of_money, Validators.required],
-      total: [this.data.total, Validators.required],
+      reference_point: [this.data.reference_point],
+      change_of_money: [this.data.change_of_money],
+      // total: [this.data.total, Validators.required],
 
       selectSize: [null],
       selectProduct: [null],
       amount: [null, [Validators.min(0), isNumberIntegerValidator]],
       observation: [null],
       meet_options: [null],
+      amountOption: [null, [Validators.min(1), isNumberIntegerValidator]]
     });
   }
 
@@ -69,7 +81,7 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   getProductPerType(event: MatSelectChange): void {
-    if (event.value.name === 'Bebida'){
+    if (event.value.name === 'Bebida') {
       this.produtoService.readPerType('bebida').subscribe(bebidas => {
         this.listProducts = bebidas;
       });
@@ -86,6 +98,24 @@ export class ModalPedidoComponent implements OnInit {
     const observation = this.orderForm.get('observation')?.value;
     const meet_options = this.orderForm.get('meet_options')?.value;
     console.log(selectProduct, amount, observation, meet_options);
+  }
+
+  buscarCEP(): void {
+    const cep = this.orderForm.get('cep').value;
+
+    this.cepService.buscarUm(cep).subscribe(endereco => {
+      this.orderForm.get('cep').setErrors(null);
+
+      this.orderForm.get('address_city').setValue(endereco.city);
+      this.orderForm.get('address_neighborhood').setValue(endereco.neighborhood);
+      this.orderForm.get('address_street').setValue(endereco.street);
+
+    },
+      (e: HttpErrorResponse) => {
+        this.cepService.showMessage('Cep inválido', true);
+        this.orderForm.get('cep').setErrors({ cepInvalido: true });
+      },
+    );
   }
 
 }

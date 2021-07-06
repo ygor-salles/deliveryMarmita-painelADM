@@ -2,6 +2,15 @@
 <form [formGroup]="orderForm">
   <mat-dialog-content>
     <div class="row mb-4">
+      <mat-form-field class="col-2">
+        <input matInput type="number" min=1 placeholder="Qtd produto" formControlName="amount">
+        <mat-error *ngIf="orderForm.get('amount')?.errors?.min">
+          A quantidade deve ser maior ou igual a um
+        </mat-error>
+        <mat-error *ngIf="orderForm.get('amount')?.errors?.inteiro">
+          A quantidade deve ser um numero inteiro
+        </mat-error>
+      </mat-form-field>
       <mat-form-field class="col-4">
         <mat-label>Tipo de produto</mat-label>
         <mat-select formControlName="selectSize" (selectionChange)="getProductPerType($event)">
@@ -10,7 +19,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-5">
+      <mat-form-field class="col-6">
         <mat-label>Produto</mat-label>
         <mat-select formControlName="selectProduct">
           <mat-option *ngFor="let product of listProducts" [value]="product">
@@ -18,17 +27,28 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-3">
-        <input matInput placeholder="qtd" formControlName="amount">
-      </mat-form-field>
     </div>
 
     <div class="row mb-4">
+      <mat-form-field class="col-3">
+        <mat-label>Acréscimo</mat-label>
+        <mat-select formControlName="meet_options">
+          <mat-option *ngFor="let option of listOptions" [value]="option">
+            {{ option.name }} -- {{ option.price | currency}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-2">
+        <input matInput type="number" min=1 placeholder="Qtd acréscimo" formControlName="amountOption">
+        <mat-error *ngIf="orderForm.get('amountOption')?.errors?.min">
+          Quantidade deve ser maior ou igual a um
+        </mat-error>
+        <mat-error *ngIf="orderForm.get('amountOption')?.errors?.inteiro">
+          Quantidade deve ser um numero inteiro
+        </mat-error>
+      </mat-form-field>
       <mat-form-field class="col-6">
         <input matInput placeholder="Observação" formControlName="observation">
-      </mat-form-field>
-      <mat-form-field class="col-5">
-        <input matInput placeholder="Mais opções" formControlName="meet_options">
       </mat-form-field>
       <div class="col-1">
         <a class="cursor-pointer addProduto" (click)="adicionarProduto()">
@@ -45,12 +65,19 @@
         <mat-error>Campo nome do cliente é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="Telefone" formControlName="phone" required>
+        <input matInput placeholder="Telefone" formControlName="phone"
+          mask="(00) 0000-0000||(00) 00000-0000" [showMaskTyped]="true" required>
         <mat-error>Campo telefone é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="CEP" formControlName="cep" required>
-        <mat-error>Campo cep é obrigatório</mat-error>
+        <input matInput placeholder="CEP" formControlName="cep"
+         mask="00000-000" [showMaskTyped]="true" required (blur)="buscarCEP()">
+         <mat-error *ngIf="orderForm.get('cep')?.errors?.required" >
+          Você deve inserir o CEP
+        </mat-error>
+        <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido" >
+          O CEP inserido é inválido
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -60,8 +87,16 @@
         <mat-error>Endereço da rua é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="Número" formControlName="address_number" required>
-        <mat-error>Número da casa é obrigatório</mat-error>
+        <input matInput type="number" min=1 placeholder="Número" formControlName="address_number" required>
+        <mat-error *ngIf="orderForm.get('address_number')?.errors?.required">
+          Número da casa é obrigatório
+        </mat-error>
+        <mat-error *ngIf="orderForm.get('address_number')?.errors?.min">
+          Quantidade deve ser maior ou igual a um
+        </mat-error>
+        <mat-error *ngIf="orderForm.get('address_number')?.errors?.inteiro">
+          Quantidade deve ser um numero inteiro
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -77,38 +112,38 @@
     </div>
 
     <div class="row mb-4">
-      <mat-form-field class="col-4">
-        <input matInput placeholder="Custo do frete" formControlName="cost_freight" required>
+      <mat-form-field class="col-3">
+        <input matInput type="number" placeholder="Custo do frete" formControlName="cost_freight" required>
         <mat-error>Custo do frete é obrigatório</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-4">
-        <input matInput placeholder="Tipo de Pagamento" formControlName="payment" required>
-        <mat-error>Tipo de pagamento é obrigatório</mat-error>
+      <mat-form-field class="col-3">
+        <mat-label>Tipo de pagamento</mat-label>
+          <mat-select formControlName="payment" required>
+            <mat-option value="pix">Pix</mat-option>
+            <mat-option value="dinheiro">Dinheiro</mat-option>
+            <mat-option value="credito">Cartão de Crédito</mat-option>
+            <mat-option value="debito">Cartão de Débito</mat-option>
+          </mat-select>
+          <mat-error>Deve ser selecionando o tipo de pagamento</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-4">
-        <input matInput placeholder="Retirada" formControlName="withdrawal" required>
-        <mat-error>Cidade é obrigatório</mat-error>
+      <mat-form-field class="col-3">
+        <mat-label>Retirada</mat-label>
+        <mat-select formControlName="withdrawal" required>
+          <mat-option value="entrega">Entrega</mat-option>
+          <mat-option value="local">Local</mat-option>
+        </mat-select>
+        <mat-error>Deve ser selecionando o ponto de retirada</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-3">
+        <input matInput type="number" placeholder="Troco" formControlName="change_of_money">
       </mat-form-field>
     </div>
 
     <div class="row mb-4">
       <mat-form-field class="col-12">
-        <input matInput placeholder="Ponto de referência" formControlName="reference_point" required>
-        <mat-error>Ponto de referência é obrigatório</mat-error>
+        <input matInput placeholder="Ponto de referência" formControlName="reference_point">
       </mat-form-field>
     </div>
-
-    <div class="row mb-5">
-      <mat-form-field class="offset-8 col-2">
-        <input matInput placeholder="Troco" formControlName="change_of_money" required>
-        <mat-error>Troco é obrigatório</mat-error>
-      </mat-form-field>
-      <mat-form-field class="col-2">
-        <input matInput placeholder="Total" formControlName="total" required>
-        <mat-error>Tipo de pagamento é obrigatório</mat-error>
-      </mat-form-field>
-    </div>
-
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
