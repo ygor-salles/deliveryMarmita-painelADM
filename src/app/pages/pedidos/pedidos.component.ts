@@ -149,7 +149,7 @@ export class PedidosComponent implements OnInit {
   dialogCadastrar(): void {
     const dialogRef = this.dialog.open(ModalPedidoComponent, {
       width: '80%',
-      data: { title: 'Cadastrar pedido' }
+      data: { title: 'Cadastrar pedido', products: [] }
     });
 
     dialogRef.afterClosed().subscribe(result => {

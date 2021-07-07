@@ -16,6 +16,8 @@ export class AcordianComponent implements OnInit {
 
   @Input('pedido') pedido: IOrder;
 
+  @Input('detalhesPedido') detalhesPedido: { meet_options: string, observation: string };
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {

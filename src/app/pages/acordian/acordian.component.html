@@ -68,3 +68,20 @@
     </div>
   </mat-list>
 </div>
+
+<!-- **************************** Accordion modal pedido **************************** -->
+<div *ngIf="detalhesPedido">
+  <mat-list>
+    <div matSubheader class="caption-table">Acréscimos</div>
+    <div class="row body-table">
+      <span class="col-md-12">{{detalhesPedido.meet_options}}</span>
+    </div>
+  </mat-list>
+
+  <mat-list>
+    <div matSubheader class="caption-table">Observação</div>
+    <div class="row body-table">
+      <span class="col-md-12">{{detalhesPedido.observation}}</span>
+    </div>
+  </mat-list>
+</div>

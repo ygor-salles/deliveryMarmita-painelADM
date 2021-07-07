@@ -1,16 +1,20 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 <form [formGroup]="orderForm">
   <mat-dialog-content>
-    <!-- Entrega, Qtd produto, Tipo produto, Produto -->
+    <!-- Retirada -->
     <div class="row mb-4">
-      <mat-form-field class="col-2">
-        <mat-label>Retirada</mat-label>
+      <mat-form-field class="col-12">
+        <mat-label>Selecione retirada</mat-label>
         <mat-select formControlName="withdrawal" required>
           <mat-option value="local">Restaurante</mat-option>
           <mat-option value="entrega">Entrega</mat-option>
         </mat-select>
         <mat-error>Deve ser selecionando o ponto de retirada</mat-error>
       </mat-form-field>
+    </div>
+
+    <!-- Entrega, Qtd produto, Tipo produto, Produto -->
+    <div class="row mb-4">
       <mat-form-field class="col-2">
         <input matInput type="number" min=1 placeholder="Qtd produto" formControlName="amount">
         <mat-error *ngIf="orderForm.get('amount')?.errors?.min">
@@ -20,7 +24,7 @@
           A quantidade deve ser um numero inteiro
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col-4">
+      <mat-form-field class="col-5">
         <mat-label>Tipo de produto</mat-label>
         <mat-select formControlName="selectSize" (selectionChange)="getProductPerType($event)">
           <mat-option *ngFor="let item of listSize" [value]="item">
@@ -28,7 +32,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-4">
+      <mat-form-field class="col-5">
         <mat-label>Produto</mat-label>
         <mat-select formControlName="selectProduct">
           <mat-option *ngFor="let product of listProducts" [value]="product">
@@ -69,37 +73,62 @@
       </div>
     </div>
 
-    <!-- Tabela dos produtos ao editar -->
-    <table *ngIf="vaiEditar && data.products.length > 0">
-      <thead>
-        <tr>
-          <th>Quantidade</th>
-          <th>Produto</th>
-          <th>Acréscimos</th>
-          <th>Observação</th>
-          <th>Excluir</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of data.products; let i = index;">
-          <td>{{ item.amount }}</td>
-          <td>{{ item.products.name }} -- {{ item.products.price | currency }}</td>
-          <td>{{ item.meet_options }}</td>
-          <td>{{ item.observation }}</td>
-          <td>
-            <a class="cursor-pointer delete" (click)="excluirProduto(i)">
-              <i class="material-icons" #tooltip="matTooltip" matTooltip="Excluir produto"
-                matTooltipPosition="above">
-                delete
-              </i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
+    <!-- Tabela de produtos dos pedidos -->
+    <table *ngIf="data.products.length > 0" mat-table [dataSource]="data.products"
+      multiTemplateDataRows class="mt-2 mb-5">
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> <span>Quantidade</span> </th>
+        <td mat-cell *matCellDef="let produto"> {{produto.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="products">
+        <th mat-header-cell *matHeaderCellDef> <span>Produto</span> </th>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef> <span>Tamanho</span> </th>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.size}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> <span>Preço</span> </th>
+        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.price | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> <span>Deletar</span> </th>
+        <td mat-cell *matCellDef="let produto; let i = dataIndex">
+          <a class="cursor-pointer delete" #tooltip="matTooltip" matTooltip="Excluir programa"
+            matTooltipPosition="above" (click)="excluirProduto(i)">
+            <i class="material-icons">
+              delete
+            </i>
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Accordian expandido -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let produto" [attr.colspan]="displayedColumns.length">
+          <div class="produto-detail" [@detailExpand]="produto == expandedElement ? 'expanded' : 'collapsed'">
+            <app-acordian [detalhesPedido]="{ meet_options: produto.meet_options, observation: produto.observation }">
+            </app-acordian>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-table"></tr>
+      <tr mat-row *matRowDef="let produto; columns: displayedColumns;" class="produto-row"
+        [class.expanded-row]="expandedElement === produto"
+        (click)="expandedElement = expandedElement === produto ? null : produto"></tr>
+      <tr mat-row *matRowDef="let produto; columns: ['expandedDetail']"
+        [class.produto-expandido]="expandedElement === produto" class="detail-row"></tr>
     </table>
 
     <!-- Cliente, Telefone, Cep -->
-    <div class="row mb-4">
+    <div class="row mb-4 mt-5">
       <mat-form-field class="col-6">
         <input matInput placeholder="Nome do cliente" formControlName="client_name" required>
         <mat-error>Campo nome do cliente é obrigatório</mat-error>

@@ -1,3 +1,4 @@
+import { IOrderToProduct } from './../../../models/IOrderToProduct.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CEPserviceService } from './../../../services/cepservice.service';
 import { MatSelectChange } from '@angular/material/select';
@@ -6,19 +7,34 @@ import { IProduct } from './../../../models/IProduct.model';
 import { IFormOrder } from './../../../models/IFormOrder.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {animate, state, style, transition, trigger,} from '@angular/animations';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isNumberIntegerValidator } from 'src/app/utils/validators/numero-inteiro';
+
 
 @Component({
   selector: 'app-modal-pedido',
   templateUrl: './modal-pedido.component.html',
-  styleUrls: ['./modal-pedido.component.scss']
+  styleUrls: ['./modal-pedido.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
+      ),
+    ]),
+  ],
 })
 export class ModalPedidoComponent implements OnInit {
 
   vaiEditar: boolean;
   orderForm: FormGroup;
   listProducts: IProduct[];
+
+  displayedColumns = ['amount', 'products', 'size', 'price', 'delete'];
+  expandedElement: IOrderToProduct | null;
 
   listSize = [
     { name: 'Marmita grande', size: 'grande' },
@@ -99,11 +115,16 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   adicionarProduto(): void {
-    const selectProduct = this.orderForm.get('selectProduct')?.value;
-    const amount = this.orderForm.get('amount')?.value;
-    const observation = this.orderForm.get('observation')?.value;
-    const meet_options = this.orderForm.get('meet_options')?.value;
-    console.log(selectProduct, amount, observation, meet_options);
+    const selectProduct = this.orderForm.get('selectProduct').value;
+    const amount = this.orderForm.get('amount').value;
+    const observation = this.orderForm.get('observation').value;
+    const meet_options = this.orderForm.get('meet_options').value;
+    this.data.products.push({
+      amount,
+      observation,
+      meet_options: meet_options.name,
+      products: selectProduct
+    });
   }
 
   excluirProduto(index: number): void {
@@ -140,6 +161,10 @@ export class ModalPedidoComponent implements OnInit {
   setTroco(event: MatSelectChange): void {
     if (event.value !== 'dinheiro') this.orderForm.get('change_of_money').setValue(0);
     else this.orderForm.get('change_of_money').setValue(null);
+  }
+
+  verDetalhesObservacao(observation: string): void {
+    console.log(observation);
   }
 
 }
