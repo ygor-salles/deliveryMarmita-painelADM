@@ -53,22 +53,20 @@ export class ModalPedidoComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.title === 'Editar pedido') this.vaiEditar = true;
     else this.vaiEditar = false;
-    console.log(this.data.products);
 
     this.orderForm = this.formBuilder.group({
-      client_name: [this.data.client_name, Validators.required],
-      phone: [this.data.phone, Validators.required],
-      cep: [this.data.cep, Validators.required],
-      address_street: [this.data.address_street, Validators.required],
-      address_number: [this.data.address_number, Validators.required],
-      address_neighborhood: [this.data.address_neighborhood, Validators.required],
-      address_city: [this.data.address_city, Validators.required],
-      cost_freight: [this.data.cost_freight, Validators.required],
-      payment: [this.data.payment, Validators.required],
       withdrawal: [this.data.withdrawal, Validators.required],
+      client_name: [this.data.client_name, Validators.required],
+      phone: [this.data.phone],
+      cep: [this.data.cep],
+      address_street: [this.data.address_street],
+      address_number: [this.data.address_number],
+      address_neighborhood: [this.data.address_neighborhood],
+      address_city: [this.data.address_city],
+      payment: [this.data.payment, Validators.required],
+      cost_freight: [this.data.cost_freight],
       reference_point: [this.data.reference_point],
       change_of_money: [this.data.change_of_money],
-      // total: [this.data.total, Validators.required],
 
       selectSize: [null],
       selectProduct: [null],
@@ -114,20 +112,21 @@ export class ModalPedidoComponent implements OnInit {
 
   buscarCEP(): void {
     const cep = this.orderForm.get('cep').value;
+    if (cep) {
+      this.cepService.buscarUm(cep).subscribe(endereco => {
+        this.orderForm.get('cep').setErrors(null);
 
-    this.cepService.buscarUm(cep).subscribe(endereco => {
-      this.orderForm.get('cep').setErrors(null);
+        this.orderForm.get('address_city').setValue(endereco.city);
+        this.orderForm.get('address_neighborhood').setValue(endereco.neighborhood);
+        this.orderForm.get('address_street').setValue(endereco.street);
 
-      this.orderForm.get('address_city').setValue(endereco.city);
-      this.orderForm.get('address_neighborhood').setValue(endereco.neighborhood);
-      this.orderForm.get('address_street').setValue(endereco.street);
-
-    },
-      (e: HttpErrorResponse) => {
-        this.cepService.showMessage('Cep inválido', true);
-        this.orderForm.get('cep').setErrors({ cepInvalido: true });
       },
-    );
+        (e: HttpErrorResponse) => {
+          this.cepService.showMessage('Cep inválido', true);
+          // this.orderForm.get('cep').setErrors({ cepInvalido: true });
+        },
+      );
+    }
   }
 
   buscarFrete(): void {
@@ -136,6 +135,11 @@ export class ModalPedidoComponent implements OnInit {
       const frete = this.listFrete.find(frete => frete.neighborhood === bairro)
       this.orderForm.get('cost_freight').setValue(frete.shipping_value);
     }
+  }
+
+  setTroco(event: MatSelectChange): void {
+    if (event.value !== 'dinheiro') this.orderForm.get('change_of_money').setValue(0);
+    else this.orderForm.get('change_of_money').setValue(null);
   }
 
 }

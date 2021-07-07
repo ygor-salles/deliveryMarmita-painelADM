@@ -1,8 +1,16 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 <form [formGroup]="orderForm">
   <mat-dialog-content>
-    <!-- Qtd produto, Tipo produto, Produto -->
+    <!-- Entrega, Qtd produto, Tipo produto, Produto -->
     <div class="row mb-4">
+      <mat-form-field class="col-2">
+        <mat-label>Retirada</mat-label>
+        <mat-select formControlName="withdrawal" required>
+          <mat-option value="local">Restaurante</mat-option>
+          <mat-option value="entrega">Entrega</mat-option>
+        </mat-select>
+        <mat-error>Deve ser selecionando o ponto de retirada</mat-error>
+      </mat-form-field>
       <mat-form-field class="col-2">
         <input matInput type="number" min=1 placeholder="Qtd produto" formControlName="amount">
         <mat-error *ngIf="orderForm.get('amount')?.errors?.min">
@@ -20,7 +28,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-6">
+      <mat-form-field class="col-4">
         <mat-label>Produto</mat-label>
         <mat-select formControlName="selectProduct">
           <mat-option *ngFor="let product of listProducts" [value]="product">
@@ -61,6 +69,7 @@
       </div>
     </div>
 
+    <!-- Tabela dos produtos ao editar -->
     <table *ngIf="vaiEditar && data.products.length > 0">
       <thead>
         <tr>
@@ -89,37 +98,44 @@
       </tbody>
     </table>
 
-    <!-- Cliente, Telefone, CEP -->
+    <!-- Cliente, Telefone, Cep -->
     <div class="row mb-4">
       <mat-form-field class="col-6">
         <input matInput placeholder="Nome do cliente" formControlName="client_name" required>
         <mat-error>Campo nome do cliente é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field class="col-3">
-        <input matInput placeholder="Telefone" formControlName="phone" mask="(00) 0000-0000||(00) 00000-0000"
-          [showMaskTyped]="true" required>
+        <input matInput placeholder="Telefone" formControlName="phone" mask="(00) 0000-0000 || (00) 00000-0000"
+          [showMaskTyped]="true" [required]="orderForm.get('withdrawal').value==='entrega'">
         <mat-error>Campo telefone é obrigatório</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-3">
-        <input matInput placeholder="CEP" formControlName="cep" mask="00000-000" [showMaskTyped]="true" required
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-3">
+        <input matInput placeholder="CEP" formControlName="cep" mask="00000-000" [showMaskTyped]="true"
           (blur)="buscarCEP()">
-        <mat-error *ngIf="orderForm.get('cep')?.errors?.required">
-          Você deve inserir o CEP
-        </mat-error>
-        <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido">
+        <!-- <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido">
           O CEP inserido é inválido
-        </mat-error>
+        </mat-error> -->
       </mat-form-field>
     </div>
 
-    <!-- Rua, Número -->
+    <!-- Bairro, Rua, Número -->
     <div class="row mb-4">
-      <mat-form-field class="col-9">
-        <input matInput placeholder="Endereço da rua" formControlName="address_street" required>
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-5">
+        <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" [matAutocomplete]="auto"
+          (blur)="buscarFrete()" [required]="orderForm.get('withdrawal').value==='entrega'">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let frete of listFrete" [value]="frete.neighborhood">
+            {{frete.neighborhood}} -- {{frete.shipping_value | currency}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>Endereço do bairro é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-5">
+        <input matInput placeholder="Endereço da rua" formControlName="address_street" [required]="orderForm.get('withdrawal').value==='entrega'">
         <mat-error>Endereço da rua é obrigatório</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-3">
-        <input matInput type="number" min=1 placeholder="Número" formControlName="address_number" required>
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-2">
+        <input matInput type="number" min=1 placeholder="Número" formControlName="address_number" [required]="orderForm.get('withdrawal').value==='entrega'">
         <mat-error *ngIf="orderForm.get('address_number')?.errors?.required">
           Número da casa é obrigatório
         </mat-error>
@@ -132,34 +148,11 @@
       </mat-form-field>
     </div>
 
-    <!-- Bairro, Cidade -->
+    <!-- Tipo pagamento, Custo frete, Troco -->
     <div class="row mb-4">
-      <mat-form-field class="col-6">
-        <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" [matAutocomplete]="auto"
-          (blur)="buscarFrete()" required>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let frete of listFrete" [value]="frete.neighborhood">
-            {{frete.neighborhood}} -- {{frete.shipping_value | currency}}
-          </mat-option>
-        </mat-autocomplete>
-        <mat-error>Endereço do bairro é obrigatório</mat-error>
-      </mat-form-field>
-      <mat-form-field class="col-6">
-        <input matInput placeholder="Cidade" formControlName="address_city" required>
-        <mat-error>Cidade é obrigatório</mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- Custo frete, Retirada -->
-    <div class="row mb-4">
-      <mat-form-field class="col-3">
-        <input matInput type="number" placeholder="Custo do frete" formControlName="cost_freight" required>
-        <span matPrefix>R$&nbsp;</span>
-        <mat-error>Custo do frete é obrigatório</mat-error>
-      </mat-form-field>
       <mat-form-field class="col-3">
         <mat-label>Tipo de pagamento</mat-label>
-        <mat-select formControlName="payment" required>
+        <mat-select formControlName="payment" (selectionChange)="setTroco($event)" required>
           <mat-option value="pix">Pix</mat-option>
           <mat-option value="dinheiro">Dinheiro</mat-option>
           <mat-option value="credito">Cartão de Crédito</mat-option>
@@ -167,22 +160,25 @@
         </mat-select>
         <mat-error>Deve ser selecionando o tipo de pagamento</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-3">
-        <mat-label>Retirada</mat-label>
-        <mat-select formControlName="withdrawal" required>
-          <mat-option value="entrega">Entrega</mat-option>
-          <mat-option value="local">Restaurante</mat-option>
-        </mat-select>
-        <mat-error>Deve ser selecionando o ponto de retirada</mat-error>
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-3">
+        <input matInput type="number" placeholder="Custo do frete" formControlName="cost_freight" [required]="orderForm.get('withdrawal').value==='entrega'">
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error>Custo do frete é obrigatório</mat-error>
       </mat-form-field>
-      <mat-form-field class="col-3">
-        <input matInput type="number" placeholder="Troco" formControlName="change_of_money">
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-3">
+        <input matInput type="number" placeholder="Troco" formControlName="change_of_money" [required]="orderForm.get('withdrawal').value==='entrega'">
+        <mat-error>Custo do frete é obrigatório</mat-error>
         <span matPrefix>R$&nbsp;</span>
       </mat-form-field>
     </div>
 
+    <!-- Cidade, ponto de referência -->
     <div class="row mb-4">
-      <mat-form-field class="col-12">
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-6">
+        <input matInput placeholder="Cidade" formControlName="address_city">
+        <mat-error>Cidade é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-6">
         <input matInput placeholder="Ponto de referência" formControlName="reference_point">
       </mat-form-field>
     </div>
