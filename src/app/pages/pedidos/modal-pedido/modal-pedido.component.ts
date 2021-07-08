@@ -11,6 +11,13 @@ import { IProduct } from './../../../models/IProduct.model';
 import { CEPserviceService } from './../../../services/cepservice.service';
 import { ProdutoService } from './../../../services/produto.service';
 
+interface IProductRelation {
+  amount: number;
+  observation: string;
+  meet_options: string;
+  order: number | null,
+  product: number
+}
 
 @Component({
   selector: 'app-modal-pedido',
@@ -90,8 +97,19 @@ export class ModalPedidoComponent implements OnInit {
 
   confirm(): void {
     const novoPedido = this.orderForm.getRawValue() as IFormOrder;
-    console.log(novoPedido);
-    // this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status });
+
+    let products: IProductRelation[] = [];
+    this.data.products.forEach(item => {
+      products.push({
+        amount: item.amount,
+        observation: item.observation,
+        meet_options: item.meet_options,
+        order: null,
+        product: item.products.id
+      });
+    });
+
+    this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status, products });
   }
 
   getProductPerType(event: MatSelectChange): void {
@@ -153,7 +171,17 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   excluirProduto(index: number): void {
-    this.data.products.splice(index, 1);
+    const dialogRef = this.dialog.open(ModalAlertComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: { title: 'Remoção de produto', text: 'Tem certeza que deseja remover este produto?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.data.products.splice(index, 1);
+      }
+    });
   }
 
   buscarCEP(): void {
@@ -165,7 +193,6 @@ export class ModalPedidoComponent implements OnInit {
         this.orderForm.get('address_city').setValue(endereco.city);
         this.orderForm.get('address_neighborhood').setValue(endereco.neighborhood);
         this.orderForm.get('address_street').setValue(endereco.street);
-
       },
         (e: HttpErrorResponse) => {
           this.cepService.showMessage('Cep inválido', true);
