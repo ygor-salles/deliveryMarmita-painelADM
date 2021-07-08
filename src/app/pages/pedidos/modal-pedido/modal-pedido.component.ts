@@ -1,31 +1,21 @@
-import { IOrderToProduct } from './../../../models/IOrderToProduct.model';
+import { ModalAlertComponent } from './../../modal-alert/modal-alert.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CEPserviceService } from './../../../services/cepservice.service';
-import { MatSelectChange } from '@angular/material/select';
-import { ProdutoService } from './../../../services/produto.service';
-import { IProduct } from './../../../models/IProduct.model';
-import { IFormOrder } from './../../../models/IFormOrder.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {animate, state, style, transition, trigger,} from '@angular/animations';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { isNumberIntegerValidator } from 'src/app/utils/validators/numero-inteiro';
+import { IFormOrder } from './../../../models/IFormOrder.model';
+import { IOrderToProduct } from './../../../models/IOrderToProduct.model';
+import { IProduct } from './../../../models/IProduct.model';
+import { CEPserviceService } from './../../../services/cepservice.service';
+import { ProdutoService } from './../../../services/produto.service';
 
 
 @Component({
   selector: 'app-modal-pedido',
   templateUrl: './modal-pedido.component.html',
   styleUrls: ['./modal-pedido.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
-      ),
-    ]),
-  ],
 })
 export class ModalPedidoComponent implements OnInit {
 
@@ -64,6 +54,7 @@ export class ModalPedidoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private produtoService: ProdutoService,
     private cepService: CEPserviceService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +77,7 @@ export class ModalPedidoComponent implements OnInit {
 
       selectSize: [null],
       selectProduct: [null],
-      amount: [null, [Validators.min(0), isNumberIntegerValidator]],
+      amount: [null, [Validators.min(1), isNumberIntegerValidator]],
       observation: [null],
       meet_options: [null],
       amountOption: [null, [Validators.min(1), isNumberIntegerValidator]]
@@ -99,7 +90,8 @@ export class ModalPedidoComponent implements OnInit {
 
   confirm(): void {
     const novoPedido = this.orderForm.getRawValue() as IFormOrder;
-    this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status });
+    console.log(novoPedido);
+    // this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status });
   }
 
   getProductPerType(event: MatSelectChange): void {
@@ -119,12 +111,45 @@ export class ModalPedidoComponent implements OnInit {
     const amount = this.orderForm.get('amount').value;
     const observation = this.orderForm.get('observation').value;
     const meet_options = this.orderForm.get('meet_options').value;
-    this.data.products.push({
-      amount,
-      observation,
-      meet_options: meet_options.name,
-      products: selectProduct
-    });
+    const amountOption = this.orderForm.get('amountOption').value;
+
+    if (amountOption && amountOption <= 0) return;
+
+    if (selectProduct && amount && amount > 0) {
+      let encontrou = false;
+      if (this.data.products.length > 0) {
+        this.data.products.forEach(item => {
+          if (item.products === selectProduct){
+            if (meet_options && amountOption) {
+
+              if (item.meet_options.length === 0) item.meet_options = `${amountOption} ${meet_options.name}`;
+              else item.meet_options += `, ${amountOption} ${meet_options.name}`;
+
+            } else {
+              this.dialog.open(ModalAlertComponent, {
+                width: 'auto',
+                height: 'auto',
+                data: {
+                  title: 'Atenção',
+                  text: 'O produto já foi inserido. Caso queira adicionar acréscimos a este produto, selecione o acréscimo e sua respectiva quantidade.'
+                }
+              });
+            }
+            encontrou = true;
+          }
+        });
+      }
+
+      if (!encontrou) {
+        this.data.products.push({
+          amount,
+          observation: observation ? observation : '',
+          meet_options: meet_options ? `${amountOption} ${meet_options.name}` : '',
+          products: selectProduct
+        });
+      }
+      this.limparDadosOpcao();
+    }
   }
 
   excluirProduto(index: number): void {
@@ -163,8 +188,9 @@ export class ModalPedidoComponent implements OnInit {
     else this.orderForm.get('change_of_money').setValue(null);
   }
 
-  verDetalhesObservacao(observation: string): void {
-    console.log(observation);
+  limparDadosOpcao(): void {
+    this.orderForm.get('meet_options').setValue(null);
+    this.orderForm.get('amountOption').setValue(null);
   }
 
 }

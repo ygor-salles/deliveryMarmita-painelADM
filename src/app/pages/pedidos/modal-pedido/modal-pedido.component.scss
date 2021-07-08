@@ -17,181 +17,22 @@ h3 {
 
 table {
   width: 100%;
-  border-collapse: separate;
-  margin-top: 20px;
-
-  .header-table {
-    height: 40px !important;
-
-    th {
-      text-align: center;
-      border: 0 !important;
-      padding: 0 0 20px 0 !important;
-
-      > span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background-color: $tr-header-color !important;
-        height: 35px;
-      }
-
-      &:first-child span {
-        border-top-left-radius: $brasa-border-radius;
-        border-bottom-left-radius: $brasa-border-radius !important;
-        padding-left: 40px;
-      }
-
-      &:last-child span {
-        border-top-right-radius: $brasa-border-radius;
-        border-bottom-right-radius: $brasa-border-radius;
-        padding-right: 24px;
-      }
-    }
-  }
-
-  tr {
-    td {
-      border-top: solid $tr-border-thickness $tr-border-color;
-      border-bottom: solid $tr-border-thickness $tr-border-color;
-      text-align: center;
-      overflow: visible !important;
-
-      &:first-child {
-        border-top-left-radius: $brasa-border-radius;
-        border-bottom-left-radius: $brasa-border-radius !important;
-        border-left: solid $tr-border-thickness $tr-border-color;
-      }
-
-      &:last-child {
-        border-top-right-radius: $brasa-border-radius;
-        border-bottom-right-radius: $brasa-border-radius;
-        border-right: solid $tr-border-thickness $tr-border-color;
-      }
-    }
-  }
+  margin: 40px 0 40px 0;
+  text-align: center;
+  border-color: black;
 }
 
-tbody {
-  tr {
-    &.produto-row {
-      border-radius: $brasa-border-radius;
-    }
-  }
+th {
+  background-color: #dedede;
 }
 
-.produto-row {
-  margin-bottom: 20px !important;
-  border-radius: $brasa-border-radius;
-
-  &:not(.expanded-row) {
-    transition: all 0.4s;
-    background: transparent;
-
-    &:hover {
-      @include translate-box;
-      ::ng-deep td {
-        background-color: $brasa-orange;
-        color: $brasa-white;
-
-        .mat-select-value,
-        .mat-select-arrow {
-          color: $brasa-white !important;
-        }
-
-        .mat-form-field-underline {
-          background-color: $brasa-white !important;
-        }
-
-        // .edit > i {
-        //   color: $brasa-white;
-        // }
-        .delete > i {
-          color: darkred;
-        }
-
-        // .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
-        //   background-color: $brasa-white;
-        // }
-        // .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-        //   background-color: $brasa-white;
-        // }
-      }
-    }
-  }
-
-  &.expanded-row {
-    box-shadow: rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 4px 13px,
-      rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-    -webkit-transform: translate(3px, 3px);
-    transform: translate(3px, 3px);
-
-    ::ng-deep td {
-      background-color: $brasa-orange;
-      color: $brasa-white;
-
-      .mat-select-value,
-      .mat-select-arrow {
-        color: $brasa-white !important;
-      }
-
-      .mat-form-field-underline {
-        background-color: $brasa-white !important;
-      }
-    }
-  }
+th,
+td {
+  padding: 5px 0 5px 0;
 }
 
-tr.detail-row {
-  height: 0;
-}
-
-.produto-row td {
-  border-bottom-width: 0;
-}
-
-.detail-row {
-  td {
-    border: none !important;
-    padding: 0.5rem 0;
-  }
-  &.produto-expandido {
-    td {
-      .produto-detail {
-        border: solid $tr-border-thickness $tr-border-color;
-        border-radius: $brasa-border-radius;
-        width: 100%;
-        padding: 0 1.5rem;
-
-        box-shadow: rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-          rgba(0, 0, 0, 0.17) 0px 4px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-        -webkit-transform: translate(3px, 3px);
-        transform: translate(3px, 3px);
-      }
-    }
-  }
-}
-
-.produto-detail {
-  overflow: hidden;
-  &.collapsed {
-    border: none !important;
-  }
-}
-
-.expansion-panel-filtros {
-  margin-bottom: 2rem !important;
-
-  .mat-expansion-panel-body {
-    padding-bottom: 0;
-  }
-
-  .mat-form-field {
-    margin-top: 0.5rem;
-  }
+tbody tr {
+  border: solid 2px #dedede;
 }
 
 .delete > i {

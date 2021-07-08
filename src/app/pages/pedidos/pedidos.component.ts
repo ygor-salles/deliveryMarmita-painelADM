@@ -222,6 +222,7 @@ export class PedidosComponent implements OnInit {
         }
         console.log('PUT pedido -', pedido);
       }
+      this.buscarPedidos(0, this.tamanhoPagina);
     });
   }
 }

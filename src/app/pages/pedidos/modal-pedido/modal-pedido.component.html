@@ -42,8 +42,11 @@
       </mat-form-field>
     </div>
 
-    <!-- Acréscimo, Qtd acréscimo, Observação -->
+    <!-- Observação, Acréscimo, Qtd acréscimo, Botão add -->
     <div class="row mb-4">
+      <mat-form-field class="col-6">
+        <input matInput placeholder="Observação" formControlName="observation">
+      </mat-form-field>
       <mat-form-field class="col-3">
         <mat-label>Acréscimo</mat-label>
         <mat-select formControlName="meet_options">
@@ -61,10 +64,7 @@
           Quantidade deve ser um numero inteiro
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col-6">
-        <input matInput placeholder="Observação" formControlName="observation">
-      </mat-form-field>
-      <div class="col-1">
+      <div>
         <a class="cursor-pointer addProduto" (click)="adicionarProduto()">
           <i class="material-icons" #tooltip="matTooltip" matTooltip="Adicionar produto" matTooltipPosition="above">
             add_box
@@ -73,58 +73,37 @@
       </div>
     </div>
 
-    <!-- Tabela de produtos dos pedidos -->
-    <table *ngIf="data.products.length > 0" mat-table [dataSource]="data.products"
-      multiTemplateDataRows class="mt-2 mb-5">
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> <span>Quantidade</span> </th>
-        <td mat-cell *matCellDef="let produto"> {{produto.amount}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="products">
-        <th mat-header-cell *matHeaderCellDef> <span>Produto</span> </th>
-        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="size">
-        <th mat-header-cell *matHeaderCellDef> <span>Tamanho</span> </th>
-        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.size}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef> <span>Preço</span> </th>
-        <td class="cursor-pointer" mat-cell *matCellDef="let produto"> {{produto.products.price | currency}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> <span>Deletar</span> </th>
-        <td mat-cell *matCellDef="let produto; let i = dataIndex">
-          <a class="cursor-pointer delete" #tooltip="matTooltip" matTooltip="Excluir programa"
-            matTooltipPosition="above" (click)="excluirProduto(i)">
-            <i class="material-icons">
-              delete
-            </i>
-          </a>
-        </td>
-      </ng-container>
-
-      <!-- Accordian expandido -->
-      <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let produto" [attr.colspan]="displayedColumns.length">
-          <div class="produto-detail" [@detailExpand]="produto == expandedElement ? 'expanded' : 'collapsed'">
-            <app-acordian [detalhesPedido]="{ meet_options: produto.meet_options, observation: produto.observation }">
-            </app-acordian>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-table"></tr>
-      <tr mat-row *matRowDef="let produto; columns: displayedColumns;" class="produto-row"
-        [class.expanded-row]="expandedElement === produto"
-        (click)="expandedElement = expandedElement === produto ? null : produto"></tr>
-      <tr mat-row *matRowDef="let produto; columns: ['expandedDetail']"
-        [class.produto-expandido]="expandedElement === produto" class="detail-row"></tr>
+    <!-- Tabela dos produtos do pedido -->
+    <table *ngIf="data.products.length > 0">
+      <thead>
+        <tr>
+          <th style="width: 8%;">Quantidade</th>
+          <th style="width: 23%;">Produto</th>
+          <th style="width: 8%;">Tamanho</th>
+          <th style="width: 8%;">Preço</th>
+          <th style="width: 23%;">Acréscimos</th>
+          <th style="width: 22%;">Observação</th>
+          <th style="width: 8%;">Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.products; let i = index;">
+          <td style="width: 8%;">{{ item.amount }}</td>
+          <td style="width: 23%;">{{ item.products.name }}</td>
+          <td style="width: 8%;">{{ item.products.size }}</td>
+          <td style="width: 8%;">{{ item.products.price | currency }}</td>
+          <td style="width: 23%;">{{ item.meet_options }}</td>
+          <td style="width: 22%;">{{ item.observation }}</td>
+          <td style="width: 8%;">
+            <a class="cursor-pointer delete" (click)="excluirProduto(i)">
+              <i class="material-icons" #tooltip="matTooltip" matTooltip="Excluir produto"
+                matTooltipPosition="above">
+                delete
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <!-- Cliente, Telefone, Cep -->
