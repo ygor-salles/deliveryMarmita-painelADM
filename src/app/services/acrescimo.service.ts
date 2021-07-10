@@ -33,7 +33,7 @@ export class AcrescimoService {
     return EMPTY;
   }
 
-  create(acrescimo: IAcrescimo): Observable<any> {
+  create(acrescimo: IAcrescimo): Observable<IAcrescimo> {
     return this.http
       .post<IAcrescimo>(`${apiUrl}/additions`, acrescimo)
       .pipe(

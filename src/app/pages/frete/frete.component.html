@@ -11,13 +11,6 @@
 <hr>
 
 <table mat-table [dataSource]="fonteFretes" class="table-frete">
-
-  <!-- CEP Column -->
-  <ng-container matColumnDef="cep">
-    <th mat-header-cell *matHeaderCellDef> <span>CEP</span> </th>
-    <td mat-cell *matCellDef="let frete"> {{ frete.cep | mask: '00000-000' }} </td>
-  </ng-container>
-
   <!-- Bairro Column -->
   <ng-container matColumnDef="neighborhood">
     <th mat-header-cell *matHeaderCellDef> <span>Bairro</span> </th>

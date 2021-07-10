@@ -33,7 +33,7 @@ export class UsuarioService {
     return EMPTY;
   }
 
-  create(usuario: IUsuario): Observable<any> {
+  create(usuario: IUsuario): Observable<IUsuario> {
     return this.http
       .post<IUsuario>(`${apiUrl}/users`, usuario)
       .pipe(

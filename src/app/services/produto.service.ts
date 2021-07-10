@@ -38,7 +38,7 @@ export class ProdutoService {
     return EMPTY;
   }
 
-  create(produto: IProduct): Observable<any> {
+  create(produto: IProduct): Observable<IProduct> {
     return this.http
       .post<IProduct>(`${apiUrl}/products`, produto)
       .pipe(

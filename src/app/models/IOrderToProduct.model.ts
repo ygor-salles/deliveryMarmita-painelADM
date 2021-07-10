@@ -7,5 +7,6 @@ export interface IOrderToProduct {
   amount: number;
   observation: string;
   meet_options: string;
+  total_item: number;
   products: IProduct;
 }

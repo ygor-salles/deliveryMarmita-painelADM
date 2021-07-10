@@ -163,7 +163,8 @@ export class ModalPedidoComponent implements OnInit {
           amount,
           observation: observation ? observation : '',
           meet_options: meet_options ? `${amountOption} ${meet_options.name}` : '',
-          products: selectProduct
+          products: selectProduct,
+          total_item: 0
         });
       }
       this.limparDadosOpcao();

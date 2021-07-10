@@ -45,6 +45,7 @@ import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.compon
 import { FreteComponent } from './frete/frete.component';
 import { AcrescimoComponent } from './acrescimo/acrescimo.component';
 import { ModalAcrescimoComponent } from './acrescimo/modal-acrescimo/modal-acrescimo.component';
+import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ModalAcrescimoComponent } from './acrescimo/modal-acrescimo/modal-acres
     FreteComponent,
     AcrescimoComponent,
     ModalAcrescimoComponent,
+    ModalFreteComponent,
   ],
   imports: [
     CommonModule,

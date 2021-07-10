@@ -1,6 +1,6 @@
 export interface IFrete {
+  title?: string;
   id?: number;
-  cep: string;
   neighborhood: string;
   value: number;
   createdAt?: Date;

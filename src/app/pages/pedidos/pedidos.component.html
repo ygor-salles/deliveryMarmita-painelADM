@@ -58,13 +58,15 @@
   <!-- Cliente Column -->
   <ng-container matColumnDef="client_name">
     <th mat-header-cell *matHeaderCellDef> <span>Cliente</span> </th>
-    <td class="cursor-pointer largura-40" mat-cell *matCellDef="let pedido"> {{pedido.client_name}} </td>
+    <td class="cursor-pointer largura-35" mat-cell *matCellDef="let pedido"> {{pedido.client_name}} </td>
   </ng-container>
 
   <!-- Telefone Column -->
   <ng-container matColumnDef="phone">
     <th mat-header-cell *matHeaderCellDef> <span>Telefone</span> </th>
-    <td class="cursor-pointer" mat-cell *matCellDef="let pedido"> {{pedido.phone}} </td>
+    <td class="cursor-pointer" mat-cell *matCellDef="let pedido">
+      {{pedido.phone | mask: '(00)0000-0000 || (00)00000-0000'}}
+    </td>
   </ng-container>
 
   <!-- Retirada Column -->

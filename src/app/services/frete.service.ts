@@ -33,7 +33,7 @@ export class FreteService {
     return EMPTY;
   }
 
-  create(frete: IFrete): Observable<any> {
+  create(frete: IFrete): Observable<IFrete> {
     return this.http
       .post<IFrete>(`${apiUrl}/shippings`, frete)
       .pipe(
