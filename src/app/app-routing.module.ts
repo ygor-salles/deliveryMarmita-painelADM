@@ -1,3 +1,5 @@
+import { FreteComponent } from './pages/frete/frete.component';
+import { AcrescimoComponent } from './pages/acrescimo/acrescimo.component';
 // Angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -35,6 +37,8 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'produtos', component: ProdutosComponent},
   {path: 'pedidos', component: PedidosComponent},
+  {path: 'acrescimos', component: AcrescimoComponent},
+  {path: 'frete', component: FreteComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'historico', component: HistoricoComponent},
 ];
