@@ -68,7 +68,7 @@ export class AcrescimoService {
   }
 
   delete(id: number): Observable<IAcrescimo> {
-    const url = `${apiUrl}/additions/${id}`;
+    const url = `${apiUrl}/additions/${id}/destroy`;
     return this.http.delete<IAcrescimo>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),

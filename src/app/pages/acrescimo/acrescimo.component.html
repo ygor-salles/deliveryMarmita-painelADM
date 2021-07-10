@@ -21,7 +21,7 @@
   <!-- Preço Column -->
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef> <span>Preço</span> </th>
-    <td mat-cell *matCellDef="let acrescimo"> {{acrescimo.price}} </td>
+    <td mat-cell *matCellDef="let acrescimo"> {{acrescimo.price | currency}} </td>
   </ng-container>
 
   <!-- Data de Criação Column -->

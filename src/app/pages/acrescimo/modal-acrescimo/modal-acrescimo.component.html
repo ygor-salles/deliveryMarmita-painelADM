@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="acrescimoForm">
+  <mat-dialog-content>
+    <div *ngIf="data.title==='Excluir acréscimo'; else elseBlock">
+      <h3>O acrescimo <i>{{ data.name }}</i> será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Acréscimo -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Acréscimo" formControlName="name" required>
+          <mat-error>Campo nome é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Preço -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <input matInput type="number" min=0.5 placeholder="Preço" formControlName="price" required>
+          <span matPrefix>R$&nbsp;</span>
+          <mat-error *ngIf="acrescimoForm.get('price')?.errors?.required">Campo preço é obrigatório</mat-error>
+          <mat-error *ngIf="acrescimoForm.get('price')?.errors?.min">O Acréscimo deve ter um preço igual ou maior a R$ 0,50</mat-error>
+        </mat-form-field>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
+      class="mat-elevation-z4">Cancelar</button>
+
+    <button mat-raised-button color="primary" *ngIf="data.title !== 'Excluir acréscimo'; else notExcluir"
+      (click)="confirm()" [disabled]="acrescimoForm.invalid" class="mat-elevation-z4 color-button">
+      {{data.title}}
+    </button>
+
+    <ng-template #notExcluir>
+      <button mat-raised-button color="primary" (click)="confirm()" class="mat-elevation-z4 color-button">
+        {{data.title}}
+      </button>
+    </ng-template>
+  </mat-dialog-actions>
+</form>
