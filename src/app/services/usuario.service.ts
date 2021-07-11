@@ -68,7 +68,7 @@ export class UsuarioService {
   }
 
   delete(id: number): Observable<IUsuario> {
-    const url = `${apiUrl}/users/${id}`;
+    const url = `${apiUrl}/users/${id}/destroy`;
     return this.http.delete<IUsuario>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),

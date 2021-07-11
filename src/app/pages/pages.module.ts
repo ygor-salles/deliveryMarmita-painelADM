@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -46,6 +47,7 @@ import { FreteComponent } from './frete/frete.component';
 import { AcrescimoComponent } from './acrescimo/acrescimo.component';
 import { ModalAcrescimoComponent } from './acrescimo/modal-acrescimo/modal-acrescimo.component';
 import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
+import { ModalUsuarioComponent } from './usuarios/modal-usuario/modal-usuario.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
     AcrescimoComponent,
     ModalAcrescimoComponent,
     ModalFreteComponent,
+    ModalUsuarioComponent,
   ],
   imports: [
     CommonModule,
@@ -93,7 +96,8 @@ import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
     MatTooltipModule,
     MatExpansionModule,
     MatListModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatIconModule
   ],
   exports: [
     ProdutosComponent,

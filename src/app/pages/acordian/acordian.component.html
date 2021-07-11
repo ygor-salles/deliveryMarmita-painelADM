@@ -2,7 +2,7 @@
 <div *ngIf="produto" class="card-contentainer">
   <div>
     <img class="cursor-pointer" (click)="abrirModalImagem(produto.image)"
-      src="{{transformImageUrl(produto.image)}}" onerror="this.src='../../../assets/img/dump3.png'"
+      [src]="transformImageUrl(produto.image)" onerror="this.src='../../../assets/img/dump3.png'"
       alt="Imagens de produtos">
   </div>
   <div class="media-text">
@@ -41,14 +41,18 @@
   <mat-list>
     <div matSubheader class="caption-table">Produto(s)</div>
     <div class="row no-gutters header-table">
-      <span class="col-md-4">Produto</span>
-      <span class="col-md-4">Observação</span>
+      <span class="col-md-3">Produto</span>
+      <span class="col-md-1">Preço</span>
+      <span class="col-md-3">Observação</span>
       <span class="col-md-4">Opçoes de carne</span>
+      <span class="col-md-1">Total item</span>
     </div>
     <div class="row no-gutters body-table" *ngFor="let produto of pedido.orderToProducts">
-      <span class="col-md-4">{{produto.amount}} {{produto.products.name}} - {{produto.products.price | currency}}</span>
-      <span class="col-md-4">{{produto.observation ? produto.observation : '---'}}</span>
+      <span class="col-md-3">{{produto.amount}} {{produto.products.name}}</span>
+      <span class="col-md-1">{{produto.products.price | currency}}</span>
+      <span class="col-md-3">{{produto.observation ? produto.observation : '---'}}</span>
       <span class="col-md-4">{{produto.meet_options ? produto.meet_options : '---'}}</span>
+      <span class="col-md-1">{{produto.total_item | currency}}</span>
     </div>
   </mat-list>
 
@@ -58,7 +62,7 @@
       <span class="col-md-3">Troco</span>
       <span class="col-md-3">Frete</span>
       <span class="col-md-3">Tipo de pagamento</span>
-      <span class="col-md-3">Total</span>
+      <span class="col-md-3">Total geral</span>
     </div>
     <div class="row body-table">
       <span class="col-md-3">{{pedido.change_of_money ? pedido.change_of_money : '---'}}</span>

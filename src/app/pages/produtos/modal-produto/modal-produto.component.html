@@ -65,7 +65,7 @@
           <div *ngIf="!showUpdateImage, else showUpdateTemplate">
             <label class="label">Imagem atual</label> <br>
             <div class="img-container">
-              <img src="{{transformImageUrl(data.image)}}" onerror="this.src='../../../../assets/img/dump3.png'"
+              <img [src]="transformImageUrl(data.image)" onerror="this.src='../../../../assets/img/dump3.png'"
                 alt="Imagem">
               <a class="cursor-pointer remove-image" (click)="removerImagem()">
                 <i class="material-icons" #tooltip="matTooltip" matTooltip="Remover imagem do produto"
