@@ -77,25 +77,27 @@
     <table *ngIf="data.products.length > 0">
       <thead>
         <tr>
-          <th style="width: 8%;">Quantidade</th>
+          <th style="width: 6%;">Qtd</th>
           <th style="width: 23%;">Produto</th>
           <th style="width: 8%;">Tamanho</th>
-          <th style="width: 8%;">Preço</th>
+          <th style="width: 6%;">Preço</th>
           <th style="width: 23%;">Acréscimos</th>
           <th style="width: 22%;">Observação</th>
-          <th style="width: 8%;">Excluir</th>
+          <th style="width: 6%;">Total</th>
+          <th style="width: 6%;">Excluir</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of data.products; let i = index;">
-          <td style="width: 8%;">{{ item.amount }}</td>
+          <td style="width: 6%;">{{ item.amount }}</td>
           <td style="width: 23%;">{{ item.products.name }}</td>
           <td style="width: 8%;">{{ item.products.size }}</td>
-          <td style="width: 8%;">{{ item.products.price | currency }}</td>
+          <td style="width: 6%;">{{ item.products.price | currency }}</td>
           <td style="width: 23%;">{{ item.meet_options }}</td>
           <td style="width: 22%;">{{ item.observation }}</td>
-          <td style="width: 8%;">
-            <a class="cursor-pointer delete" (click)="excluirProduto(i)">
+          <td style="width: 6%;">{{ item.total_item | currency }}</td>
+          <td style="width: 6%;">
+            <a class="cursor-pointer delete" (click)="excluirProduto(i, item.total_item)">
               <i class="material-icons" #tooltip="matTooltip" matTooltip="Excluir produto"
                 matTooltipPosition="above">
                 delete
@@ -104,6 +106,12 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6" class="total-geral">Total Geral</td>
+          <td colspan="2">{{ data.total | currency}}</td>
+        </tr>
+      </tfoot>
     </table>
 
     <!-- Cliente, Telefone, Cep -->
@@ -175,7 +183,7 @@
       </mat-form-field>
       <mat-form-field *ngIf="orderForm.get('withdrawal').value==='entrega'" class="col-3">
         <input matInput type="number" placeholder="Troco" formControlName="change_of_money" [required]="orderForm.get('withdrawal').value==='entrega'">
-        <mat-error>Custo do frete é obrigatório</mat-error>
+        <mat-error>Troco é obrigatório</mat-error>
         <span matPrefix>R$&nbsp;</span>
       </mat-form-field>
     </div>

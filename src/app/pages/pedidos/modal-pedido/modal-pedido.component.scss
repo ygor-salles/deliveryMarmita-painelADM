@@ -38,3 +38,12 @@ tbody tr {
 .delete > i {
   color: $delete-color;
 }
+
+tfoot {
+  background-color: #dedede;
+  font-weight: bold;
+  text-align: start;
+  .total-geral {
+    padding-left: 20px;
+  }
+}

@@ -1,9 +1,8 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import transformProductImageUrl from 'src/app/utils/functions/transformProductImageUrl';
 import { IProduct } from '../../../models/IProduct.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IFormProduct } from '../../../models/IFormProduct.model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-modal-produto',
@@ -19,7 +18,7 @@ export class ModalProdutoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalProdutoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IFormProduct,
+    @Inject(MAT_DIALOG_DATA) public data: IProduct,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
   ) { }

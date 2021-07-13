@@ -1,3 +1,4 @@
+import { IOrder } from 'src/app/models/IOrder.model';
 import { ModalAlertComponent } from './../../modal-alert/modal-alert.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -5,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { isNumberIntegerValidator } from 'src/app/utils/validators/numero-inteiro';
-import { IFormOrder } from './../../../models/IFormOrder.model';
 import { IOrderToProduct } from './../../../models/IOrderToProduct.model';
 import { IProduct } from './../../../models/IProduct.model';
 import { CEPserviceService } from './../../../services/cepservice.service';
@@ -16,7 +16,8 @@ interface IProductRelation {
   observation: string;
   meet_options: string;
   order: number | null,
-  product: number
+  product: number,
+  total_item: number
 }
 
 @Component({
@@ -57,7 +58,7 @@ export class ModalPedidoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalPedidoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IFormOrder,
+    @Inject(MAT_DIALOG_DATA) public data: IOrder,
     private formBuilder: FormBuilder,
     private produtoService: ProdutoService,
     private cepService: CEPserviceService,
@@ -96,7 +97,7 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   confirm(): void {
-    const novoPedido = this.orderForm.getRawValue() as IFormOrder;
+    const novoPedido = this.orderForm.getRawValue() as IOrder;
 
     let products: IProductRelation[] = [];
     this.data.products.forEach(item => {
@@ -105,11 +106,18 @@ export class ModalPedidoComponent implements OnInit {
         observation: item.observation,
         meet_options: item.meet_options,
         order: null,
-        product: item.products.id
+        product: item.products.id,
+        total_item: item.total_item,
       });
     });
 
-    this.dialogRef.close({ ...novoPedido, id: this.data.id, status: this.data.status, products });
+    this.dialogRef.close({
+      ...novoPedido,
+      id: this.data.id,
+      status: this.data.status,
+      products,
+      total: this.data.total
+    });
   }
 
   getProductPerType(event: MatSelectChange): void {
@@ -135,6 +143,7 @@ export class ModalPedidoComponent implements OnInit {
 
     if (selectProduct && amount && amount > 0) {
       let encontrou = false;
+
       if (this.data.products.length > 0) {
         this.data.products.forEach(item => {
           if (item.products === selectProduct){
@@ -142,6 +151,8 @@ export class ModalPedidoComponent implements OnInit {
 
               if (item.meet_options.length === 0) item.meet_options = `${amountOption} ${meet_options.name}`;
               else item.meet_options += `, ${amountOption} ${meet_options.name}`;
+              item.total_item += (amountOption * meet_options.price);
+              this.data.total +=  (amountOption * meet_options.price);
 
             } else {
               this.dialog.open(ModalAlertComponent, {
@@ -164,14 +175,18 @@ export class ModalPedidoComponent implements OnInit {
           observation: observation ? observation : '',
           meet_options: meet_options ? `${amountOption} ${meet_options.name}` : '',
           products: selectProduct,
-          total_item: 0
+          total_item: amountOption && meet_options ?
+            (amount * selectProduct.price) + (amountOption * meet_options.price) : (amount * selectProduct.price),
         });
+        this.data.total += amountOption && meet_options ?
+          (amount * selectProduct.price) + (amountOption * meet_options.price) : (amount * selectProduct.price)
       }
+
       this.limparDadosOpcao();
     }
   }
 
-  excluirProduto(index: number): void {
+  excluirProduto(index: number, total_item: number): void {
     const dialogRef = this.dialog.open(ModalAlertComponent, {
       width: 'auto',
       height: 'auto',
@@ -180,6 +195,7 @@ export class ModalPedidoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.data.total -= total_item;
         this.data.products.splice(index, 1);
       }
     });
@@ -212,8 +228,11 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   setTroco(event: MatSelectChange): void {
-    if (event.value !== 'dinheiro') this.orderForm.get('change_of_money').setValue(0);
-    else this.orderForm.get('change_of_money').setValue(null);
+    const withdrawal = this.orderForm.get('withdrawal').value;
+    if (withdrawal) {
+      if (event.value !== 'dinheiro') this.orderForm.get('change_of_money').setValue(0);
+      else this.orderForm.get('change_of_money').setValue(null);
+    }
   }
 
   limparDadosOpcao(): void {

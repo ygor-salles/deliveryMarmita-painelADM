@@ -1,7 +1,8 @@
 import { IOrderToProduct } from './IOrderToProduct.model';
 
 export interface IOrder {
-  id: number;
+  title?: string;
+  id?: number;
   client_name: string;
   phone: string;
   cep: string;
@@ -13,10 +14,11 @@ export interface IOrder {
   withdrawal: string;
   payment: string;
   reference_point: string;
-  status: string;
+  status?: string;
   change_of_money: number;
   total: number;
-  createdAt: Date;
-  updatedAt: Date;
-  orderToProducts: IOrderToProduct[];
+  products?: IOrderToProduct[];
+  orderToProducts?: IOrderToProduct[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

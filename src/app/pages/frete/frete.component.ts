@@ -50,6 +50,7 @@ export class FreteComponent implements OnInit {
         title: 'Editar frete',
         id: frete.id,
         neighborhood: frete.neighborhood,
+        value: frete.value,
       }
     });
 

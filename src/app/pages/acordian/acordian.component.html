@@ -13,7 +13,7 @@
 
 <!-- **************************** Accordion da tela de pedidos **************************** -->
 <div *ngIf="pedido">
-  <mat-list>
+  <mat-list *ngIf="pedido.withdrawal==='entrega'">
     <div matSubheader class="caption-table">Endereço</div>
     <div class="row header-table">
       <span class="col-md-3">Cidade</span>
@@ -31,7 +31,7 @@
     </div>
   </mat-list>
 
-  <mat-list *ngIf="pedido.reference_point">
+  <mat-list *ngIf="pedido.withdrawal==='entrega' && pedido.reference_point">
     <div matSubheader class="caption-table">Ponto de referência</div>
     <div class="row body-table">
       <span class="col-md-12">{{pedido.reference_point}}</span>

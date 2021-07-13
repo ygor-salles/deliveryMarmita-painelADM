@@ -94,8 +94,8 @@ export class PedidoService {
     );
   }
 
-  update(pedido: IOrder): Observable<IOrder> {
-    const url = `${apiUrl}/orders/${pedido.id}`;
+  update(pedido: IOrder, idPedido: number): Observable<IOrder> {
+    const url = `${apiUrl}/orders/${idPedido}`;
     return this.http.put<IOrder>(url, pedido).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
