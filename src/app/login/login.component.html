@@ -16,19 +16,23 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Senha</mat-label>
-          <input type="password" matInput formControlName="senha">
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide" class="mat-elevation-z4">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
         </mat-form-field>
       </div>
 
       <div class="login-button">
-        <button mat-raised-button class="mat-elevation-z8 color-button" type="submit" [disabled]="loginForm.invalid">Continuar</button>
+        <button mat-raised-button class="mat-elevation-z8 color-button submit" type="submit"
+          [disabled]="loginForm.invalid">Continuar</button>
       </div>
 
     </form>
 
     <div class="ajuda">
       <a (click)="esqueciASenha()">Esqueceu a senha?</a>
-      <a (click)="ajuda()">Problemas para acessar o painel?</a>
     </div>
 
   </div>

@@ -23,12 +23,12 @@ export class AutenticacaoService {
     });
   }
 
-  autenticar(email: string, senha: string): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(`${apiUrl}/administrador/login`, { email, senha });
+  autenticar(email: string, password: string): Observable<IAuthResponse> {
+    return this.http.post<IAuthResponse>(`${apiUrl}/auth/signin`, { email, password });
   }
 
   atualizarAutenticacao(refresh_token: string): Observable<IAuthResponse> {
     const headers = new HttpHeaders({ refresh_token });
-    return this.http.post<IAuthResponse>(`${apiUrl}/administrador/login`, {}, { headers });
+    return this.http.post<IAuthResponse>(`${apiUrl}/auth/signin`, {}, { headers });
   }
 }

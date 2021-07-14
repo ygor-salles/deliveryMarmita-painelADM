@@ -9,8 +9,8 @@ import jwt_decode from 'jwt-decode';
 })
 export class SessaoService {
   private loggedSubject = new Subject<boolean>();
-  private tokenExp!: number;
-  private perfil_id!: number | null;
+  private tokenExp: number;
+  private perfil_id: number | null;
   private logged$ = this.loggedSubject.asObservable();
 
   constructor(private autenticacaoService: AutenticacaoService) {
@@ -77,10 +77,10 @@ export class SessaoService {
       }
 
       this.autenticacaoService.atualizarAutenticacao(refreshToken).subscribe(
-        ({ token, refresh_token }) => {
-          this.setToken(token);
-          this.setRefreshToken(refresh_token);
-          resolve(token);
+        (result) => {
+          this.setToken(result.data.token);
+          this.setRefreshToken(result.data.refresh_token);
+          resolve(result.data.token);
         },
         err => reject(err),
       );
@@ -89,8 +89,8 @@ export class SessaoService {
 
   logout(): void {
     window.localStorage.removeItem('token');
-    window.localStorage.removeItem('refresh_token');
-    this.perfil_id = null;
+    // window.localStorage.removeItem('refresh_token');
+    // this.perfil_id = null;
     this.loggedSubject.next(false);
   }
 
