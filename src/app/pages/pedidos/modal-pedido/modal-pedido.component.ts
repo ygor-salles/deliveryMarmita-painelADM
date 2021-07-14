@@ -1,3 +1,6 @@
+import { IAcrescimo } from './../../../models/IAcrescimo.model';
+import { FreteService } from './../../../services/frete.service';
+import { AcrescimoService } from './../../../services/acrescimo.service';
 import { IOrder } from 'src/app/models/IOrder.model';
 import { ModalAlertComponent } from './../../modal-alert/modal-alert.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,6 +13,7 @@ import { IOrderToProduct } from './../../../models/IOrderToProduct.model';
 import { IProduct } from './../../../models/IProduct.model';
 import { CEPserviceService } from './../../../services/cepservice.service';
 import { ProdutoService } from './../../../services/produto.service';
+import { IFrete } from 'src/app/models/IFrete.model';
 
 interface IProductRelation {
   amount: number;
@@ -41,20 +45,9 @@ export class ModalPedidoComponent implements OnInit {
     { name: 'Bebida', size: null },
   ]
 
-  listOptions = [
-    { id: 1, name: 'Bisteca', price: 2.50 },
-    { id: 2, name: 'Frango', price: 2.00 },
-    { id: 3, name: 'Peixe', price: 2.30 },
-    { id: 4, name: 'Linguiça', price: 2.00 },
-    { id: 5, name: 'Macarrão', price: 1.50 },
-  ]
+  listOptions: IAcrescimo[];
 
-  listFrete = [
-    { id: 1, cep: '37510-000', neighborhood: 'Machado', shipping_value: 5.50 },
-    { id: 2, cep: '37510-000', neighborhood: 'Morada do Sol', shipping_value: 3 },
-    { id: 3, cep: '37520-000', neighborhood: 'Paulino', shipping_value: 7.50 },
-    { id: 4, cep: '37510-000', neighborhood: 'Fundão', shipping_value: 6.50 },
-  ]
+  listFrete: IFrete[];
 
   constructor(
     public dialogRef: MatDialogRef<ModalPedidoComponent>,
@@ -63,6 +56,8 @@ export class ModalPedidoComponent implements OnInit {
     private produtoService: ProdutoService,
     private cepService: CEPserviceService,
     private dialog: MatDialog,
+    private acrescimoService: AcrescimoService,
+    private freteService: FreteService,
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +84,14 @@ export class ModalPedidoComponent implements OnInit {
       observation: [null],
       meet_options: [null],
       amountOption: [null, [Validators.min(1), isNumberIntegerValidator]]
+    });
+
+    this.acrescimoService.read().subscribe(acrescimos => {
+      this.listOptions = acrescimos;
+    });
+
+    this.freteService.read().subscribe(fretes => {
+      this.listFrete = fretes;
     });
   }
 
@@ -223,7 +226,7 @@ export class ModalPedidoComponent implements OnInit {
     const bairro = this.orderForm.get('address_neighborhood').value;
     if (bairro) {
       const frete = this.listFrete.find(frete => frete.neighborhood === bairro)
-      this.orderForm.get('cost_freight').setValue(frete.shipping_value);
+      this.orderForm.get('cost_freight').setValue(frete.value);
     }
   }
 

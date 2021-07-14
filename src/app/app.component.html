@@ -1,25 +1,25 @@
-<!-- <div class="wrapper default-theme" [ngClass]="getClasses()">
-    <app-navbar></app-navbar>
-    <main>
-      <app-sidebar *ngIf="logado"></app-sidebar>
-      <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 " [class.login-bg]="!logado">
-        <router-outlet></router-outlet>
-        <hr>
-        <app-footer></app-footer>
-      </div>
-      <div class="overlay" (click)="toggleSidebar()"></div>
-    </main>
-  </div> -->
-
 <div class="wrapper default-theme" [ngClass]="getClasses()">
   <!-- <app-navbar></app-navbar> -->
   <main>
-    <app-sidebar></app-sidebar>
-    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+    <app-sidebar *ngIf="logado"></app-sidebar>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 " [class.login-bg]="!logado">
       <router-outlet></router-outlet>
-      <!-- <hr>
-      <app-footer></app-footer> -->
+      <!-- <hr> -->
+      <!-- <app-footer></app-footer> -->
     </div>
     <div class="overlay" (click)="toggleSidebar()"></div>
   </main>
 </div>
+
+<!-- <div class="wrapper default-theme" [ngClass]="getClasses()">
+  <app-navbar></app-navbar>
+  <main>
+    <app-sidebar></app-sidebar>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+      <router-outlet></router-outlet>
+      <hr>
+      <app-footer></app-footer>
+    </div>
+    <div class="overlay" (click)="toggleSidebar()"></div>
+  </main>
+</div> -->

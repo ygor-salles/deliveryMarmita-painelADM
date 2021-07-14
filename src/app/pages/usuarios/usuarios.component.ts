@@ -1,3 +1,4 @@
+import { MatSelectChange } from '@angular/material/select';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IUsuario } from './../../models/IUsuario.model';
@@ -13,8 +14,7 @@ export class UsuariosComponent implements OnInit {
 
   fonteUsuarios: IUsuario[] = [];
   displayedColumns = ['name', 'username', 'email', 'role', 'createdAt', 'actions'];
-  isAdmin = true;
-  notAdmin = false;
+  listUser = ['admin', 'user'];
 
   constructor(private usuarioService: UsuarioService, private dialog: MatDialog) { }
 
@@ -94,8 +94,11 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  tornarAdmin(usuario: IUsuario): void {
-    console.log('Tornar admin', usuario);
+  selectTypeUser(event: MatSelectChange, idUsuario: number): void {
+    console.log('PATCH', event.value, idUsuario);
+    // this.usuarioService.patch(event.value, idUsuario).subscribe(() => {
+    //   this.usuarioService.showMessage('Tipo de usuário atualizado com sucesso!');
+    // });
   }
 
 }

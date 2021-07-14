@@ -141,7 +141,7 @@
           (blur)="buscarFrete()" [required]="orderForm.get('withdrawal').value==='entrega'">
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let frete of listFrete" [value]="frete.neighborhood">
-            {{frete.neighborhood}} -- {{frete.shipping_value | currency}}
+            {{frete.neighborhood}} -- {{frete.value | currency}}
           </mat-option>
         </mat-autocomplete>
         <mat-error>Endereço do bairro é obrigatório</mat-error>
