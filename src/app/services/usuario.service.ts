@@ -8,10 +8,6 @@ import { environment } from 'src/environments/environment';
 
 const { apiUrl } = environment;
 
-interface IUsuarioUpdate {
-  role: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -71,9 +67,15 @@ export class UsuarioService {
     );
   }
 
-  patch(role: string, idUsuario: number): Observable<IUsuarioUpdate> {
-    const url = `${apiUrl}/users/${idUsuario}/changeStatus`;
-    return this.http.put<IUsuarioUpdate>(url, { role: role }).pipe(
+  patch(usuario: IUsuario, idUsuario: number): Observable<IUsuario> {
+    const url = `${apiUrl}/users/${idUsuario}`;
+    const obj = {
+      name: usuario.name,
+      username: usuario.username,
+      email: usuario.email,
+      role: usuario.role
+    }
+    return this.http.put<IUsuario>(url, obj).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );

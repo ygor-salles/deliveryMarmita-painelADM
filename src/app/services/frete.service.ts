@@ -68,7 +68,7 @@ export class FreteService {
   }
 
   delete(id: number): Observable<IFrete> {
-    const url = `${apiUrl}/shippings/${id}`;
+    const url = `${apiUrl}/shippings/${id}/destroy`;
     return this.http.delete<IFrete>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),

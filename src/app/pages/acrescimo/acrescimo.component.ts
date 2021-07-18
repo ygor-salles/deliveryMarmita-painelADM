@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class AcrescimoComponent implements OnInit {
 
   fonteAcrescimos: IAcrescimo[] = [];
-  displayedColumns = ['name', 'price', 'createdAt', 'actions'];
+  displayedColumns = ['name', 'price', 'createdAt', 'status', 'actions'];
 
   constructor(private acrescimoService: AcrescimoService, private dialog: MatDialog) { }
 
@@ -32,7 +32,7 @@ export class AcrescimoComponent implements OnInit {
       if (result) {
         const acrescimo: IAcrescimo = {
           name: result.name,
-          price: result.price,
+          price: result.price
         }
         this.acrescimoService.create(acrescimo).subscribe(() => {
           this.acrescimoService.showMessage('Acréscimo cadastrado com sucesso!');
@@ -82,6 +82,14 @@ export class AcrescimoComponent implements OnInit {
           this.ngOnInit();
         });
       }
+    });
+  }
+
+  ativarDesativar(acrescimo: IAcrescimo): void {
+    this.acrescimoService.patch(acrescimo.status, acrescimo.id).subscribe(() => {
+      this.acrescimoService.showMessage(
+        acrescimo.status === true ? 'Acréscimo ativado' : 'Acréscimo desativado',
+      );
     });
   }
 

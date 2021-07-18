@@ -65,7 +65,7 @@ export class ModalPedidoComponent implements OnInit {
     else this.vaiEditar = false;
 
     this.orderForm = this.formBuilder.group({
-      withdrawal: [this.data.withdrawal, Validators.required],
+      withdrawal: [{ value: this.data.withdrawal, disabled: this.vaiEditar }, Validators.required],
       client_name: [this.data.client_name, Validators.required],
       phone: [this.data.phone],
       cep: [this.data.cep],

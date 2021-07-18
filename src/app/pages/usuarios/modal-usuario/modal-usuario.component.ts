@@ -28,7 +28,6 @@ export class ModalUsuarioComponent implements OnInit {
     else this.vaiEditar = false;
 
     this.usuarioForm = this.formBuilder.group({
-      role: [{ value: this.data.role, disabled: false }, Validators.required],
       name: [this.data.name, Validators.required],
       username: [this.data.username, Validators.required],
       email: [this.data.email, [Validators.email, Validators.required]],

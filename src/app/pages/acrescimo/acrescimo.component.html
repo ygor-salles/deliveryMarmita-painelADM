@@ -24,6 +24,16 @@
     <td mat-cell *matCellDef="let acrescimo"> {{acrescimo.price | currency}} </td>
   </ng-container>
 
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> <span>Ativo</span> </th>
+    <td mat-cell *matCellDef="let acrescimo">
+      <mat-slide-toggle #tooltip="matTooltip" matTooltip="Ativar / Desativar" matTooltipPosition="above"
+        (change)="ativarDesativar(acrescimo)" [(ngModel)]="acrescimo.status">
+      </mat-slide-toggle>
+    </td>
+  </ng-container>
+
   <!-- Data de Criação Column -->
   <ng-container matColumnDef="createdAt">
     <th mat-header-cell *matHeaderCellDef> <span>Data de Criação</span> </th>

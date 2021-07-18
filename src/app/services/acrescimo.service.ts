@@ -67,6 +67,14 @@ export class AcrescimoService {
     );
   }
 
+  patch(status: boolean, idAcrescimo: number): Observable<IAcrescimo> {
+    const url = `${apiUrl}/additions/${idAcrescimo}/update-status`;
+    return this.http.put<IAcrescimo>(url, { status: status }).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e)),
+    );
+  }
+
   delete(id: number): Observable<IAcrescimo> {
     const url = `${apiUrl}/additions/${id}/destroy`;
     return this.http.delete<IAcrescimo>(url).pipe(

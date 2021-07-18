@@ -37,7 +37,7 @@ export class UsuariosComponent implements OnInit {
           email: result.email,
           username: result.username,
           password: result.password,
-          role: result.role,
+          role: 'user',
         }
         this.usuarioService.create(usuario).subscribe(() => {
           this.usuarioService.showMessage('Usuário cadastrado com sucesso!');
@@ -94,11 +94,11 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  selectTypeUser(event: MatSelectChange, idUsuario: number): void {
-    console.log('PATCH', event.value, idUsuario);
-    // this.usuarioService.patch(event.value, idUsuario).subscribe(() => {
-    //   this.usuarioService.showMessage('Tipo de usuário atualizado com sucesso!');
-    // });
+  selectTypeUser(event: MatSelectChange, usuario: IUsuario): void {
+    usuario.role = event.value;
+    this.usuarioService.patch(usuario, usuario.id).subscribe(() => {
+      this.usuarioService.showMessage('Tipo de usuário atualizado com sucesso!');
+    });
   }
 
 }

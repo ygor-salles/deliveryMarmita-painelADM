@@ -1,8 +1,8 @@
-import { InfoModalComponent } from './../../login/info-modal/info-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SessaoService } from 'src/app/services/sessao.service';
+import { ModalAlertComponent } from './../../pages/modal-alert/modal-alert.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
   logout(evento: MouseEvent): void {
     evento.preventDefault();
 
-    const dialogRef = this.dialog.open(InfoModalComponent, {
+    const dialogRef = this.dialog.open(ModalAlertComponent, {
       width: 'auto',
       height: 'auto',
       data: {
