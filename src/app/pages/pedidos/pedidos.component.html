@@ -2,8 +2,11 @@
   <h1>Pedidos</h1>
   <hr>
   <div class="d-flex">
-    <button mat-raised-button color="primary" class="mat-elevation-z4 mr-3 color-button" (click)="dialogCadastrar()">
-      Cadastrar
+    <button mat-raised-button color="primary" class="mat-elevation-z4 mr-3 color-button" (click)="dialogCadastrar(true)">
+      Cadastrar delivery
+    </button>
+    <button mat-raised-button color="primary" class="mat-elevation-z4 mr-3 color-button" (click)="dialogCadastrar(false)">
+      Cadastrar local
     </button>
     <button mat-raised-button color="primary" (click)="filterAccordion.toggle()" class="mat-elevation-z4 mr-3 color-button">
       Filtros
@@ -65,7 +68,7 @@
   <ng-container matColumnDef="phone">
     <th mat-header-cell *matHeaderCellDef> <span>Telefone</span> </th>
     <td class="cursor-pointer" mat-cell *matCellDef="let pedido">
-      {{pedido.phone | mask: '(00)0000-0000 || (00)00000-0000'}}
+      {{pedido.phone ? (pedido.phone | mask: '(00)0000-0000 || (00)00000-0000') : '--'}}
     </td>
   </ng-container>
 

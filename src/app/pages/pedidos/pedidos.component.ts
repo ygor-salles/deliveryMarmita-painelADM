@@ -145,10 +145,15 @@ export class PedidosComponent implements OnInit {
     }
   }
 
-  dialogCadastrar(): void {
+  dialogCadastrar(isDelivery: boolean): void {
     const dialogRef = this.dialog.open(ModalPedidoComponent, {
       width: '80%',
-      data: { title: 'Cadastrar pedido', products: [], total: 0 }
+      data: {
+        title: isDelivery === true ? 'Cadastrar pedido delivery' : 'Cadastrar pedido local',
+        products: [],
+        total: 0,
+        withdrawal: isDelivery === true ? 'entrega' : 'local'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

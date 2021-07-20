@@ -24,6 +24,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -97,7 +98,8 @@ import { ModalUsuarioComponent } from './usuarios/modal-usuario/modal-usuario.co
     MatExpansionModule,
     MatListModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     ProdutosComponent,
