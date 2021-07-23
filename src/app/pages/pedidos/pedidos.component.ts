@@ -18,7 +18,7 @@ import { IPagedOrder } from 'src/app/models/IPagedOrder.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PedidoService } from 'src/app/services/pedido.service';
-
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pedidos',
@@ -52,7 +52,10 @@ export class PedidosComponent implements OnInit {
   indicePagina = 0;
   opcoesPaginacao: number[] = [5, 10, 20, 50, 100];
 
-  listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado']
+  listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado'];
+
+  subscription: Subscription;
+  source = interval(10000);
 
   constructor(
     public dialog: MatDialog,
@@ -68,6 +71,13 @@ export class PedidosComponent implements OnInit {
       client_name: '',
       data: '',
     });
+
+    this.subscription = this.source.subscribe(val => this.buscarPedidos(0, 10));
+
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   buscarPedidos(
@@ -80,6 +90,7 @@ export class PedidosComponent implements OnInit {
       this.fontePedidos.sort = this.sort;
     };
 
+    // console.log(Math.random());
     this.pedidoService.readPaginator(pagina, limite, filtros).subscribe(ped => {
       this.pedidos = ped.instances;
       this.tamanhoPaginacao = ped.total;
