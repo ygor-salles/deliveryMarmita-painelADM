@@ -7,7 +7,7 @@ import { SessaoService } from '../services/sessao.service';
 export class AutenticacaoGuard implements CanActivate {
   constructor(private sessaoService: SessaoService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot, ):
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot, ):
     | boolean
     | UrlTree
     | Observable<boolean | UrlTree>

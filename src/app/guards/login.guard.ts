@@ -8,13 +8,13 @@ import { SessaoService } from '../services/sessao.service';
 export class LoginGuard implements CanActivate {
   constructor(private sessaoService: SessaoService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot, ):
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot, ):
     | boolean
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     if (this.sessaoService.isLogged()) {
-      return this.router.parseUrl('/dashboard');
+      return this.router.parseUrl('/pedidos');
     }
     return true;
   }

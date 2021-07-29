@@ -58,7 +58,7 @@
         <div *ngIf="!vaiEditar; else editar">
           <label class="label">Inserir imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label><br>
           <label for='selecao-arquivo' class="label-input-file">Selecionar uma imagem &#187;</label>
-          <input id='selecao-arquivo' type='file' accept="image/*" multiple (change)="uploadFileEvt($event)"><br>
+          <input id='selecao-arquivo' type='file' accept="image/*" (change)="uploadFileEvt($event)"><br>
           <img *ngIf="img64" [src]="img64">
         </div>
         <ng-template #editar>
@@ -78,7 +78,7 @@
           <ng-template #showUpdateTemplate>
             <label class="label">Atualizar imagem do produto (OBS: apenas imagem menores que 1MB serão aceitas)</label> <br>
             <label for='selecao-arquivo' class="label-input-file">Selecionar uma imagem &#187;</label>
-            <input id='selecao-arquivo' type='file' accept="image/*" multiple (change)="uploadFileEvt($event)"><br>
+            <input id='selecao-arquivo' type='file' accept="image/*" (change)="uploadFileEvt($event)"><br>
             <img *ngIf="img64" [src]="img64">
             <br><br>
             <button mat-raised-button color="secondary" (click)="cancelarAlteracao()">

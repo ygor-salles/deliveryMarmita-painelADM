@@ -7,11 +7,11 @@
       </div> -->
       Brasa Admin
     </div>
-    <!-- <div class="sidebar-user">
-      <span class="sidebar-user-name">Login: Brasa Admin</span>
+    <div class="sidebar-user" *ngIf="($user | async) as user">
+      <span class="sidebar-user-name">Login: {{ user.username }}</span>
       <br>
-      <span>Perfil: Admin</span>
-    </div> -->
+      <span>Perfil: {{user.role}}</span>
+    </div>
     <ul class="menu-items">
       <li>
         <a href="#" routerLink="/dashboard" routerLinkActive="active">

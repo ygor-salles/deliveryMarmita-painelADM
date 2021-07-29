@@ -19,7 +19,7 @@ import { FreteComponent } from './pages/frete/frete.component';
 import { AcrescimoComponent } from './pages/acrescimo/acrescimo.component';
 
 const routes: Routes = [
-  {path: '',   redirectTo: 'dashboard', pathMatch: 'full'},
+  {path: '',   redirectTo: 'pedidos', pathMatch: 'full'},
   {path: 'login', canActivate: [LoginGuard], component: LoginComponent},
   {path: 'recuperar-senha', canActivate: [LoginGuard], component: RecuperarSenhaComponent },
   {path: 'esqueceu-senha', canActivate: [LoginGuard], component: EsqueceuSenhaComponent },
@@ -33,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
