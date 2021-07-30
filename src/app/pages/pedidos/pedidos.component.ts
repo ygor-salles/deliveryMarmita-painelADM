@@ -1,6 +1,6 @@
 import { ModalPedidoComponent } from './modal-pedido/modal-pedido.component';
 import { IFilterOrder } from '../../models/IFilterOrder.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   animate,
   state,
@@ -19,6 +19,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { interval, Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const { pedidosTimeout } = environment;
 
 @Component({
   selector: 'app-pedidos',
@@ -35,7 +38,7 @@ import { interval, Subscription } from 'rxjs';
     ]),
   ],
 })
-export class PedidosComponent implements OnInit {
+export class PedidosComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
   public filterForm: FormGroup;
@@ -54,8 +57,12 @@ export class PedidosComponent implements OnInit {
 
   listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado'];
 
+  status: string;
+  client: string;
+  data: string;
+
   subscription: Subscription;
-  source = interval(20000);
+  source = interval(pedidosTimeout);
 
   constructor(
     public dialog: MatDialog,
@@ -72,7 +79,11 @@ export class PedidosComponent implements OnInit {
       data: '',
     });
 
-    this.subscription = this.source.subscribe(val => this.buscarPedidos(this.indicePagina, this.tamanhoPagina));
+    this.subscription = this.source.subscribe(val => {
+      this.buscarPedidos(this.indicePagina, this.tamanhoPagina, {
+        data: this.data, client: this.client, status: this.status
+      });
+    });
 
   }
 
@@ -103,12 +114,9 @@ export class PedidosComponent implements OnInit {
     const status = this.filterForm.get('status')?.value;
     const client = this.filterForm.get('client_name')?.value;
     const data = this.filterForm.get('data')?.value;
-    let dataFormatada: string;
+    let dataFormatada: string | null = null;
     if (data) {
       dataFormatada = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
-    } else {
-      const agora = new Date();
-      dataFormatada = `${agora.getFullYear()}-${agora.getMonth() + 1}-${agora.getDate()}`;
     }
 
     this.tamanhoPagina = event.pageSize;
@@ -134,21 +142,19 @@ export class PedidosComponent implements OnInit {
   }
 
   filtrar(): void {
-    const status = this.filterForm.get('status')?.value;
-    const client = this.filterForm.get('client_name')?.value;
+    this.status = this.filterForm.get('status')?.value;
+    this.client = this.filterForm.get('client_name')?.value;
     const data = this.filterForm.get('data')?.value;
-    let dataFormatada: string;
+    let dataFormatada: string | null = null;
     if (data) {
       dataFormatada = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
-    } else {
-      const agora = new Date();
-      dataFormatada = `${agora.getFullYear()}-${agora.getMonth() + 1}-${agora.getDate()}`;
     }
 
-    if (status || client || data) {
+    if (this.status || this.client || data) {
+      this.data = dataFormatada;
       this.buscarPedidos(0, this.tamanhoPagina, {
-        status,
-        client,
+        status: this.status,
+        client: this.client,
         data: dataFormatada,
       });
     } else {
