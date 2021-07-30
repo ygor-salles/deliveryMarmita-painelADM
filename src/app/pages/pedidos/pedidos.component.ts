@@ -1,3 +1,4 @@
+import { ModalDetalhesPedidoComponent } from './modal-detalhes-pedido/modal-detalhes-pedido.component';
 import { ModalPedidoComponent } from './modal-pedido/modal-pedido.component';
 import { IFilterOrder } from '../../models/IFilterOrder.model';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -160,6 +161,13 @@ export class PedidosComponent implements OnInit, OnDestroy {
     } else {
       this.buscarPedidos(0, this.tamanhoPagina);
     }
+  }
+
+  abrirModalDetalhes(pedido: IOrder): void {
+    this.dialog.open(ModalDetalhesPedidoComponent, {
+      width: '80%',
+      data: { title: `Pedido - ${pedido.client_name}`, pedido }
+    });
   }
 
   dialogCadastrar(isDelivery: boolean): void {

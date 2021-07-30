@@ -49,6 +49,7 @@ import { AcrescimoComponent } from './acrescimo/acrescimo.component';
 import { ModalAcrescimoComponent } from './acrescimo/modal-acrescimo/modal-acrescimo.component';
 import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
 import { ModalUsuarioComponent } from './usuarios/modal-usuario/modal-usuario.component';
+import { ModalDetalhesPedidoComponent } from './pedidos/modal-detalhes-pedido/modal-detalhes-pedido.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ModalUsuarioComponent } from './usuarios/modal-usuario/modal-usuario.co
     ModalAcrescimoComponent,
     ModalFreteComponent,
     ModalUsuarioComponent,
+    ModalDetalhesPedidoComponent,
   ],
   imports: [
     CommonModule,
