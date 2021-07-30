@@ -55,7 +55,7 @@ export class PedidosComponent implements OnInit {
   listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado'];
 
   subscription: Subscription;
-  source = interval(10000);
+  source = interval(20000);
 
   constructor(
     public dialog: MatDialog,
@@ -72,7 +72,7 @@ export class PedidosComponent implements OnInit {
       data: '',
     });
 
-    this.subscription = this.source.subscribe(val => this.buscarPedidos(0, 10));
+    this.subscription = this.source.subscribe(val => this.buscarPedidos(this.indicePagina, this.tamanhoPagina));
 
   }
 
@@ -240,10 +240,10 @@ export class PedidosComponent implements OnInit {
         }
         this.pedidoService.update(pedido, result.id).subscribe(() => {
           this.pedidoService.showMessage('Pedido alterado com sucesso!');
-          // this.buscarPedidos(0, this.tamanhoPagina);
+          this.buscarPedidos(0, this.tamanhoPagina);
         })
       }
-      this.buscarPedidos(0, this.tamanhoPagina);
+      // this.buscarPedidos(0, this.tamanhoPagina);
     });
   }
 }

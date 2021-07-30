@@ -23,7 +23,6 @@ export class RecuperarSenhaComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params.token;
-      console.log(params.token)
     });
 
     this.recuperarSenhaForm = this.formBuilder.group({
@@ -50,9 +49,6 @@ export class RecuperarSenhaComponent implements OnInit {
       return;
     }
 
-    console.log(email);
-    console.log(senha);
-    console.log(this.token);
     this.usuarioAdminService.redefinirSenha(email, senha, this.token).subscribe(
       () => {
         this.usuarioAdminService.showMessage('Sua senha foi alterada com sucesso!');

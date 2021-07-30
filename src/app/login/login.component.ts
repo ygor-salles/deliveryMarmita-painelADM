@@ -35,14 +35,12 @@ export class LoginComponent implements OnInit {
 
     this.autenticacaoService.autenticar(email, senha).subscribe(
       (result) => {
-        console.log(result)
         this.autenticacaoService.showMessage('O login foi efetuado com sucesso!');
         this.sessaoService.setToken(result.token);
         // this.sessaoService.setRefreshToken(refresh_token);
         this.router.navigate(['pedidos']);
       },
       (e) => {
-        console.log(e);
         this.autenticacaoService.showMessage('Credenciais incorretas, tente novamente', true);
       },
     );
