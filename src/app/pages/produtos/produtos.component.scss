@@ -197,14 +197,24 @@ tr.detail-row {
   }
 }
 
-.edit {
-  margin-right: 10px;
-}
-
 .edit > i {
   color: $edit-color;
+  margin-right: 10px;
 }
 
 .delete > i {
   color: $delete-color;
+}
+
+.disabled > i {
+  color: #c1c1c1;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.mr-sm {
+  margin-right: 10px;
 }

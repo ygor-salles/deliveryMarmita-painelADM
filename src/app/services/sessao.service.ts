@@ -1,8 +1,8 @@
-import { ITokenDecoded } from './../models/ITokenDecoded.model';
-import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { Observable, Subject } from 'rxjs';
+import { AutenticacaoService } from 'src/app/services/autenticacao.service';
+import { ITokenDecoded } from './../models/ITokenDecoded.model';
 
 @Injectable({
   providedIn: 'root'
@@ -110,6 +110,14 @@ export class SessaoService {
     this.username = null;
     this.role = null;
     this.loggedSubject.next(false);
+  }
+
+  checkPermission(): boolean {
+    return this.role === 'admin';
+  }
+
+  checkIdUser(idUser: number): boolean {
+    return this.idUser === idUser;
   }
 
 }

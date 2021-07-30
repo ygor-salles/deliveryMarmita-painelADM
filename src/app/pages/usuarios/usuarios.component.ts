@@ -1,3 +1,4 @@
+import { SessaoService } from 'src/app/services/sessao.service';
 import { MatSelectChange } from '@angular/material/select';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,12 +17,20 @@ export class UsuariosComponent implements OnInit {
   displayedColumns = ['name', 'username', 'email', 'role', 'createdAt', 'actions'];
   listUser = ['admin', 'user'];
 
-  constructor(private usuarioService: UsuarioService, private dialog: MatDialog) { }
+  constructor(
+    private usuarioService: UsuarioService,
+    private dialog: MatDialog,
+    private sessaoService: SessaoService,
+  ) { }
 
   ngOnInit(): void {
     this.usuarioService.read().subscribe(usuarios => {
       this.fonteUsuarios = usuarios;
     });
+  }
+
+  isHimself(idUser: number): boolean {
+    return this.sessaoService.checkIdUser(idUser);
   }
 
   dialogCadastrar(): void {
@@ -79,19 +88,22 @@ export class UsuariosComponent implements OnInit {
 
   dialogExcluir(event: MouseEvent, usuario: IUsuario): void {
     event.stopPropagation();
-    const dialogRef = this.dialog.open(ModalUsuarioComponent, {
-      width: '50%',
-      data: { title: 'Excluir usuário', id: usuario.id, name: usuario.name }
-    });
 
-    dialogRef.afterClosed().subscribe((result: IUsuario) => {
-      if (result) {
-        this.usuarioService.delete(result.id).subscribe(() => {
-          this.usuarioService.showMessage('Usuário excluído com sucesso!');
-          this.ngOnInit();
-        });
-      }
-    });
+    if (!this.isHimself(usuario.id)) {
+      const dialogRef = this.dialog.open(ModalUsuarioComponent, {
+        width: '50%',
+        data: { title: 'Excluir usuário', id: usuario.id, name: usuario.name }
+      });
+
+      dialogRef.afterClosed().subscribe((result: IUsuario) => {
+        if (result) {
+          this.usuarioService.delete(result.id).subscribe(() => {
+            this.usuarioService.showMessage('Usuário excluído com sucesso!');
+            this.ngOnInit();
+          });
+        }
+      });
+    }
   }
 
   selectTypeUser(event: MatSelectChange, usuario: IUsuario): void {

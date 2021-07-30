@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         this.autenticacaoService.showMessage('O login foi efetuado com sucesso!');
         this.sessaoService.setToken(result.token);
         // this.sessaoService.setRefreshToken(refresh_token);
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['pedidos']);
       },
       (e) => {
         console.log(e);

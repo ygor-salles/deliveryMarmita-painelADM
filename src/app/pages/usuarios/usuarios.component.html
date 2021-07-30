@@ -35,7 +35,8 @@
     <th mat-header-cell *matHeaderCellDef> <span>Tipo usuário</span> </th>
     <td mat-cell *matCellDef="let usuario">
       <mat-form-field>
-        <mat-select [(value)]="usuario.role" (selectionChange)="selectTypeUser($event, usuario)">
+        <mat-select [(value)]="usuario.role" [disabled]="isHimself(usuario.id)"
+          (selectionChange)="selectTypeUser($event, usuario)">
           <mat-option [value]="type" *ngFor="let type of listUser">
             {{type}}
           </mat-option>
@@ -60,7 +61,8 @@
           edit
         </i>
       </a>
-      <a class="cursor-pointer delete" #tooltip="matTooltip" matTooltip="Excluir usuario" matTooltipPosition="above"
+      <a [ngClass]="{'cursor-pointer delete': !isHimself(usuario.id),'disabled': isHimself(usuario.id)}"
+        #tooltip="matTooltip" matTooltip="Excluir usuario" matTooltipPosition="above"
         (click)="dialogExcluir($event, usuario)">
         <i class="material-icons">
           delete

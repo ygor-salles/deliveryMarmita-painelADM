@@ -8,7 +8,7 @@ import { SessaoService } from './services/sessao.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'pro-dashboard-angular';
+  title = 'restaurante-brasa';
   logado = false;
 
   constructor(private appService: AppService, private sessaoService: SessaoService) {}

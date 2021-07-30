@@ -66,3 +66,16 @@
 .delete > i {
   color: $delete-color;
 }
+
+.disabled > i {
+  color: #c1c1c1;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.mr-sm {
+  margin-right: 10px;
+}

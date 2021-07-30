@@ -1,11 +1,11 @@
-import { UsuarioService } from './../../services/usuario.service';
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IUsuario } from 'src/app/models/IUsuario.model';
 import { SessaoService } from 'src/app/services/sessao.service';
 import { ModalAlertComponent } from './../../pages/modal-alert/modal-alert.component';
-import { IUsuario } from 'src/app/models/IUsuario.model';
+import { UsuarioService } from './../../services/usuario.service';
 
 @Component({
   selector: 'app-sidebar',
