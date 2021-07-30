@@ -183,22 +183,35 @@ export class PedidosComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const pedido: IOrder = {
-          client_name: result.client_name,
-          phone: result.phone ? result.phone : '',
-          cep: result.cep ? result.cep : '',
-          address_street: result.address_street ? result.address_street : '',
-          address_number: result.address_number ? result.address_number : 0,
-          address_neighborhood: result.address_neighborhood ? result.address_neighborhood : '',
-          address_city: result.address_city ? result.address_city : '',
-          cost_freight: result.cost_freight ? result.cost_freight : '',
-          status: 'inicializado',
-          payment: result.payment,
-          withdrawal: result.withdrawal,
-          reference_point: result.reference_point ? result.reference_point : '',
-          change_of_money: result.change_of_money,
-          total: result.total,
-          products: result.products,
+        let pedido: IOrder;
+        if (result.withdrawal === 'entrega') {
+          pedido = {
+            client_name: result.client_name,
+            phone: result.phone,
+            cep: result.cep ? result.cep : '',
+            address_street: result.address_street,
+            address_number: result.address_number,
+            address_neighborhood: result.address_neighborhood,
+            address_city: result.address_city ? result.address_city : '',
+            cost_freight: result.cost_freight,
+            status: 'inicializado',
+            payment: result.payment,
+            withdrawal: result.withdrawal,
+            reference_point: result.reference_point ? result.reference_point : '',
+            change_of_money: result.change_of_money,
+            total: (result.total + result.cost_freight),
+            products: result.products,
+          }
+        } else {
+          pedido = {
+            client_name: result.client_name,
+            status: 'inicializado',
+            payment: result.payment,
+            withdrawal: result.withdrawal,
+            total: result.total,
+            phone: result.phone ? result.phone : '',
+            products: result.products,
+          }
         }
         this.pedidoService.create(pedido).subscribe(() => {
           this.pedidoService.showMessage('Pedido cadastrado com sucesso!');
@@ -235,23 +248,36 @@ export class PedidosComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const pedido: IOrder = {
-          client_name: result.client_name,
-          phone: result.phone ? result.phone : '',
-          cep: result.cep ? result.cep : '',
-          address_street: result.address_street ? result.address_street : '',
-          address_number: result.address_number ? result.address_number : 0,
-          address_neighborhood: result.address_neighborhood ? result.address_neighborhood : '',
-          address_city: result.address_city ? result.address_city : '',
-          cost_freight: result.cost_freight ? result.cost_freight : '',
-          status: result.status,
-          payment: result.payment,
-          withdrawal: result.withdrawal,
-          reference_point: result.reference_point ? result.reference_point : '',
-          change_of_money: result.change_of_money,
-          total: result.total,
-          products: result.products,
+        let pedido: IOrder;
+        if (result.withdrawal) {
+          pedido = {
+            client_name: result.client_name,
+            phone: result.phone,
+            cep: result.cep ? result.cep : '',
+            address_street: result.address_street,
+            address_number: result.address_number,
+            address_neighborhood: result.address_neighborhood,
+            address_city: result.address_city ? result.address_city : '',
+            cost_freight: result.cost_freight,
+            status: result.status,
+            payment: result.payment,
+            withdrawal: result.withdrawal,
+            reference_point: result.reference_point ? result.reference_point : '',
+            change_of_money: result.change_of_money,
+            total: result.total,
+            products: result.products,
+          }
+        } else {
+          pedido = {
+            client_name: result.client_name,
+            status: result.status,
+            payment: result.payment,
+            withdrawal: result.withdrawal,
+            total: result.total,
+            products: result.products,
+          }
         }
+        console.log('PUT pedido', pedido);
         this.pedidoService.update(pedido, result.id).subscribe(() => {
           this.pedidoService.showMessage('Pedido alterado com sucesso!');
           this.buscarPedidos(0, this.tamanhoPagina);

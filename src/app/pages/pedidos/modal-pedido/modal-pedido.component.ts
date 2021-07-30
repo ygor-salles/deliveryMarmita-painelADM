@@ -75,7 +75,10 @@ export class ModalPedidoComponent implements OnInit {
       payment: [this.data.payment, Validators.required],
       cost_freight: [{ value: this.data.cost_freight, disabled: true }],
       reference_point: [this.data.reference_point],
-      change_of_money: [this.data.change_of_money],
+      change_of_money: [{
+        value: this.data.change_of_money,
+        disabled: this.vaiEditar && this.data.payment !== 'dinheiro'
+      }],
 
       amount: [null, [Validators.min(1), isNumberIntegerValidator]],
       selectSize: [null],
@@ -114,6 +117,21 @@ export class ModalPedidoComponent implements OnInit {
       });
     });
 
+    if (this.data.withdrawal === 'entrega' && novoPedido.payment==='dinheiro') {
+      if ((novoPedido.change_of_money < (this.data.total + novoPedido.cost_freight))) {
+        this.dialog.open(ModalAlertComponent, {
+          width: 'auto',
+          height: 'auto',
+          data: {
+            title: 'Atenção',
+            text: 'O troco para é menor que o valor total, favor verificar!',
+          }
+        });
+        this.orderForm.get('change_of_money').setValue(null);
+        return ;
+      }
+    }
+
     this.dialogRef.close({
       ...novoPedido,
       withdrawal: this.data.withdrawal,
@@ -127,9 +145,7 @@ export class ModalPedidoComponent implements OnInit {
   getProductPerType(event: MatSelectChange): void {
     this.showSpinner2 = true;
     if (event.value.name === 'Bebida') {
-      this.orderForm.get('observation').disable();
-      this.orderForm.get('meet_options').disable();
-      this.orderForm.get('amountOption').disable();
+      this.limparOpcoesEObservacao();
 
       this.produtoService.readPerType('bebida').subscribe(bebidas => {
         this.showSpinner2 = false;
@@ -213,9 +229,9 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   buscarCEP(): void {
-    this.showSpinner = true;
     const cep = this.orderForm.get('cep').value;
     if (cep) {
+      this.showSpinner = true;
       this.cepService.buscarUm(cep).subscribe(endereco => {
         this.showSpinner = false;
         this.orderForm.get('cep').setErrors(null);
@@ -241,11 +257,11 @@ export class ModalPedidoComponent implements OnInit {
   }
 
   setTroco(event: MatSelectChange): void {
-    if (event.value !== 'dinheiro'){
+    if (event.value !== 'dinheiro') {
       this.orderForm.get('change_of_money').setValue(0);
       this.orderForm.get('change_of_money').disable();
     }
-    else{
+    else {
       this.orderForm.get('change_of_money').setValue(null);
       this.orderForm.get('change_of_money').enable();
     }
@@ -254,6 +270,15 @@ export class ModalPedidoComponent implements OnInit {
   limparDadosOpcao(): void {
     this.orderForm.get('meet_options').setValue(null);
     this.orderForm.get('amountOption').setValue(null);
+  }
+
+  limparOpcoesEObservacao(): void {
+    this.orderForm.get('observation').setValue(null);
+    this.orderForm.get('meet_options').setValue(null);
+    this.orderForm.get('amountOption').setValue(null);
+    this.orderForm.get('observation').disable();
+    this.orderForm.get('meet_options').disable();
+    this.orderForm.get('amountOption').disable();
   }
 
 }

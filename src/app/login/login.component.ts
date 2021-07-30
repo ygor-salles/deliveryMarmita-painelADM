@@ -36,9 +36,10 @@ export class LoginComponent implements OnInit {
     this.autenticacaoService.autenticar(email, senha).subscribe(
       (result) => {
         this.autenticacaoService.showMessage('O login foi efetuado com sucesso!');
-        this.sessaoService.setToken(result.token);
+        const role = this.sessaoService.setToken(result.token);
         // this.sessaoService.setRefreshToken(refresh_token);
-        this.router.navigate(['pedidos']);
+        if (role === 'admin') this.router.navigate(['dashboard']);
+        else this.router.navigate(['pedidos']);
       },
       (e) => {
         this.autenticacaoService.showMessage('Credenciais incorretas, tente novamente', true);

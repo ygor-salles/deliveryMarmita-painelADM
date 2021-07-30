@@ -48,10 +48,11 @@ export class SessaoService {
     return this.role;
   }
 
-  setToken(token: string): void {
+  setToken(token: string): string {
     window.localStorage.setItem('token', token);
     this.decodeToken(token);
     this.loggedSubject.next(true);
+    return this.role;
   }
 
   setRefreshToken(refresh_token: string): void {

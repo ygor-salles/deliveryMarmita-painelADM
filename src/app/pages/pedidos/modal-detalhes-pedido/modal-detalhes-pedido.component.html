@@ -2,7 +2,7 @@
 
 <mat-dialog-content>
   <mat-list *ngIf="data.pedido.withdrawal==='entrega'">
-    <div matSubheader class="caption-table">Endereço</div>
+    <div matSubheader class="col-12 caption-table">Endereço</div>
     <div class="row header-table">
       <span class="col-md-3">Cidade</span>
       <span class="col-md-2">CEP</span>
@@ -11,8 +11,8 @@
       <span class="col-md-1">Número</span>
     </div>
     <div class="row body-table">
-      <span class="col-md-3">{{ data.pedido.address_city }}</span>
-      <span class="col-md-2">{{ data.pedido.cep | mask: '00000-000' }}</span>
+      <span class="col-md-3">{{ data.pedido.address_city ? data.pedido.address_city : '---' }}</span>
+      <span class="col-md-2">{{ data.pedido.cep ? (data.pedido.cep | mask: '00000-000') : '---' }}</span>
       <span class="col-md-3">{{ data.pedido.address_neighborhood }}</span>
       <span class="col-md-3">{{ data.pedido.address_street }}</span>
       <span class="col-md-1">{{ data.pedido.address_number }}</span>
@@ -40,24 +40,34 @@
       <span class="col-md-1">{{produto.products.price | currency}}</span>
       <span class="col-md-3">{{produto.observation ? produto.observation : '---'}}</span>
       <span class="col-md-4">{{produto.meet_options ? produto.meet_options : '---'}}</span>
-      <span class="col-md-1">{{produto.total_item | currency}}</span>
+      <span class="col-md-1"><b>{{produto.total_item | currency}}</b></span>
     </div>
   </mat-list>
 
   <mat-list>
     <div matSubheader class="caption-table">Pagamento</div>
     <div class="row header-table">
-      <span class="col-md-3">Troco</span>
-      <span class="col-md-3">Frete</span>
-      <span class="col-md-3">Tipo de pagamento</span>
-      <span class="col-md-3">Total geral</span>
+      <span class="col-md-2">Troco para:</span>
+      <span class="col-md-2">Frete</span>
+      <span class="col-md-2">Tipo de pagamento</span>
+      <span class="col-md-3">Total geral (total + frete)</span>
+      <span class="col-md-2">Volta</span>
     </div>
     <div class="row body-table">
-      <span class="col-md-3">{{data.pedido.change_of_money ? data.pedido.change_of_money : '---'}}</span>
-      <span class="col-md-3">{{data.pedido.cost_freight===0 ? 'Frete grátis' : data.pedido.cost_freight |
-        currency}}</span>
-      <span class="col-md-3">{{data.pedido.payment}}</span>
-      <span class="col-md-3">{{data.pedido.total | currency}}</span>
+      <span class="col-md-2">
+        <b style="color: blue;">{{data.pedido.change_of_money ? (data.pedido.change_of_money | currency) : '---'}}</b>
+      </span>
+      <span *ngIf="data.pedido.cost_freight; else notFrete" class="col-md-2">
+        <b style="color: green;">{{data.pedido.cost_freight===0 ? 'Frete grátis' : data.pedido.cost_freight | currency}}</b>
+      </span>
+      <ng-template #notFrete>
+        <span class="col-md-2">---</span>
+      </ng-template>
+      <span class="col-md-2">{{data.pedido.payment}}</span>
+      <span class="col-md-3"><b style="color: red;">{{data.pedido.total | currency}}</b></span>
+      <span class="col-md-2">
+        <b style="color: blue;">{{data.pedido.change_of_money ? (data.pedido.change_of_money - data.pedido.total | currency) : '---'}}</b>
+      </span>
     </div>
   </mat-list>
 </mat-dialog-content>
