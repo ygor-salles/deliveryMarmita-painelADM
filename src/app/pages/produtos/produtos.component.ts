@@ -132,29 +132,16 @@ export class ProdutosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const produto: IProduct = {
-          name: result.name,
-          description: result.description,
-          price: result.price,
-          type: result.type,
-          size: result.size,
-          image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-        };
-        this.produtoService.create(produto).subscribe(() => {
-          if (produto.type === 'marmita') {
-            this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-            this.produtoService.showMessage('Marmita cadastrada com sucesso');
-          } else {
-            this.buscarBebidas(0, this.tamanhoPaginaBebida);
-            this.produtoService.showMessage('Bebida cadastrada com sucesso');
-          }
-        });
+        this.produtoService.showMessage(result.message);
+        if (result.type === 'marmita') this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+        else this.buscarBebidas(0, this.tamanhoPaginaBebida);
       }
     })
   }
 
   dialogEditar(event: MouseEvent, produto: IProduct) {
     event.stopPropagation();
+
     if (!this.notPermission()) {
       const dialogRef = this.dialog.open(ModalProdutoComponent, {
         width: '70%',
@@ -173,53 +160,9 @@ export class ProdutosComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          let produto: IProduct;
-          if (result.size) {
-            if (result.img64) {
-              produto = {
-                name: result.name,
-                description: result.description,
-                price: result.price,
-                type: result.type,
-                size: result.size,
-                image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-              };
-            } else {
-              produto = {
-                name: result.name,
-                description: result.description,
-                price: result.price,
-                type: result.type,
-                size: result.size,
-              };
-            }
-          } else {
-            if (result.img64) {
-              produto = {
-                name: result.name,
-                description: result.description,
-                price: result.price,
-                type: result.type,
-                image: result.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-              };
-            } else {
-              produto = {
-                name: result.name,
-                description: result.description,
-                price: result.price,
-                type: result.type,
-              };
-            }
-          }
-          this.produtoService.update(produto, result.id).subscribe(() => {
-            if (produto.type === 'marmita') {
-              this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-              this.produtoService.showMessage('Marmita alterada com sucesso');
-            } else {
-              this.buscarBebidas(0, this.tamanhoPaginaBebida);
-              this.produtoService.showMessage('Bebida alterada com sucesso');
-            }
-          });
+          this.produtoService.showMessage(result.message);
+          if (result.type === 'marmita') this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+          else this.buscarBebidas(0, this.tamanhoPaginaBebida);
         }
       });
     }
@@ -235,15 +178,9 @@ export class ProdutosComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.produtoService.delete(result.id).subscribe(() => {
-            if (produto.type === 'marmita') {
-              this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
-              this.produtoService.showMessage('Marmita deletada com sucesso');
-            } else {
-              this.buscarBebidas(0, this.tamanhoPaginaBebida);
-              this.produtoService.showMessage('Bebida deletada com sucesso');
-            }
-          });
+          this.produtoService.showMessage(result.message);
+          if (result.type === 'marmita') this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
+          else this.buscarBebidas(0, this.tamanhoPaginaBebida);
         }
       });
     }
