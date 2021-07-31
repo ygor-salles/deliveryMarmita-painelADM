@@ -2,10 +2,10 @@
   <!-- <mat-sidenav></mat-sidenav> -->
   <mat-sidenav-content class="sidebar-menu pb-3" *ngIf="($user | async) as user">
     <div class="menu-header">
-      <!-- <div class="logo-picture">
-        <img src="../../../assets/img/logo-brasa.jpg" alt="Logo">
-      </div> -->
-      Brasa Admin
+      <div class="logo-picture">
+        <img src="../../../assets/img/logo-semFundo.png" alt="Logo">
+      </div>
+      <span class="name-organization">Brasa Admin</span>
     </div>
     <div class="sidebar-user">
       <span class="sidebar-user-name">Login: {{ user.username }}</span>
