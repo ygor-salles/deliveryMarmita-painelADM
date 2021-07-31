@@ -1,3 +1,4 @@
+import { IOrderToProduct } from './../../models/IOrderToProduct.model';
 import { ModalDetalhesPedidoComponent } from './modal-detalhes-pedido/modal-detalhes-pedido.component';
 import { ModalPedidoComponent } from './modal-pedido/modal-pedido.component';
 import { IFilterOrder } from '../../models/IFilterOrder.model';
@@ -61,6 +62,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
   status: string;
   client: string;
   data: string;
+
+  orderProductInit: IOrderToProduct[] = [];
 
   subscription: Subscription;
   source = interval(pedidosTimeout);
@@ -146,13 +149,14 @@ export class PedidosComponent implements OnInit, OnDestroy {
     this.status = this.filterForm.get('status')?.value;
     this.client = this.filterForm.get('client_name')?.value;
     const data = this.filterForm.get('data')?.value;
+
     let dataFormatada: string | null = null;
     if (data) {
       dataFormatada = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
     }
+    this.data = dataFormatada;
 
     if (this.status || this.client || data) {
-      this.data = dataFormatada;
       this.buscarPedidos(0, this.tamanhoPagina, {
         status: this.status,
         client: this.client,
@@ -223,6 +227,20 @@ export class PedidosComponent implements OnInit, OnDestroy {
 
   dialogEditar(event: MouseEvent, pedido: IOrder) {
     event.stopPropagation();
+
+    pedido.orderToProducts.forEach(item => {
+      this.orderProductInit.push({
+        id: item.id,
+        amount: item.amount,
+        meet_options: item.meet_options,
+        observation: item.observation,
+        total_item: item.total_item,
+        products: item.products,
+        orderId: item.orderId,
+        productId: item.productId
+      });
+    });
+
     const dialogRef = this.dialog.open(ModalPedidoComponent, {
       width: '80%',
       data: {
@@ -242,14 +260,14 @@ export class PedidosComponent implements OnInit, OnDestroy {
         reference_point: pedido.reference_point,
         change_of_money: pedido.change_of_money,
         total: pedido.total,
-        products: pedido.orderToProducts,
+        products: this.orderProductInit,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let pedido: IOrder;
-        if (result.withdrawal) {
+        if (result.withdrawal === 'entrega') {
           pedido = {
             client_name: result.client_name,
             phone: result.phone,
@@ -277,13 +295,14 @@ export class PedidosComponent implements OnInit, OnDestroy {
             products: result.products,
           }
         }
-        console.log('PUT pedido', pedido);
+
         this.pedidoService.update(pedido, result.id).subscribe(() => {
           this.pedidoService.showMessage('Pedido alterado com sucesso!');
           this.buscarPedidos(0, this.tamanhoPagina);
         })
       }
-      // this.buscarPedidos(0, this.tamanhoPagina);
     });
+    this.orderProductInit = [];
   }
+
 }

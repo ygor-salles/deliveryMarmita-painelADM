@@ -152,6 +152,7 @@ export class ModalPedidoComponent implements OnInit {
         this.listProducts = bebidas;
       });
     } else {
+      this.destravarFormObservacao();
       this.produtoService.readPerType('marmita', event.value.size).subscribe(bebidas => {
         this.showSpinner2 = false;
         this.listProducts = bebidas;
@@ -279,6 +280,12 @@ export class ModalPedidoComponent implements OnInit {
     this.orderForm.get('observation').disable();
     this.orderForm.get('meet_options').disable();
     this.orderForm.get('amountOption').disable();
+  }
+
+  destravarFormObservacao(): void {
+    this.orderForm.get('observation').enable();
+    this.orderForm.get('meet_options').enable();
+    this.orderForm.get('amountOption').enable();
   }
 
 }
