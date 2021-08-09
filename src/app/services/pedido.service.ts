@@ -60,6 +60,7 @@ export class PedidoService {
   readPaginator(
     pagina: number,
     limite: number,
+    isPedido: boolean,
     filtros?: IFilterOrder,
   ): Observable<IPagedOrder> {
     let params = new HttpParams();
@@ -78,9 +79,12 @@ export class PedidoService {
       }
     }
 
+    let url: string;
+    if (isPedido) url = `${apiUrl}/orders/paged`;
+    else url = `${apiUrl}/orders/historic/paged`;
+
     return this.http
-      .get<IPagedOrder>(`${apiUrl}/orders/paged`, { params })
-      .pipe(
+      .get<IPagedOrder>(url, { params }).pipe(
         map(obj => obj),
         catchError(e => this.errorHandler(e)),
       );

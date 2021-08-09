@@ -58,6 +58,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   opcoesPaginacao: number[] = [5, 10, 20, 50, 100];
 
   listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado'];
+  listStatusFilter = ['inicializado', 'andamento', 'pronto'];
 
   status: string;
   client: string;
@@ -106,7 +107,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
     };
 
     // console.log(Math.random());
-    this.pedidoService.readPaginator(pagina, limite, filtros).subscribe(ped => {
+    this.pedidoService.readPaginator(pagina, limite, true, filtros).subscribe(ped => {
       this.pedidos = ped.instances;
       this.tamanhoPaginacao = ped.total;
       this.indicePagina = pagina;
