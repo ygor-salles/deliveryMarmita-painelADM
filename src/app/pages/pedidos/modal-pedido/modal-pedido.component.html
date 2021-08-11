@@ -98,6 +98,10 @@
             </a>
           </td>
         </tr>
+        <tr *ngIf="data.withdrawal==='entrega'" class="frete">
+          <td colspan="6" class="total-geral">Valor do frete</td>
+          <td colspan="2">{{ data.cost_freight | currency}}</td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
@@ -136,14 +140,14 @@
         <i class="fa fa-spinner fa-spin"></i> Processando, aguarde ...
       </div>
       <ng-template #notSpinner>
-        <mat-form-field class="col-2">
+        <!-- <mat-form-field class="col-2">
           <input matInput placeholder="CEP" formControlName="cep" mask="00000-000" [showMaskTyped]="true"
-            (blur)="buscarCEP()">
+            (blur)="buscarCEP()"> -->
           <!-- <mat-error *ngIf="orderForm.get('cep')?.errors?.cepInvalido">
             O CEP inserido é inválido
           </mat-error> -->
-        </mat-form-field>
-        <mat-form-field class="col-3">
+        <!-- </mat-form-field> -->
+        <mat-form-field class="col-5">
           <input matInput placeholder="Endereço do bairro" formControlName="address_neighborhood" [matAutocomplete]="auto"
             (blur)="buscarFrete()" [required]="data.withdrawal==='entrega'">
           <mat-autocomplete #auto="matAutocomplete">

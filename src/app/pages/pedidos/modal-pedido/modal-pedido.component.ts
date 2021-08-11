@@ -49,6 +49,8 @@ export class ModalPedidoComponent implements OnInit {
 
   showSpinner2 = false;
 
+  valorAnteriorFrete: number;
+
   constructor(
     public dialogRef: MatDialogRef<ModalPedidoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IOrder,
@@ -63,6 +65,8 @@ export class ModalPedidoComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.title === 'Editar pedido') this.vaiEditar = true;
     else this.vaiEditar = false;
+
+    this.valorAnteriorFrete = this.data.cost_freight;
 
     this.orderForm = this.formBuilder.group({
       client_name: [this.data.client_name, Validators.required],
@@ -118,7 +122,7 @@ export class ModalPedidoComponent implements OnInit {
     });
 
     if (this.data.withdrawal === 'entrega' && novoPedido.payment==='dinheiro') {
-      if ((novoPedido.change_of_money < (this.data.total + novoPedido.cost_freight))) {
+      if ((novoPedido.change_of_money < this.data.total)) {
         this.dialog.open(ModalAlertComponent, {
           width: 'auto',
           height: 'auto',
@@ -253,8 +257,22 @@ export class ModalPedidoComponent implements OnInit {
   buscarFrete(): void {
     const bairro = this.orderForm.get('address_neighborhood').value;
     const frete = this.listFrete.find(frete => frete.neighborhood === bairro)
-    if (frete) this.orderForm.get('cost_freight').setValue(frete.value);
-    else this.orderForm.get('cost_freight').setValue(0);
+
+    if (frete){
+      if (this.valorAnteriorFrete !== 0) {
+        this.data.total -= this.valorAnteriorFrete;
+      }
+      this.orderForm.get('cost_freight').setValue(frete.value);
+      this.data.cost_freight = frete.value;
+      this.data.total += frete.value;
+      this.valorAnteriorFrete = frete.value;
+    }
+    else{
+      this.orderForm.get('cost_freight').setValue(0);
+      this.data.cost_freight = 0;
+      this.data.total -= this.valorAnteriorFrete;
+      this.valorAnteriorFrete = 0;
+    }
   }
 
   setTroco(event: MatSelectChange): void {

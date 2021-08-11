@@ -182,6 +182,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
         title: isDelivery === true ? 'Cadastrar pedido delivery' : 'Cadastrar pedido local',
         products: [],
         total: 0,
+        cost_freight: 0,
         withdrawal: isDelivery === true ? 'entrega' : 'local'
       }
     });
@@ -204,7 +205,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
             withdrawal: result.withdrawal,
             reference_point: result.reference_point ? result.reference_point : '',
             change_of_money: result.change_of_money,
-            total: (result.total + result.cost_freight),
+            total: result.total,
             products: result.products,
           }
         } else {

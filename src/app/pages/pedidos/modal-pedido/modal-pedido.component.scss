@@ -39,6 +39,13 @@ tbody tr {
   color: $delete-color;
 }
 
+.frete {
+  text-align: start;
+  .total-geral {
+    padding-left: 20px;
+  }
+}
+
 tfoot {
   background-color: #dedede;
   font-weight: bold;
