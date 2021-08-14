@@ -14,6 +14,10 @@ interface IPedidoUpdate {
   status: string;
 }
 
+interface ICountOrders {
+  qtd: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -117,6 +121,14 @@ export class PedidoService {
   delete(id: number): Observable<IOrder> {
     const url = `${apiUrl}/orders/${id}`;
     return this.http.delete<IOrder>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e)),
+    );
+  }
+
+  countOrders(): Observable<ICountOrders> {
+    const url = `${apiUrl}/orders/count`;
+    return this.http.get<ICountOrders>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );

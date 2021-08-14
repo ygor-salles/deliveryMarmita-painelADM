@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -101,7 +102,8 @@ import { ModalDetalhesPedidoComponent } from './pedidos/modal-detalhes-pedido/mo
     MatListModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule,
   ],
   exports: [
     ProdutosComponent,
