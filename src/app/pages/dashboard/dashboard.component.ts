@@ -95,13 +95,13 @@ export class DashboardComponent implements OnInit {
 
     if (type === 'dia') {
       this.chartBar.data.labels = this.relatorio.arrayDay.map(rel => rel.name);
-      this.chartBar.data.datasets.data = this.relatorio.arrayDay.map(rel => rel.value);
+      this.chartBar.data.datasets[0].data = this.relatorio.arrayDay.map(rel => rel.value);
     } else if (type === 'semana') {
       this.chartBar.data.labels = this.relatorio.arrayWeek.map(rel => rel.name);
-      this.chartBar.data.datasets.data = this.relatorio.arrayWeek.map(rel => rel.value);
+      this.chartBar.data.datasets[0].data = this.relatorio.arrayWeek.map(rel => rel.value);
     } else {
       this.chartBar.data.labels = this.relatorio.arrayMonth.map(rel => rel.name);
-      this.chartBar.data.datasets.data = this.relatorio.arrayMonth.map(rel => rel.value);
+      this.chartBar.data.datasets[0].data = this.relatorio.arrayMonth.map(rel => rel.value);
     }
     this.chartBar.update();
   }
