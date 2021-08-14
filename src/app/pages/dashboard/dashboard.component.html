@@ -9,7 +9,8 @@
         <div class="card-body">
           <div class="card-innerBody d-flex align-items-center">
             <div class="card-icon text-light size-icon">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              <i class="fa fa-shopping-cart" aria-hidden="true"
+                #tooltip="matTooltip" matTooltip="Total de pedidos entregue hoje" matTooltipPosition="above"></i>
             </div>
             <div class="ml-auto">
               <p class="card-label text-right text-muted">Pedidos hoje</p>
@@ -17,13 +18,6 @@
             </div>
           </div>
         </div>
-        <div class="card-footer d-flex ">
-          <small class="text-muted">Desde o último dia</small>
-          <small class="text-success ml-auto">
-            <i class="fa fa-caret-up" aria-hidden="true"></i>
-            5,35%
-          </small>
-        </div>
       </mat-card>
     </div>
   </div>
@@ -34,7 +28,8 @@
         <div class="card-body">
           <div class="card-innerBody d-flex align-items-center">
             <div class="card-icon text-light size-icon">
-              <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+              <i class="fas fa-dollar-sign" aria-hidden="true"
+              #tooltip="matTooltip" matTooltip="Vendas entregue nas últimas 24 horas" matTooltipPosition="above"></i>
             </div>
             <div class="ml-auto">
               <p class="card-label text-right text-muted">Total no dia</p>
@@ -42,13 +37,6 @@
             </div>
           </div>
         </div>
-        <div class="card-footer d-flex ">
-          <small class="text-muted">Desde o último dia</small>
-          <small class="text-success ml-auto">
-            <i class="fa fa-caret-up" aria-hidden="true"></i>
-            5,35%
-          </small>
-        </div>
       </mat-card>
     </div>
   </div>
@@ -59,7 +47,8 @@
         <div class="card-body">
           <div class="card-innerBody d-flex align-items-center">
             <div class="card-icon text-light size-icon">
-              <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+              <i class="fas fa-dollar-sign" aria-hidden="true"
+              #tooltip="matTooltip" matTooltip="Vendas entregue nas últimos 7 dias" matTooltipPosition="above"></i>
             </div>
             <div class="ml-auto">
               <p class="card-label text-right text-muted">Total na semana</p>
@@ -67,13 +56,6 @@
             </div>
           </div>
         </div>
-        <div class="card-footer d-flex ">
-          <small class="text-muted">Desde a última semana</small>
-          <small class="text-success ml-auto">
-            <i class="fa fa-caret-up" aria-hidden="true"></i>
-            5,35%
-          </small>
-        </div>
       </mat-card>
     </div>
   </div>
@@ -84,20 +66,14 @@
         <div class="card-body">
           <div class="card-innerBody d-flex align-items-center">
             <div class="card-icon text-light size-icon">
-              <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+              <i class="fas fa-dollar-sign" aria-hidden="true"
+              #tooltip="matTooltip" matTooltip="Vendas entregue nas últimos 30 dias" matTooltipPosition="above"></i>
             </div>
             <div class="ml-auto">
               <p class="card-label text-right text-muted">Total no Mês</p>
               <h4 class="card-text text-right "><b>{{ relatorio.totalMonth | currency }}</b></h4>
             </div>
           </div>
-        </div>
-        <div class="card-footer d-flex ">
-          <small class="text-muted">Desde o último mês</small>
-          <small class="text-success ml-auto">
-            <i class="fa fa-caret-up" aria-hidden="true"></i>
-            5,35%
-          </small>
         </div>
       </mat-card>
     </div>
@@ -110,21 +86,21 @@
     <div class="card border-0 rounded-0">
       <mat-card class="card-container mat-elevation-z8">
         <div class="card-title mb-1 p-3 d-flex">
-          <h1>Vendas de produtos na semana</h1>
+          <h1>Vendas de produtos - {{tempoChart}}</h1>
           <a class="btn ml-auto p-0 text-lightning">
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="filtroChart('dia')">
                 <mat-icon>attach_money</mat-icon>
                 <span>Por dia</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="filtroChart('semana')">
                 <mat-icon>attach_money</mat-icon>
                 <span>Por semana</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="filtroChart('mês')">
                 <mat-icon>attach_money</mat-icon>
                 <span>Por mês</span>
               </button>

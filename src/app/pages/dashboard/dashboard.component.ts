@@ -29,6 +29,10 @@ export class DashboardComponent implements OnInit {
     arrayWeek: null
   }
 
+  tempoChart = 'semana';
+
+  chartBar: any;
+
   constructor(
     private pedidoService: PedidoService,
     private relatorioService: RelatoriosService
@@ -42,43 +46,64 @@ export class DashboardComponent implements OnInit {
     this.relatorioService.handle().subscribe(result => {
       this.relatorio = result;
 
-      new Chart('chart-bar', {
+      this.chartBar = new Chart('chart-bar', {
         type: 'bar',
         data: {
           labels: this.relatorio.arrayWeek.map(rel => rel.name),
           datasets: [{
-            label: 'Produtos',
+            label: 'Total: R$',
             data: this.relatorio.arrayWeek.map(rel => rel.value),
-            backgroundColor: '#5b6582',
-            borderColor: '#5b6582',
+            backgroundColor: '#98a4c7',
+            borderColor: '#98a4c7',
             borderWidth: 2
           }]
         },
-        options:{
+        options: {
+          animation: {
+            duration: 2000
+          },
           barValueSpacing: 1,
           scales: {
-              yAxes: [{
-                ticks: {
-                    fontColor: 'rgba(0,0,0,.6)',
-                    fontStyle: 'bold',
-                    beginAtZero: true,
-                    maxTicksLimit: 8,
-                    padding: 10
-                }
-            }],
             xAxes: [{
-              barPercentage: 0.4
-          }]
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              position: 'bottom'
+            }],
+            yAxes: [{
+
+              gridLines: {
+                display: true,
+                drawBorder: false
+              }
+            }]
           },
           responsive: true,
           legend: {
-            position:'bottom',
-            display:false
+            position: 'bottom',
+            display: false
           },
         }
       })
     });
 
+  }
+
+  filtroChart(type: string): void {
+    this.tempoChart = type;
+
+    if (type === 'dia') {
+      this.chartBar.data.labels = this.relatorio.arrayDay.map(rel => rel.name);
+      this.chartBar.data.datasets.data = this.relatorio.arrayDay.map(rel => rel.value);
+    } else if (type === 'semana') {
+      this.chartBar.data.labels = this.relatorio.arrayWeek.map(rel => rel.name);
+      this.chartBar.data.datasets.data = this.relatorio.arrayWeek.map(rel => rel.value);
+    } else {
+      this.chartBar.data.labels = this.relatorio.arrayMonth.map(rel => rel.name);
+      this.chartBar.data.datasets.data = this.relatorio.arrayMonth.map(rel => rel.value);
+    }
+    this.chartBar.update();
   }
 
 }
