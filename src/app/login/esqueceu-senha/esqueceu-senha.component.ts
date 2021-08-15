@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class EsqueceuSenhaComponent implements OnInit {
   esqueceuSenhaForm!: FormGroup;
 
+  showSpinner = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -24,17 +26,20 @@ export class EsqueceuSenhaComponent implements OnInit {
   }
 
   async recuperarSenha(): Promise<void> {
+    this.showSpinner = true;
     const email = this.esqueceuSenhaForm.get('email')?.value;
     this.usuarioAdminService.esqueceuSenha(email).subscribe(
       () => {
         this.usuarioAdminService.showMessage('Favor verificar sua caixa de entrada! Email de confirmação enviado!');
         this.router.navigate(['login']);
+        this.showSpinner = false;
       },
       () => {
         this.usuarioAdminService.showMessage(
           'Ocorreu um erro ao enviar email de confirmação, favor tente novamente mais tarde! '+
           'Tente novamente mais tarde!', true
         );
+        this.showSpinner = false;
       },
     );
   }

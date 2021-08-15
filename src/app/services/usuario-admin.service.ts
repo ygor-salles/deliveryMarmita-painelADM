@@ -23,12 +23,10 @@ export class UsuarioAdminService {
   }
 
   esqueceuSenha(email: string): Observable<Object> {
-    return this.http.post<Object>(`${apiUrl}/administrador/recuperar_senha`, { email });
+    return this.http.post<Object>(`${apiUrl}/auth/forgot-password`, { email });
   }
 
-  redefinirSenha(email: string, senha: string, token: string): Observable<Object> {
-    // let headers = new HttpHeaders();
-    // headers = headers.append('recovery_token', token);
-    return this.http.post<Object>(`${apiUrl}/administrador/redefinir_renha`, { email, senha, token });
+  redefinirSenha(email: string, password: string, token: string): Observable<Object> {
+    return this.http.post<Object>(`${apiUrl}/auth/change-password`, { email, password });
   }
 }

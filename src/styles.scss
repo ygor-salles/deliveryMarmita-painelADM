@@ -65,6 +65,15 @@ $candy-app-theme: mat-light-theme((
   color: #fff !important;
 }
 
+.spinner-login {
+  text-align: center;
+  border-radius: 5px;
+  background-color: $brasa-orange;
+  color: #fff;
+  padding: 8px;
+  font-size: initial;
+}
+
 .spinner {
   text-align: center;
   margin: 40px 10px 0px 70px;

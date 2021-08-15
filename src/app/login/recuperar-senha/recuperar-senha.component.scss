@@ -30,12 +30,12 @@
 }
 
 .recuperar-senha-logo {
-  max-height: 5rem;
-  max-width: 5rem;
+  max-height: 15rem;
+  max-width: 15rem;
 
   position: absolute;
-  top: 1.5rem;
-  left: 2rem;
+  top: 1rem;
+  left: 1.5rem;
 }
 
 .recuperar-senha-container {
@@ -55,7 +55,7 @@
   justify-content: center;
   align-items: center;
 
-  padding: 1.5rem 0;
+  padding: 0.8rem 0;
 
   .mat-form-field {
     width: 60%;

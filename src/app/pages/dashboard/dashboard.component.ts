@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit {
           animation: {
             duration: 2000
           },
-          barValueSpacing: 1,
           scales: {
             xAxes: [{
               gridLines: {

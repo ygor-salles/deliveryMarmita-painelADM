@@ -10,8 +10,8 @@ import { passwordValidator } from 'src/app/utils/validators/password-validator';
   styleUrls: ['./recuperar-senha.component.scss']
 })
 export class RecuperarSenhaComponent implements OnInit {
-  recuperarSenhaForm!: FormGroup;
-  token!: string;
+  recuperarSenhaForm: FormGroup;
+  token: string;
 
   constructor(
     private formBuilder: FormBuilder,
