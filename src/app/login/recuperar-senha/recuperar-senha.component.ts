@@ -12,6 +12,7 @@ import { passwordValidator } from 'src/app/utils/validators/password-validator';
 export class RecuperarSenhaComponent implements OnInit {
   recuperarSenhaForm: FormGroup;
   token: string;
+  hide = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,25 +32,27 @@ export class RecuperarSenhaComponent implements OnInit {
         '',
         [Validators.required, passwordValidator, Validators.minLength(7)],
       ],
-      'confirm-password': [
-        '',
-        [Validators.required, passwordValidator, Validators.minLength(7)],
-      ],
+      // 'confirm-password': [
+      //   '',
+      //   [Validators.required, passwordValidator, Validators.minLength(7)],
+      // ],
+      codVerificacao: ['', Validators.required]
     });
   }
 
   async recuperarSenha(): Promise<void> {
     const email = this.recuperarSenhaForm.get('email')?.value
     const senha = this.recuperarSenhaForm.get('password')?.value;
-    const confirmarSenha = this.recuperarSenhaForm.get('confirm-password')?.value;
+    // const confirmarSenha = this.recuperarSenhaForm.get('confirm-password')?.value;
+    const codVerificacao = this.recuperarSenhaForm.get('codVerificacao')?.value;
 
-    if (senha !== confirmarSenha) {
-      this.usuarioAdminService.showMessage(
-        'Para alterar a senha, você deve confirma-lá corretamente! \nSenhas diferentes!', true);
-      return;
-    }
+    // if (senha !== confirmarSenha) {
+    //   this.usuarioAdminService.showMessage(
+    //     'Para alterar a senha, você deve confirma-lá corretamente! \nSenhas diferentes!', true);
+    //   return;
+    // }
 
-    this.usuarioAdminService.redefinirSenha(email, senha, this.token).subscribe(
+    this.usuarioAdminService.redefinirSenha(email, senha, codVerificacao).subscribe(
       () => {
         this.usuarioAdminService.showMessage('Sua senha foi alterada com sucesso!');
         this.router.navigate(['dashboard']);
