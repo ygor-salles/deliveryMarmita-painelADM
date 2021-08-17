@@ -3,5 +3,5 @@ export const environment = {
   apiUrl: '',
   brasilApiUrl: 'https://brasilapi.com.br/api',
   productImagesServerUrl: '',
-  pedidosTimeout: 20000
+  pedidosTimeout: 30000
 };
