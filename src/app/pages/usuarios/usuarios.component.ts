@@ -17,6 +17,8 @@ export class UsuariosComponent implements OnInit {
   displayedColumns = ['name', 'username', 'email', 'role', 'createdAt', 'actions'];
   listUser = ['admin', 'user'];
 
+  showSpinner = false;
+
   constructor(
     private usuarioService: UsuarioService,
     private dialog: MatDialog,
@@ -24,8 +26,10 @@ export class UsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.usuarioService.read().subscribe(usuarios => {
       this.fonteUsuarios = usuarios;
+      this.showSpinner = false;
     });
   }
 

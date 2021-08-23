@@ -69,6 +69,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   source = interval(pedidosTimeout);
 
+  showSpinner = false
+
   constructor(
     public dialog: MatDialog,
     private pedidoService: PedidoService,
@@ -76,6 +78,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.buscarPedidos(0, this.tamanhoPagina);
 
     this.filterForm = this.formBuilder.group({
@@ -112,6 +115,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
       this.tamanhoPaginacao = ped.total;
       this.indicePagina = pagina;
       sort();
+      this.showSpinner = false;
     });
   }
 

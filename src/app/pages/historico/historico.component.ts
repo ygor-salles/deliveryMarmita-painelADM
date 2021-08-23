@@ -54,6 +54,8 @@ export class HistoricoComponent implements OnInit {
   listStatus = ['inicializado', 'andamento', 'pronto', 'entregue', 'cancelado'];
   listStatusFilter = ['entregue', 'cancelado'];
 
+  showSpinner = false;
+
   constructor(
     public dialog: MatDialog,
     private pedidoService: PedidoService,
@@ -61,6 +63,7 @@ export class HistoricoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.buscarPedidos(0, this.tamanhoPagina);
 
     this.filterForm = this.formBuilder.group({
@@ -85,6 +88,7 @@ export class HistoricoComponent implements OnInit {
       this.tamanhoPaginacao = ped.total;
       this.indicePagina = pagina;
       sort();
+      this.showSpinner = false;
     });
   }
 

@@ -63,6 +63,8 @@ export class ProdutosComponent implements OnInit {
   indicePaginaBebida = 0;
   opcoesPaginacaoBebida: number[] = [5, 10, 20, 50, 100];
 
+  showSpinner = false;
+
   constructor(
     private produtoService: ProdutoService,
     private dialog: MatDialog,
@@ -70,6 +72,7 @@ export class ProdutosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.buscarMarmitas(0, this.tamanhoPaginaMarmita);
     this.buscarBebidas(0, this.tamanhoPaginaBebida);
   }
@@ -103,6 +106,7 @@ export class ProdutosComponent implements OnInit {
       this.tamanhoPaginacaoBebida = bebidas.total;
       this.indicePaginaBebida = pagina;
       sort();
+      this.showSpinner = false;
     });
   }
 

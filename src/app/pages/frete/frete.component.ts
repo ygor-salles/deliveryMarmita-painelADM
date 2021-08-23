@@ -14,11 +14,15 @@ export class FreteComponent implements OnInit {
   fonteFretes: IFrete[] = [];
   displayedColumns = ['neighborhood', 'value', 'createdAt', 'actions'];
 
+  showSpinner = false;
+
   constructor(private freteService: FreteService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.freteService.read().subscribe(fretes => {
       this.fonteFretes = fretes;
+      this.showSpinner = false;
     });
   }
 

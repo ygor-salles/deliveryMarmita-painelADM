@@ -15,6 +15,8 @@ export class AcrescimoComponent implements OnInit {
   fonteAcrescimos: IAcrescimo[] = [];
   displayedColumns = ['name', 'price', 'createdAt', 'status', 'actions'];
 
+  showSpinner = false;
+
   constructor(
     private acrescimoService: AcrescimoService,
     private dialog: MatDialog,
@@ -22,8 +24,10 @@ export class AcrescimoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner = true;
     this.acrescimoService.read().subscribe(acrescimos => {
       this.fonteAcrescimos = acrescimos;
+      this.showSpinner = false;
     });
   }
 
