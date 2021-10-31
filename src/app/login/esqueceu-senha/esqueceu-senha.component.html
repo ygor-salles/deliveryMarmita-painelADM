@@ -1,6 +1,6 @@
 <div class="esqueci-senha-bg">
 
-  <img class="esqueci-senha-logo" src="../../../assets/img/logo.png" alt="Logo">
+  <img class="esqueci-senha-logo" src="../../../assets/img/logo-semFundo.png" alt="Logo">
 
   <div class="card esqueci-senha-container">
 
@@ -18,7 +18,14 @@
       </div>
 
       <div class="esqueci-senha-button">
-        <button mat-raised-button class="mat-elevation-z8 color-button" type="submit" [disabled]="esqueceuSenhaForm.invalid">esqueci senha</button>
+        <div *ngIf="showSpinner; else notSpinner" class="spinner-login">
+          <i class="fa fa-spinner fa-spin"></i> Processando, aguarde ...
+        </div>
+        <ng-template #notSpinner>
+          <button mat-raised-button class="mat-elevation-z8 color-button" type="submit" [disabled]="esqueceuSenhaForm.invalid">
+            Recuperar senha
+          </button>
+        </ng-template>
       </div>
 
     </form>

@@ -1,4 +1,5 @@
 export interface IProduct {
+  title?: string;
   id?: number;
   name: string;
   price: number;
@@ -7,6 +8,6 @@ export interface IProduct {
   description: string;
   status?: boolean;
   image?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }

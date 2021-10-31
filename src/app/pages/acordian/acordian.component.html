@@ -2,7 +2,7 @@
 <div *ngIf="produto" class="card-contentainer">
   <div>
     <img class="cursor-pointer" (click)="abrirModalImagem(produto.image)"
-      src="{{transformImageUrl(produto.image)}}" onerror="this.src='../../../assets/img/dump3.png'"
+      [src]="transformImageUrl(produto.image)" onerror="this.src='../../../assets/img/dump3.png'"
       alt="Imagens de produtos">
   </div>
   <div class="media-text">
@@ -11,60 +11,3 @@
   </div>
 </div>
 
-<!-- **************************** Accordion da tela de pedidos **************************** -->
-<div *ngIf="pedido">
-  <mat-list>
-    <div matSubheader class="caption-table">Endereço</div>
-    <div class="row header-table">
-      <span class="col-md-3">Cidade</span>
-      <span class="col-md-2">CEP</span>
-      <span class="col-md-3">Bairro</span>
-      <span class="col-md-3">Rua</span>
-      <span class="col-md-1">Número</span>
-    </div>
-    <div class="row body-table">
-      <span class="col-md-3">{{ pedido.address_city }}</span>
-      <span class="col-md-2">{{ pedido.cep | mask: '00000-000' }}</span>
-      <span class="col-md-3">{{ pedido.address_neighborhood }}</span>
-      <span class="col-md-3">{{ pedido.address_street }}</span>
-      <span class="col-md-1">{{ pedido.address_number }}</span>
-    </div>
-  </mat-list>
-
-  <mat-list *ngIf="pedido.reference_point">
-    <div matSubheader class="caption-table">Ponto de referência</div>
-    <div class="row body-table">
-      <span class="col-md-12">{{pedido.reference_point}}</span>
-    </div>
-  </mat-list>
-
-  <mat-list>
-    <div matSubheader class="caption-table">Produto(s)</div>
-    <div class="row no-gutters header-table">
-      <span class="col-md-4">Produto</span>
-      <span class="col-md-4">Observação</span>
-      <span class="col-md-4">Opçoes de carne</span>
-    </div>
-    <div class="row no-gutters body-table" *ngFor="let produto of pedido.orderToProducts">
-      <span class="col-md-4">{{produto.amount}} {{produto.products.name}} - {{produto.products.price | currency}}</span>
-      <span class="col-md-4">{{produto.observation ? produto.observation : '---'}}</span>
-      <span class="col-md-4">{{produto.meet_options ? produto.meet_options : '---'}}</span>
-    </div>
-  </mat-list>
-
-  <mat-list>
-    <div matSubheader class="caption-table">Pagamento</div>
-    <div class="row header-table">
-      <span class="col-md-3">Troco</span>
-      <span class="col-md-3">Frete</span>
-      <span class="col-md-3">Tipo de pagamento</span>
-      <span class="col-md-3">Total</span>
-    </div>
-    <div class="row body-table">
-      <span class="col-md-3">{{pedido.change_of_money ? pedido.change_of_money : '---'}}</span>
-      <span class="col-md-3">{{pedido.cost_freight===0 ? 'Frete grátis' : pedido.cost_freight | currency}}</span>
-      <span class="col-md-3">{{pedido.payment}}</span>
-      <span class="col-md-3">{{pedido.total | currency}}</span>
-    </div>
-  </mat-list>
-</div>

@@ -1,16 +1,18 @@
-import { ITokenDecoded } from './../models/ITokenDecoded.model';
-import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { Observable, Subject } from 'rxjs';
+import { AutenticacaoService } from 'src/app/services/autenticacao.service';
+import { ITokenDecoded } from './../models/ITokenDecoded.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessaoService {
   private loggedSubject = new Subject<boolean>();
-  private tokenExp!: number;
-  private perfil_id!: number | null;
+  private tokenExp: number;
+  private idUser: number;
+  private username: string;
+  private role: string;
   private logged$ = this.loggedSubject.asObservable();
 
   constructor(private autenticacaoService: AutenticacaoService) {
@@ -34,10 +36,28 @@ export class SessaoService {
     return window.localStorage.getItem('refresh_token');
   }
 
-  setToken(token: string): void {
+  clearLocalStorage(): void {
+    window.localStorage.clear();
+    setTimeout(() => { window.location.reload() }, 3000)
+  }
+
+  getIdUser(): number {
+    return this.idUser;
+  }
+
+  getUsername(): string {
+    return this.username;
+  }
+
+  getRoleUser(): string {
+    return this.role;
+  }
+
+  setToken(token: string): string {
     window.localStorage.setItem('token', token);
     this.decodeToken(token);
     this.loggedSubject.next(true);
+    return this.role;
   }
 
   setRefreshToken(refresh_token: string): void {
@@ -58,7 +78,9 @@ export class SessaoService {
       this.tokenExp = decode.exp;
 
       if (this.checkTokenValidity()) {
-        this.perfil_id = decode.perfil_id;
+        this.idUser = decode.id;
+        this.username = decode.username;
+        this.role = decode.role;
         return decode;
       }
     }
@@ -89,9 +111,19 @@ export class SessaoService {
 
   logout(): void {
     window.localStorage.removeItem('token');
-    window.localStorage.removeItem('refresh_token');
-    this.perfil_id = null;
+    // window.localStorage.removeItem('refresh_token');
+    this.idUser = null;
+    this.username = null;
+    this.role = null;
     this.loggedSubject.next(false);
+  }
+
+  checkPermission(): boolean {
+    return this.role === 'admin';
+  }
+
+  checkIdUser(idUser: number): boolean {
+    return this.idUser === idUser;
   }
 
 }

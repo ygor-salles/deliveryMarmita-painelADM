@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: '',
-  imagesServerUrl: 'http://localhost:3000/images',
-  productImagesServerUrl: 'http://localhost:3000/images',
+  apiUrl: 'https://delivery-marmita.herokuapp.com/api',
+  brasilApiUrl: 'https://brasilapi.com.br/api',
+  productImagesServerUrl: 'https://delivery-marmita.herokuapp.com/api/',
+  pedidosTimeout: 30000
 };

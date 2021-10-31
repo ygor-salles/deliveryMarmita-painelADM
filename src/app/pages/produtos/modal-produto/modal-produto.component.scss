@@ -10,8 +10,21 @@ h3 {
 }
 
 .label {
-  margin: 30px 0 30px 0;
+  margin: 30px 0 20px 15px;
   color: $brasa-orange;
+}
+
+input[type='file'] {
+  display: none
+}
+
+.label-input-file {
+  background-color: $brasa-orange;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  padding: 6px 20px
 }
 
 .img-container {
@@ -20,11 +33,11 @@ h3 {
 }
 
 img {
-  width: 30%;
+  width: 50%;
   height: 30%;
   object-fit: cover;
-  margin: 20px 0 30px 0;
-  border-radius: 10px;
+  margin: 20px 0 30px 20px;
+  border-radius: 5px;
   // @include brasa-items-border;
 }
 

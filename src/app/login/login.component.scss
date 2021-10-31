@@ -9,12 +9,12 @@
 }
 
 .login-logo {
-  max-height: 5rem;
-  max-width: 5rem;
+  max-height: 15rem;
+  max-width: 15rem;
 
   position: absolute;
-  top: 1.5rem;
-  left: 2rem;
+  top: 1rem;
+  left: 1.5rem;
 }
 
 .login-container {
@@ -85,4 +85,12 @@
       margin-top: 0.5rem;
     }
   }
+}
+
+a:hover {
+  transform: scale(1.02);
+}
+
+.submit:hover {
+  transform: scale(1.01);
 }

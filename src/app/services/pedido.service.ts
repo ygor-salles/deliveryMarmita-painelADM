@@ -1,3 +1,4 @@
+import { SessaoService } from 'src/app/services/sessao.service';
 import { IPagedOrder } from '../models/IPagedOrder.model';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,12 +15,20 @@ interface IPedidoUpdate {
   status: string;
 }
 
+interface ICountOrders {
+  qtd: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
 
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private sessaoService: SessaoService
+  ) { }
 
   showMessage(msg: string, isError = false): void {
     this.snackBar.open(msg, 'X', {
@@ -34,6 +43,7 @@ export class PedidoService {
     if (e.status) {
       this.showMessage(e.error.message, true);
     } else {
+      this.sessaoService.clearLocalStorage();
       this.showMessage('Falha de conexão com a API!', true);
     }
     return EMPTY;
@@ -60,6 +70,7 @@ export class PedidoService {
   readPaginator(
     pagina: number,
     limite: number,
+    isPedido: boolean,
     filtros?: IFilterOrder,
   ): Observable<IPagedOrder> {
     let params = new HttpParams();
@@ -78,9 +89,12 @@ export class PedidoService {
       }
     }
 
+    let url: string;
+    if (isPedido) url = `${apiUrl}/orders/paged`;
+    else url = `${apiUrl}/orders/historic/paged`;
+
     return this.http
-      .get<IPagedOrder>(`${apiUrl}/orders/paged`, { params })
-      .pipe(
+      .get<IPagedOrder>(url, { params }).pipe(
         map(obj => obj),
         catchError(e => this.errorHandler(e)),
       );
@@ -94,8 +108,8 @@ export class PedidoService {
     );
   }
 
-  update(pedido: IOrder): Observable<IOrder> {
-    const url = `${apiUrl}/orders/${pedido.id}`;
+  update(pedido: IOrder, idPedido: number): Observable<IOrder> {
+    const url = `${apiUrl}/orders/${idPedido}`;
     return this.http.put<IOrder>(url, pedido).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
@@ -113,6 +127,14 @@ export class PedidoService {
   delete(id: number): Observable<IOrder> {
     const url = `${apiUrl}/orders/${id}`;
     return this.http.delete<IOrder>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e)),
+    );
+  }
+
+  countOrders(): Observable<ICountOrders> {
+    const url = `${apiUrl}/orders/count`;
+    return this.http.get<ICountOrders>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e)),
     );

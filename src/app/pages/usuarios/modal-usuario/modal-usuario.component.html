@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="usuarioForm">
+  <mat-dialog-content>
+    <div *ngIf="data.title==='Excluir usuário'; else elseBlock">
+      <h3>O usuário <i>{{ data.name }}</i> será excluído. Deseja prosseguir?</h3>
+    </div>
+
+    <ng-template #elseBlock>
+      <!-- Nome -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Nome" formControlName="name" required>
+          <mat-error>Campo nome é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Username -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Username" formControlName="username" required>
+          <mat-error>Campo nome é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- E-mail -->
+      <div class="d-flex">
+        <mat-form-field class="w-100">
+          <input type="email" matInput placeholder="E-mail" formControlName="email" required>
+          <mat-error *ngIf="usuarioForm.get('email')?.errors?.required">Campo e-mail é obrigatório</mat-error>
+          <mat-error *ngIf="usuarioForm.get('email')?.errors?.email">E-mail inválido</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Senha -->
+      <div class="d-flex" *ngIf="!vaiEditar">
+        <mat-form-field class="w-100">
+          <input matInput [required]="!vaiEditar" [type]="hide ? 'password' : 'text'" placeholder="Senha" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="usuarioForm.get('password')?.errors?.required">Campo senha é obrigatório</mat-error>
+          <mat-error *ngIf="usuarioForm.get('password')?.errors?.invalidPassword">
+            Deve conter um dígito, uma letra minúscula e uma maiúscula
+          </mat-error>
+          <mat-error *ngIf="usuarioForm.get('password')?.errors?.minlength">
+            Deve conter pelo menos 7 caracteres
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Confirmar senha -->
+      <div class="d-flex" *ngIf="!vaiEditar">
+        <mat-form-field class="w-100">
+          <input matInput [required]="!vaiEditar" [type]="hide ? 'password' : 'text'" placeholder="Confirmar senha"
+            formControlName="confirmPassword">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="usuarioForm.get('confirmPassword')?.errors?.required">Campo confirmar senha é obrigatório
+          </mat-error>
+          <mat-error *ngIf="usuarioForm.get('confirmPassword')?.errors?.invalidPassword">
+            Deve conter um dígito, uma letra minúscula e uma maiúscula
+          </mat-error>
+          <mat-error *ngIf="usuarioForm.get('confirmPassword')?.errors?.minlength">
+            Deve conter pelo menos 7 caracteres
+          </mat-error>
+          <mat-error *ngIf="usuarioForm.get('confirmPassword')?.value !== usuarioForm.get('senha')?.value">
+            Senha e confirmar senha devem ser iguais
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="secondary" (click)="onNoClick()"
+      class="mat-elevation-z4">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="confirm()" *ngIf="data.title!=='Excluir usuário'"
+      [disabled]="usuarioForm.invalid" class="mat-elevation-z4 color-button">{{data.title}}</button>
+
+    <button mat-raised-button color="warn" (click)="confirm()" *ngIf="data.title==='Excluir usuário'"
+      class="mat-elevation-z4">{{data.title}}</button>
+
+  </mat-dialog-actions>
+</form>

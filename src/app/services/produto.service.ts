@@ -1,3 +1,4 @@
+import { SessaoService } from 'src/app/services/sessao.service';
 import { IProduct } from '../models/IProduct.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,7 +19,11 @@ interface IUpdateProduct {
 })
 export class ProdutoService {
 
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private sessaoService: SessaoService
+  ) { }
 
   showMessage(msg: string, isError = false): void {
     this.snackBar.open(msg, 'X', {
@@ -33,12 +38,13 @@ export class ProdutoService {
     if (e.status) {
       this.showMessage(e.error.message, true);
     } else {
+      this.sessaoService.clearLocalStorage();
       this.showMessage('Falha de conexão com a API!', true);
     }
     return EMPTY;
   }
 
-  create(produto: IProduct): Observable<any> {
+  create(produto: IProduct): Observable<IProduct> {
     return this.http
       .post<IProduct>(`${apiUrl}/products`, produto)
       .pipe(

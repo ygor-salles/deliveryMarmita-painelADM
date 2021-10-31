@@ -1,19 +1,19 @@
 <mat-sidenav-container class="sidebar pt-3">
   <!-- <mat-sidenav></mat-sidenav> -->
-  <mat-sidenav-content class="sidebar-menu pb-3">
+  <mat-sidenav-content class="sidebar-menu pb-3" *ngIf="($user | async) as user">
     <div class="menu-header">
-      <!-- <div class="logo-picture">
-        <img src="../../../assets/img/logo-brasa.jpg" alt="Logo">
-      </div> -->
-      Brasa Admin
+      <div class="logo-picture">
+        <img src="../../../assets/img/logo-semFundo.png" alt="Logo">
+      </div>
+      <span class="name-organization">Brasa Admin</span>
     </div>
-    <!-- <div class="sidebar-user">
-      <span class="sidebar-user-name">Login: Brasa Admin</span>
+    <div class="sidebar-user">
+      <span class="sidebar-user-name">Login: {{ user.username }}</span>
       <br>
-      <span>Perfil: Admin</span>
-    </div> -->
+      <span>Perfil: {{user.role}}</span>
+    </div>
     <ul class="menu-items">
-      <li>
+      <li *ngIf="user.role === 'admin'">
         <a href="#" routerLink="/dashboard" routerLinkActive="active">
           <i class="fa fa-columns"></i>
           <span>Dashboard</span>
@@ -34,10 +34,22 @@
       <li>
         <a href="#" routerLink="/produtos" routerLinkActive="active">
           <i class="fas fa-utensils"></i>
-          <span>Produtos</span>
+          <span>Cardápio</span>
         </a>
       </li>
       <li>
+        <a href="#" routerLink="/acrescimos" routerLinkActive="active">
+          <i class="fas fa-cart-plus"></i>
+          <span>Acréscimos</span>
+        </a>
+      </li>
+      <li *ngIf="user.role === 'admin'">
+        <a href="#" routerLink="/frete" routerLinkActive="active">
+          <i class="fas fa-shipping-fast"></i>
+          <span>Frete</span>
+        </a>
+      </li>
+      <li *ngIf="user.role === 'admin'">
         <a href="#" routerLink="/usuarios" routerLinkActive="active">
           <i class="fa fa-users"></i>
           <span>Usuários</span>
@@ -50,7 +62,7 @@
         </a>
       </li> -->
       <li>
-        <a href="#">
+        <a href="#"  (click)="logout($event)">
           <i class="fas fa-sign-out-alt"></i>
           <span>Sair</span>
         </a>

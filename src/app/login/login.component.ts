@@ -1,10 +1,9 @@
-import { InfoModalComponent } from './info-modal/info-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AutenticacaoService } from 'src/app/services/autenticacao.service';
 import { SessaoService } from 'src/app/services/sessao.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,11 +13,14 @@ import { SessaoService } from 'src/app/services/sessao.service';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
+  hide = true;
+
+  showSpinner = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private autenticacaoService: AutenticacaoService,
     private sessaoService: SessaoService,
-    private dialog: MatDialog,
     private router: Router,
   ) { }
 
@@ -30,34 +32,28 @@ export class LoginComponent implements OnInit {
   }
 
   async login(): Promise<void> {
+    this.showSpinner = true;
+    this.loginForm.disable();
     const email = this.loginForm.get('email')?.value;
     const senha = this.loginForm.get('senha')?.value;
 
     this.autenticacaoService.autenticar(email, senha).subscribe(
-      ({ refresh_token, token }) => {
+      (result) => {
+        this.showSpinner = false;
         this.autenticacaoService.showMessage('O login foi efetuado com sucesso!');
-        this.sessaoService.setToken(token);
-        this.sessaoService.setRefreshToken(refresh_token);
-        this.router.navigate(['dashboard']);
+        const role = this.sessaoService.setToken(result.token);
+        // this.sessaoService.setRefreshToken(refresh_token);
+        if (role === 'admin') this.router.navigate(['dashboard']);
+        else this.router.navigate(['pedidos']);
       },
-      () => {
-        this.autenticacaoService.showMessage('Credenciais incorretas, tente novamente', true);
+      (e) => {
+        this.showSpinner = false;
+        this.loginForm.enable();
+        this.autenticacaoService.showMessage(
+          e.status === 400 ? 'Credenciais incorretas, tente novamente'
+            : 'Falha de conexão com a API!', true);
       },
     );
-  }
-
-  ajuda(): void {
-    this.dialog.open(InfoModalComponent, {
-      width: 'auto',
-      height: 'auto',
-      data: {
-        title: 'Ajuda',
-        text: [
-          'Caso esteja tendo problema para acessar o painel envie um email para: '+
-          'contato@brasa.com.br'
-        ],
-      },
-    });
   }
 
   esqueciASenha(): void {

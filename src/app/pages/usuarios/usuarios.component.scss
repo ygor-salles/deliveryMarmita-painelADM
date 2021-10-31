@@ -1,0 +1,84 @@
+@import "../../../assets/partials/variables";
+@import "../../../assets/partials/mixins";
+
+.table-usuario {
+  width: 100%;
+  border-collapse: separate;
+  // border-spacing: 0 1rem !important;
+
+  .header-table {
+    height: 40px !important;
+
+    th {
+      text-align: center;
+      border: 0 !important;
+      padding: 0 0 20px 0 !important;
+
+      > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: $tr-header-color !important;
+        height: 35px;
+      }
+
+      &:first-child span {
+        border-top-left-radius: $brasa-border-radius;
+        border-bottom-left-radius: $brasa-border-radius !important;
+        padding-left: 40px;
+      }
+
+      &:last-child span {
+        border-top-right-radius: $brasa-border-radius;
+        border-bottom-right-radius: $brasa-border-radius;
+        padding-right: 24px;
+      }
+    }
+  }
+
+
+  .usuario-row {
+
+    td {
+      border-top: solid $tr-border-thickness $tr-border-color;
+      border-bottom: solid $tr-border-thickness $tr-border-color !important;
+      text-align: center;
+      overflow: visible !important;
+
+      &:first-child {
+        border-top-left-radius: $brasa-border-radius;
+        border-bottom-left-radius: $brasa-border-radius !important;
+        border-left: solid $tr-border-thickness $tr-border-color;
+      }
+
+      &:last-child {
+        border-top-right-radius: $brasa-border-radius;
+        border-bottom-right-radius: $brasa-border-radius;
+        border-right: solid $tr-border-thickness $tr-border-color;
+      }
+    }
+  }
+}
+
+.edit > i {
+  color: $edit-color;
+  margin-right: 10px;
+}
+
+.delete > i {
+  color: $delete-color;
+}
+
+.disabled > i {
+  color: #c1c1c1;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.mr-sm {
+  margin-right: 10px;
+}

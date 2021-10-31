@@ -1,2 +1,117 @@
-<h1>Histórico</h1>
-<hr>
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="showSpinner; else notSpinner"></mat-progress-spinner>
+<ng-template #notSpinner>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Histórico</h1>
+    <hr>
+    <div class="d-flex">
+      <button mat-raised-button color="primary" (click)="filterAccordion.toggle()"
+        class="mat-elevation-z4 mr-3 color-button">
+        Filtros
+        <i class="fa fa-filter"></i>
+      </button>
+    </div>
+  </div>
+  <hr>
+
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel #filterAccordion class="expansion-panel-filtros">
+      <mat-expansion-panel-header hidden>
+      </mat-expansion-panel-header>
+
+      <form [formGroup]="filterForm">
+        <div class="d-flex justify-content-between align-items-center">
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="{{null}}">Selecione</mat-option>
+              <mat-option *ngFor="let status of listStatusFilter" value="{{status}}">{{status}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <input matInput formControlName="client_name">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Data" formControlName="data" (click)="picker.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <button mat-raised-button color="secondary" (click)="filtrar()" class="mat-elevation-z4">
+            Buscar
+          </button>
+        </div>
+      </form>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <table mat-table [dataSource]="fonteHistorico" multiTemplateDataRows class="table-historicos">
+    <!-- Data Criação Column -->
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef> <span>Data Criação</span> </th>
+      <td class="cursor-pointer" mat-cell *matCellDef="let historico"> {{historico.created_at | date:'dd/MM/yyyy -
+        HH:mm' }} </td>
+    </ng-container>
+
+    <!-- Cliente Column -->
+    <ng-container matColumnDef="client_name">
+      <th mat-header-cell *matHeaderCellDef> <span>Cliente</span> </th>
+      <td class="cursor-pointer largura-35" mat-cell *matCellDef="let historico"> {{historico.client_name}} </td>
+    </ng-container>
+
+    <!-- Telefone Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> <span>Telefone</span> </th>
+      <td class="cursor-pointer" mat-cell *matCellDef="let historico">
+        {{historico.phone ? (historico.phone | mask: '(00)0000-0000 || (00)00000-0000') : '--'}}
+      </td>
+    </ng-container>
+
+    <!-- Retirada Column -->
+    <ng-container matColumnDef="withdrawal">
+      <th mat-header-cell *matHeaderCellDef> <span>Retirada</span> </th>
+      <td class="cursor-pointer" mat-cell *matCellDef="let historico"> {{historico.withdrawal}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> <span>Status</span> </th>
+      <td mat-cell *matCellDef="let historico">
+        <mat-form-field>
+          <mat-select [(value)]="historico.status" (click)="toggleStatusSelect($event)"
+            (selectionChange)="selectPedido($event, historico.id)">
+            <mat-option [value]="status" *ngFor="let status of listStatus">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!-- Colspan -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let historico" [attr.colspan]="displayedColumns.length">
+        <div class="historico-detail">
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-table"></tr>
+    <tr mat-row *matRowDef="let historico; columns: displayedColumns;" class="historico-row"
+      [class.expanded-row]="expandedElement === historico" (click)="abrirModalDetalhes(historico)"></tr>
+    <tr mat-row *matRowDef="let historico; columns: ['expandedDetail']"
+      [class.historico-expandido]="expandedElement === historico" class="detail-row"></tr>
+  </table>
+
+  <div *ngIf="historicos.length === 0" class="mensagem-nenhum-item-tabela">
+    <span>Não há nenhum historico com esse filtro</span>
+  </div>
+
+  <mat-paginator [length]="tamanhoPaginacao" [pageSize]="tamanhoPagina" [pageSizeOptions]="opcoesPaginacao"
+    [pageIndex]="indicePagina" (page)="mudouPagina($event)" showFirstLastButtons>
+  </mat-paginator>
+
+</ng-template>

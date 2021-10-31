@@ -8,8 +8,8 @@ import { SessaoService } from './services/sessao.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'pro-dashboard-angular';
-  logado: boolean;
+  title = 'restaurante-brasa';
+  logado = false;
 
   constructor(private appService: AppService, private sessaoService: SessaoService) {}
 
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
     };
     return classes;
   }
+
   toggleSidebar(): void {
     this.appService.toggleSidebar();
   }

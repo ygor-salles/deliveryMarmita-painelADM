@@ -22,6 +22,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 // NGX, Outros
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -41,6 +45,12 @@ import { ModalProdutoComponent } from './produtos/modal-produto/modal-produto.co
 import { ModalImagemComponent } from './modal-imagem/modal-imagem.component';
 import { ModalAlertComponent } from './modal-alert/modal-alert.component';
 import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.component';
+import { FreteComponent } from './frete/frete.component';
+import { AcrescimoComponent } from './acrescimo/acrescimo.component';
+import { ModalAcrescimoComponent } from './acrescimo/modal-acrescimo/modal-acrescimo.component';
+import { ModalFreteComponent } from './frete/modal-frete/modal-frete.component';
+import { ModalUsuarioComponent } from './usuarios/modal-usuario/modal-usuario.component';
+import { ModalDetalhesPedidoComponent } from './pedidos/modal-detalhes-pedido/modal-detalhes-pedido.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +64,12 @@ import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.compon
     ModalImagemComponent,
     ModalAlertComponent,
     ModalPedidoComponent,
+    FreteComponent,
+    AcrescimoComponent,
+    ModalAcrescimoComponent,
+    ModalFreteComponent,
+    ModalUsuarioComponent,
+    ModalDetalhesPedidoComponent,
   ],
   imports: [
     CommonModule,
@@ -83,7 +99,11 @@ import { ModalPedidoComponent } from './pedidos/modal-pedido/modal-pedido.compon
     MatSortModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
   ],
   exports: [
     ProdutosComponent,

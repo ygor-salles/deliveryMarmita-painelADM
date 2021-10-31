@@ -1,8 +1,11 @@
-import { InfoModalComponent } from './../../login/info-modal/info-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IUsuario } from 'src/app/models/IUsuario.model';
 import { SessaoService } from 'src/app/services/sessao.service';
+import { ModalAlertComponent } from './../../pages/modal-alert/modal-alert.component';
+import { UsuarioService } from './../../services/usuario.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,16 +13,25 @@ import { SessaoService } from 'src/app/services/sessao.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  $user: Observable<IUsuario>;
 
-  constructor(private dialog: MatDialog, private router: Router, private sessaoService: SessaoService,) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private sessaoService: SessaoService,
+    private usuarioService: UsuarioService,
+  ) { }
 
   ngOnInit(): void {
+    this.$user = this.usuarioService.readById(
+      this.sessaoService.getIdUser()
+    );
   }
 
   logout(evento: MouseEvent): void {
     evento.preventDefault();
 
-    const dialogRef = this.dialog.open(InfoModalComponent, {
+    const dialogRef = this.dialog.open(ModalAlertComponent, {
       width: 'auto',
       height: 'auto',
       data: {
