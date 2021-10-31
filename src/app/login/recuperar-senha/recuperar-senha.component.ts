@@ -55,10 +55,13 @@ export class RecuperarSenhaComponent implements OnInit {
     this.usuarioAdminService.redefinirSenha(email, senha, codVerificacao).subscribe(
       () => {
         this.usuarioAdminService.showMessage('Sua senha foi alterada com sucesso!');
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['pedidos']);
       },
-      () => {
-        this.usuarioAdminService.showMessage('Houve erro ao recuperar a senha, tente novamente!', true);
+      (e) => {
+        this.usuarioAdminService.showMessage(
+          e.status === 400 ? 'Código de verificação inválido'
+            : 'Houve erro ao recuperar a senha, tente novamente mais tarde!', true
+        );
       },
     );
   }

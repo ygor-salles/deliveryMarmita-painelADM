@@ -41,7 +41,7 @@ export class ProdutosComponent implements OnInit {
   marmitas: IProduct[] = [];
   $marmitas: Observable<IPagedProduct>;
   fonteMarmitas: MatTableDataSource<IProduct>;
-  displayedColumns = ['indice', 'name', 'price', 'size', 'status', 'createdAt', 'actions'];
+  displayedColumns = ['indice', 'name', 'price', 'size', 'status', 'created_at', 'actions'];
   expandedElement: IProduct | null;
 
   // MatPaginator Inputs Produto Físico
@@ -54,7 +54,7 @@ export class ProdutosComponent implements OnInit {
   bebidas: IProduct[] = [];
   $bebidas: Observable<IPagedProduct>;
   fonteBebidas: MatTableDataSource<IProduct>;
-  columnsDisplayed = ['indice', 'name', 'price', 'size', 'status', 'createdAt', 'actions'];
+  columnsDisplayed = ['indice', 'name', 'price', 'size', 'status', 'created_at', 'actions'];
   elementExpanded: IProduct | null;
 
   // MatPaginator Inputs Produto Físico

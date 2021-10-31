@@ -1,3 +1,4 @@
+import { SessaoService } from 'src/app/services/sessao.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,7 +12,11 @@ const { brasilApiUrl } = environment
   providedIn: 'root'
 })
 export class CEPserviceService {
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private sessaoService: SessaoService
+  ) { }
 
   showMessage(msg: string, isError = false): void {
     this.snackBar.open(msg, 'X', {
@@ -26,6 +31,7 @@ export class CEPserviceService {
     if (e.status) {
       this.showMessage(e.error.message, true);
     } else {
+      this.sessaoService.clearLocalStorage();
       this.showMessage('Falha de conexão com a API!', true);
     }
     return EMPTY;

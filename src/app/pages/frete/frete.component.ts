@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class FreteComponent implements OnInit {
 
   fonteFretes: IFrete[] = [];
-  displayedColumns = ['neighborhood', 'value', 'createdAt', 'actions'];
+  displayedColumns = ['neighborhood', 'value', 'created_at', 'actions'];
 
   showSpinner = false;
 

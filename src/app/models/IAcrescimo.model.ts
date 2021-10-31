@@ -4,6 +4,6 @@ export interface IAcrescimo {
   name: string;
   price: number;
   status?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }

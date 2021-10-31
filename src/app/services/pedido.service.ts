@@ -1,3 +1,4 @@
+import { SessaoService } from 'src/app/services/sessao.service';
 import { IPagedOrder } from '../models/IPagedOrder.model';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -23,7 +24,11 @@ interface ICountOrders {
 })
 export class PedidoService {
 
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private sessaoService: SessaoService
+  ) { }
 
   showMessage(msg: string, isError = false): void {
     this.snackBar.open(msg, 'X', {
@@ -38,6 +43,7 @@ export class PedidoService {
     if (e.status) {
       this.showMessage(e.error.message, true);
     } else {
+      this.sessaoService.clearLocalStorage();
       this.showMessage('Falha de conexão com a API!', true);
     }
     return EMPTY;

@@ -48,7 +48,7 @@ export class PedidosComponent implements OnInit, OnDestroy {
   pedidos: IOrder[] = [];
   $pedidos: Observable<IPagedOrder>;
   fontePedidos: MatTableDataSource<IOrder>;
-  displayedColumns = ['createdAt', 'client_name', 'phone', 'withdrawal', 'status', 'actions'];
+  displayedColumns = ['created_at', 'client_name', 'phone', 'withdrawal', 'status', 'actions'];
 
   expandedElement: IOrder | null;
 
@@ -242,8 +242,8 @@ export class PedidosComponent implements OnInit, OnDestroy {
         observation: item.observation,
         total_item: item.total_item,
         products: item.products,
-        orderId: item.orderId,
-        productId: item.productId
+        order_id: item.order_id,
+        product_id: item.product_id
       });
     });
 

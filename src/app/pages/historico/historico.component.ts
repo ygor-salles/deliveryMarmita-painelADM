@@ -42,7 +42,7 @@ export class HistoricoComponent implements OnInit {
   historicos: IOrder[] = [];
   $historicos: Observable<IPagedOrder>;
   fonteHistorico: MatTableDataSource<IOrder>;
-  displayedColumns = ['createdAt', 'client_name', 'phone', 'withdrawal', 'status'];
+  displayedColumns = ['created_at', 'client_name', 'phone', 'withdrawal', 'status'];
 
   expandedElement: IOrder | null;
 

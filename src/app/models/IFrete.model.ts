@@ -3,6 +3,6 @@ export interface IFrete {
   id?: number;
   neighborhood: string;
   value: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }

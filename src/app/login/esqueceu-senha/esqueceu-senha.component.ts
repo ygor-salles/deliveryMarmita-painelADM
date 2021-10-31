@@ -34,11 +34,14 @@ export class EsqueceuSenhaComponent implements OnInit {
         this.router.navigate(['login']);
         this.showSpinner = false;
       },
-      () => {
-        this.usuarioAdminService.showMessage(
-          'Ocorreu um erro ao enviar email de confirmação, favor tente novamente mais tarde! '+
-          'Tente novamente mais tarde!', true
-        );
+      (e) => {
+        if (e.status === 400) {
+          this.usuarioAdminService.showMessage('Usuário inexistente!', true)
+        } else {
+          this.usuarioAdminService.showMessage(
+            'Ocorreu um erro ao enviar email de confirmação, favor tente novamente mais tarde!', true
+          );
+        }
         this.showSpinner = false;
       },
     );

@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class AcrescimoComponent implements OnInit {
 
   fonteAcrescimos: IAcrescimo[] = [];
-  displayedColumns = ['name', 'price', 'createdAt', 'status', 'actions'];
+  displayedColumns = ['name', 'price', 'created_at', 'status', 'actions'];
 
   showSpinner = false;
 

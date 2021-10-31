@@ -14,7 +14,7 @@ import { ModalUsuarioComponent } from './modal-usuario/modal-usuario.component';
 export class UsuariosComponent implements OnInit {
 
   fonteUsuarios: IUsuario[] = [];
-  displayedColumns = ['name', 'username', 'email', 'role', 'createdAt', 'actions'];
+  displayedColumns = ['name', 'username', 'email', 'role', 'created_at', 'actions'];
   listUser = ['admin', 'user'];
 
   showSpinner = false;

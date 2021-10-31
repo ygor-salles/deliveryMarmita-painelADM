@@ -6,6 +6,6 @@ export interface IUsuario {
   email: string;
   password?: string;
   role: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }

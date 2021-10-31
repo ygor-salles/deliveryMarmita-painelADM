@@ -36,6 +36,11 @@ export class SessaoService {
     return window.localStorage.getItem('refresh_token');
   }
 
+  clearLocalStorage(): void {
+    window.localStorage.clear();
+    setTimeout(() => { window.location.reload() }, 3000)
+  }
+
   getIdUser(): number {
     return this.idUser;
   }
@@ -94,7 +99,7 @@ export class SessaoService {
       }
 
       this.autenticacaoService.atualizarAutenticacao(refreshToken).subscribe(
-        ({token, refresh_token}) => {
+        ({ token, refresh_token }) => {
           this.setToken(token);
           this.setRefreshToken(refresh_token);
           resolve(token);

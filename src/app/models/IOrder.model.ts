@@ -19,6 +19,6 @@ export interface IOrder {
   total: number;
   products?: IOrderToProduct[];
   orderToProducts?: IOrderToProduct[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }

@@ -26,7 +26,7 @@ export class UsuarioAdminService {
     return this.http.post<Object>(`${apiUrl}/auth/forgot-password`, { email });
   }
 
-  redefinirSenha(email: string, password: string, codVerificao: string): Observable<Object> {
-    return this.http.post<Object>(`${apiUrl}/auth/change-password`, { email, password, codVerificao });
+  redefinirSenha(email: string, password: string, codVerificacao: string): Observable<Object> {
+    return this.http.post<Object>(`${apiUrl}/auth/change-password`, { email, password, codVerificacao });
   }
 }

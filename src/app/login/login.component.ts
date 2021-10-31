@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
+  showSpinner = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private autenticacaoService: AutenticacaoService,
@@ -30,11 +32,14 @@ export class LoginComponent implements OnInit {
   }
 
   async login(): Promise<void> {
+    this.showSpinner = true;
+    this.loginForm.disable();
     const email = this.loginForm.get('email')?.value;
     const senha = this.loginForm.get('senha')?.value;
 
     this.autenticacaoService.autenticar(email, senha).subscribe(
       (result) => {
+        this.showSpinner = false;
         this.autenticacaoService.showMessage('O login foi efetuado com sucesso!');
         const role = this.sessaoService.setToken(result.token);
         // this.sessaoService.setRefreshToken(refresh_token);
@@ -42,7 +47,11 @@ export class LoginComponent implements OnInit {
         else this.router.navigate(['pedidos']);
       },
       (e) => {
-        this.autenticacaoService.showMessage('Credenciais incorretas, tente novamente', true);
+        this.showSpinner = false;
+        this.loginForm.enable();
+        this.autenticacaoService.showMessage(
+          e.status === 400 ? 'Credenciais incorretas, tente novamente'
+            : 'Falha de conexão com a API!', true);
       },
     );
   }
