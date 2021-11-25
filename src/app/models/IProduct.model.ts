@@ -10,4 +10,5 @@ export interface IProduct {
   image?: string;
   created_at?: Date;
   updated_at?: Date;
+  firebasePost?: boolean;
 }
