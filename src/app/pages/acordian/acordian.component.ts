@@ -20,7 +20,7 @@ export class AcordianComponent implements OnInit {
   }
 
   transformImageUrl(imageUrl?: string): string {
-    return transformProductImageUrl(imageUrl);
+    return imageUrl.slice(0, 4) === 'http' ? imageUrl :  transformProductImageUrl(imageUrl);
   }
 
   abrirModalImagem(image?: string): void {

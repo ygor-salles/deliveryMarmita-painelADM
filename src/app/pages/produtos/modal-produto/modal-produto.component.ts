@@ -4,6 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import transformProductImageUrl from 'src/app/utils/functions/transformProductImageUrl';
 import { IProduct } from '../../../models/IProduct.model';
+import { StorageService } from '../../../services/storage.service';
+import { environment } from 'src/environments/environment';
+
+const { name_app, firebaseActive } = environment;
 
 @Component({
   selector: 'app-modal-produto',
@@ -23,7 +27,8 @@ export class ModalProdutoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: IProduct,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private storageService: StorageService,
   ) { }
 
   ngOnInit(): void {
@@ -43,96 +48,138 @@ export class ModalProdutoComponent implements OnInit {
     this.dialogRef.close(null);
   }
 
-  confirm(): void {
+  async confirm(): Promise<void> {
     this.executeSpinner();
     const novoProduto = this.produtoForm.getRawValue() as IProduct;
     // this.dialogRef.close({ ...novoProduto, id: this.data.id, status: this.data.status, img64: this.img64 });
 
     if (this.data.title === 'Cadastrar produto') {
-      const produto: IProduct = {
-        name: novoProduto.name,
-        description: novoProduto.description,
-        price: novoProduto.price,
-        type: novoProduto.type,
-        size: novoProduto.size,
-        image: this.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-      };
-      this.produtoService.create(produto).subscribe(() => {
-        this.stopSpinner(true);
-        if (novoProduto.type==='marmita') {
-          this.dialogRef.close({ type: 'marmita', message: 'Marmita cadastrada com sucesso' });
-        }
-        else {
-          this.dialogRef.close({ type: 'bebida', message: 'Bebida cadastrada com sucesso' });
-        }
-      });
-
+      await this.cadastrarProduto(novoProduto);
     } else if (this.data.title === 'Editar produto') {
-
-      let produto: IProduct;
-      if (novoProduto.size) {
-        if (this.img64) {
-          produto = {
-            name: novoProduto.name,
-            description: novoProduto.description,
-            price: novoProduto.price,
-            type: novoProduto.type,
-            size: novoProduto.size,
-            image: this.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-          };
-        } else {
-          produto = {
-            name: novoProduto.name,
-            description: novoProduto.description,
-            price: novoProduto.price,
-            type: novoProduto.type,
-            size: novoProduto.size,
-          };
-        }
-      } else {
-        if (this.img64) {
-          produto = {
-            name: novoProduto.name,
-            description: novoProduto.description,
-            price: novoProduto.price,
-            type: novoProduto.type,
-            image: this.img64.replace(/^data:image\/[a-z]+;base64,/, "")
-          };
-        } else {
-          produto = {
-            name: novoProduto.name,
-            description: novoProduto.description,
-            price: novoProduto.price,
-            type: novoProduto.type,
-          };
-        }
-      }
-      this.produtoService.update(produto, this.data.id).subscribe(() => {
-        this.stopSpinner(true);
-        if (novoProduto.type==='marmita') {
-          this.dialogRef.close({ type: 'marmita', message: 'Marmita editada com sucesso' });
-        }
-        else {
-          this.dialogRef.close({ type: 'bebida', message: 'Bebida editada com sucesso' });
-        }
-      });
-
+      await this.editarProduto(novoProduto);
     } else {
+      await this.excluirProduto(novoProduto);
+    }
+  }
 
-      this.produtoService.delete(this.data.id).subscribe(() => {
-        this.stopSpinner(true);
-        if (novoProduto.type==='marmita') {
-          this.dialogRef.close({ type: 'marmita', message: 'Marmita excluída com sucesso' });
-        }
-        else {
-          this.dialogRef.close({ type: 'bebida', message: 'Bebida excluída com sucesso' });
-        }
-      });
+  async cadastrarProduto(novoProduto: IProduct): Promise<void> {
+    const produto: IProduct = {
+      name: novoProduto.name,
+      description: novoProduto.description,
+      price: novoProduto.price,
+      type: novoProduto.type,
+      size: novoProduto.size,
+      image: this.img64.replace(/^data:image\/[a-z]+;base64,/, ""),
+      firebasePost: false
+    };
+
+    if (firebaseActive) {
+      const urlImage = await this.postNewImageFireabse();
+      if (urlImage) {
+        produto.firebasePost = true;
+        produto.image = urlImage;
+      }
+    }
+
+    this.produtoService.create(produto).subscribe(() => {
+      this.stopSpinner(true);
+      if (novoProduto.type==='marmita') {
+        this.dialogRef.close({ type: 'marmita', message: 'Marmita cadastrada com sucesso' });
+      }
+      else {
+        this.dialogRef.close({ type: 'bebida', message: 'Bebida cadastrada com sucesso' });
+      }
+    });
+  }
+
+  async editarProduto(novoProduto: IProduct): Promise<void> {
+    let produto: IProduct;
+    if (novoProduto.size) {
+      if (this.img64) {
+        produto = {
+          name: novoProduto.name,
+          description: novoProduto.description,
+          price: novoProduto.price,
+          type: novoProduto.type,
+          size: novoProduto.size,
+          image: this.img64.replace(/^data:image\/[a-z]+;base64,/, ""),
+          firebasePost: false
+        };
+      } else {
+        produto = {
+          name: novoProduto.name,
+          description: novoProduto.description,
+          price: novoProduto.price,
+          type: novoProduto.type,
+          size: novoProduto.size,
+          firebasePost: false
+        };
+      }
+    } else {
+      if (this.img64) {
+        produto = {
+          name: novoProduto.name,
+          description: novoProduto.description,
+          price: novoProduto.price,
+          type: novoProduto.type,
+          image: this.img64.replace(/^data:image\/[a-z]+;base64,/, ""),
+          firebasePost: false
+        };
+      } else {
+        produto = {
+          name: novoProduto.name,
+          description: novoProduto.description,
+          price: novoProduto.price,
+          type: novoProduto.type,
+          firebasePost: false
+        };
+      }
+    }
+
+    // Cadastro e deleção de imagem no firebase
+    if(this.img64 && firebaseActive) {
+      const urlImage = await this.postNewImageFireabse()
+      await this.deleteOldImageFirebase()
+      produto.firebasePost = true;
+      produto.image = urlImage || '';
+    }
+    this.produtoService.update(produto, this.data.id).subscribe(() => {
+      this.stopSpinner(true);
+      if (novoProduto.type==='marmita') {
+        this.dialogRef.close({ type: 'marmita', message: 'Marmita editada com sucesso' });
+      }
+      else {
+        this.dialogRef.close({ type: 'bebida', message: 'Bebida editada com sucesso' });
+      }
+    });
+  }
+
+  async excluirProduto(novoProduto: IProduct) {
+    await this.deleteOldImageFirebase();
+
+    this.produtoService.delete(this.data.id).subscribe(() => {
+      this.stopSpinner(true);
+      if (novoProduto.type==='marmita') {
+        this.dialogRef.close({ type: 'marmita', message: 'Marmita excluída com sucesso' });
+      }
+      else {
+        this.dialogRef.close({ type: 'bebida', message: 'Bebida excluída com sucesso' });
+      }
+    });
+  }
+
+  async postNewImageFireabse(): Promise<string> {
+    return await this.storageService.subirImagen(`${name_app}_${Date.now()}`, this.img64);
+  }
+
+  async deleteOldImageFirebase(): Promise<void> {
+    if (this.data.image.slice(0, 4) === 'http') {
+      await this.storageService.removerImagem(this.data.image);
     }
   }
 
   transformImageUrl(imageUrl: string): string {
-    return transformProductImageUrl(imageUrl);
+    return imageUrl.slice(0, 4) === 'http' ? imageUrl : transformProductImageUrl(imageUrl);
   }
 
   uploadFileEvt(imgFile: any) {

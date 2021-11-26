@@ -177,7 +177,13 @@ export class ProdutosComponent implements OnInit {
     if (!this.notPermission()) {
       const dialogRef = this.dialog.open(ModalProdutoComponent, {
         width: '70%',
-        data: { title: 'Excluir produto', id: produto.id, name: produto.name, type: produto.type },
+        data: {
+          title: 'Excluir produto',
+          id: produto.id,
+          name: produto.name,
+          type: produto.type,
+          image: produto.image
+        },
       });
 
       dialogRef.afterClosed().subscribe(result => {

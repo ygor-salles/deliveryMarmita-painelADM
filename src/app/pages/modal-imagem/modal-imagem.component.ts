@@ -24,7 +24,7 @@ export class ModalImagemComponent implements OnInit {
   activeSlideIndex = 0;
 
   transformImageUrl(imageUrl: string): string {
-    return transformProductImageUrl(imageUrl);
+    return imageUrl.slice(0, 4) === 'http' ? imageUrl :  transformProductImageUrl(imageUrl);
   }
 
   cancel(): void {
