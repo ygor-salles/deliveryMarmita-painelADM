@@ -53,3 +53,9 @@ yarn build
 ```bash
 npm run build
 ```
+
+## Usuário e senha
+
+- https://brasa-pousada-restaurante-admin.netlify.app/#/login
+- user: ygor@gmail.com
+- senha: 123456
